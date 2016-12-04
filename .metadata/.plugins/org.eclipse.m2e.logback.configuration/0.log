@@ -1,0 +1,3 @@
+2016-12-01 21:14:48,148 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2016-12-01 21:25:39,243 [Thread-8] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
