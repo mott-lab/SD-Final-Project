@@ -13,8 +13,6 @@ public abstract class Tile {
 		this.row=i;
 		this.col=j;
 		initializeStuff();
-		
-		collisionBox = new Rectangle(TILE_SIZE, TILE_SIZE);
 	}
 	
 	protected abstract void initializeStuff();

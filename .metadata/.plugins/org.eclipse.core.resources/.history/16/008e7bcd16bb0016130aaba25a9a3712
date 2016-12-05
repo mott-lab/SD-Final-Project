@@ -28,7 +28,7 @@ public class Protagonist {
 	
 	private int currentX = 100;		//current horizontal start dist
 	
-	private int currentY = GameFrame.HEIGHT - PlayPanel.TERRAIN_HEIGHT - PROTAGONIST_HEIGHT;
+	private int currentY = GameFrame.HEIGHT - PlayPanel.TERRAIN_HEIGHT - PROTAGONIST_HEIGHT - 300;
 	
 	private boolean jumping;
 	
@@ -68,7 +68,7 @@ public class Protagonist {
 	public void move(int direction){
 		
 		moving = true;
-//		collisionChecker();
+		collisionChecker();
 		
 		if(direction == KeyEvent.VK_LEFT){
 			
@@ -183,7 +183,6 @@ public class Protagonist {
 	}
 	
 	public void collisionChecker () {
-		
 		int footPos = (int)collisionBox.getMaxY();
 		
 		int rowCurrent = (int)(currentY/Tile.TILE_SIZE);
@@ -192,119 +191,14 @@ public class Protagonist {
 		int colCurrent = (int)(currentX/Tile.TILE_SIZE);
 		int colRight = (int)((collisionBox.getMaxX()-1)/Tile.TILE_SIZE);
 		
-//		//position of the character's feet on the y-axis
-//				int footY=(int)(collisionBox.getMaxY());
-//				
-//				//if the character is jumping, his head must not touch a block;
-//				//if it touches a block, stop the ascending phase of the jump (start falling)
-//				if(jumping){
-//					
-//					//row position of the cell above the character's head (in the tiled map)
-//					int upRow=(int)((collisionBox.getMinY()-1)/Tile.TILE_SIZE);
-//					
-//					//tile position relative to the upper-left corner of the character's bounding box
-//					int upLeftCornerCol=(int)(collisionBox.getMinX()/Tile.TILE_SIZE);
-//					
-//					//tile position relative to the upper-right corner of the character's bounding box
-//					int upRightCornerCol=(int)((collisionBox.getMaxX())/Tile.TILE_SIZE);
-//
-//					if(rowCurrent>=0){
-//						if(World.tiledMap[upRow][upLeftCornerCol] instanceof Block){
-//							//if the upper-left corner stats intersecting a block, stop the jumping phase
-//							//and start the falling phase, setting the jump_count to 0
-//							if(World.tiledMap[upRow][upLeftCornerCol].getCollisionBox().intersects(this.collisionBox)){
-//								jumping=false;
-//								jump_count=0;
-//								descending=true;
-//								return;
-//							}
-//						}
-//						if(World.tiledMap[upRow][upRightCornerCol] instanceof Block){
-//							//if the upper-right corner stats intersecting a block, stop the jumping phase
-//							//and start the falling phase, setting the jump_count to 0
-//							if(World.tiledMap[upRow][upRightCornerCol].getCollisionBox().intersects(this.collisionBox)){
-//								jumping=false;
-//								jump_count=0;
-//								descending=true;
-//								return;
-//							}
-//						}
-//					}
-//				}
-//				
-//				//if last direction was right..
-//				if(last_direction==KeyEvent.VK_RIGHT){
-//					
-//					//get the left side of the bounding box
-//					int footX=(int)collisionBox.getMinX();
-//					
-//					//get the tile position (in the tiled map) 
-//					//relative to the tile in front of the character
-//					int tileInFrontOfFootRow=((footY-1)/Tile.TILE_SIZE);
-//					int tileInFrontOfFootCol=(footX/Tile.TILE_SIZE)+1;
-//					
-//					if(tileInFrontOfFootCol<World.COLS){
-//						//if the tile in front of the character contains a block..
-//						if(World.tiledMap[tileInFrontOfFootRow][tileInFrontOfFootCol] instanceof Block){
-//							//..and the character's bounding box intersect the block's one
-//							if(collisionBox.intersects(World.tiledMap[tileInFrontOfFootRow][tileInFrontOfFootCol].getCollisionBox())){
-//								//push the character away and re-set its position
-//								currentX-=DISPLACEMENT;
-//								collisionBox.setLocation(currentX, currentY);
-//								colCurrent=currentX/Tile.TILE_SIZE;
-//							}
-//						}
-//						
-//						if(World.tiledMap[rowCurrent][colCurrent] instanceof Block){
-//							//if the tile the character finds himself in contains a block, act like above
-//							if(collisionBox.intersects(World.tiledMap[rowCurrent][colCurrent].getCollisionBox())){
-//								currentX-=DISPLACEMENT;
-//								collisionBox.setLocation(currentX, currentY);
-//								colCurrent=currentX/Tile.TILE_SIZE;
-//							}
-//						}
-//					}
-//				} else {
-//					//get the right side of the bounding box
-//					int footX=(int) collisionBox.getMaxX();
-//					
-//					//get the tile position (in the tiled map) 
-//					//relative to the tile in front of the character
-//					int tileInFrontOfFootRow=((footY-1)/Tile.TILE_SIZE);
-//					int tileInFrontOfFootCol=(footX/Tile.TILE_SIZE)-1;
-//					
-//					if(tileInFrontOfFootCol>=0){
-//						//if the tile in front of the character contains a block..
-//						if(World.tiledMap[tileInFrontOfFootRow][tileInFrontOfFootCol] instanceof Block){
-//							//..and the character's bounding box intersect the block's one
-//							if(collisionBox.intersects(World.tiledMap[tileInFrontOfFootRow][tileInFrontOfFootCol].getCollisionBox())){
-//								//push the character away and re-set its position
-//								currentX+=DISPLACEMENT;
-//								collisionBox.setLocation(currentX, currentY);
-//								colCurrent=currentX/Tile.TILE_SIZE;
-//							}
-//						}
-//						
-//						if(World.tiledMap[rowCurrent][colCurrent] instanceof Block){
-//							//if the tile the character finds himself in contains a block, act like above
-//							if(collisionBox.intersects(World.tiledMap[rowCurrent][colCurrent].getCollisionBox())){
-//								currentX+=DISPLACEMENT;
-//								collisionBox.setLocation(currentX, currentY);
-//								colCurrent=currentX/Tile.TILE_SIZE;
-//							}
-//						}
-//					}	
-//				}
-
-		
 		// Check moving first
 		if (moving) {
 			
-			if (World.tiledMap[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
+			if (World.tiledMap[rowCurrent][colRight].getCollisionBox().intersects(getCollisionBox())) {
 				moving = false;
-//				return;
+				return;
 			} else {
-//				return;
+				return;
 			}
 		}
 			

@@ -19,9 +19,7 @@ public class Block extends Tile {
 		this.imgName=imgName;
 		loadInformations();
 		
-		x=col*TILE_SIZE;
-		y=row*TILE_SIZE;
-		collisionBox=new Rectangle(x,y,TILE_SIZE,TILE_SIZE);
+		
 	}
 
 	@Override

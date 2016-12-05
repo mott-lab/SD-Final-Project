@@ -30,8 +30,6 @@ public class GameManager extends Thread{
 			
 			manageKeys();
 			
-			protagonist.collisionChecker();
-			
 			gamePanel.repaintGame();
 			
 			try{

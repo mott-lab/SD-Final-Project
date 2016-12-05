@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 //all the big part under the stats panel 
 public class PlayPanel extends JPanel{
 
+	private static final long serialVersionUID = 1L;
+
 	public PlayPanel(){
 		
 		//set the size of the play panel
@@ -36,13 +38,13 @@ public class PlayPanel extends JPanel{
 		
 		g2.drawImage(World.CURRENT_BACKGROUND, 0, Tile.TILE_SIZE, GameFrame.WIDTH, PLAY_PANEL_HEIGHT, null);
 		
-		for(int i=0; i<World.ROWS; i++){
-			for(int j=0; j<World.COLS; j++){
-				if(World.tiledMap[i][j] != null){
-					g2.drawImage(World.tiledMap[i][j].getImage(), j*Tile.TILE_SIZE, i*Tile.TILE_SIZE, null);
-				}
-			}
-		}
+//		for(int i=0; i<World.ROWS; i++){
+//			for(int j=0; j<World.COLS; j++){
+//				if(World.tiledMap[i][j] != null){
+//					g2.drawImage(World.tiledMap[i][j].getImage(), j*Tile.TILE_SIZE, i*Tile.TILE_SIZE, null);
+//				}
+//			}
+//		}
 		
 		//draw the protagonist of the game
 //		if(!bb8.getRestoring()){

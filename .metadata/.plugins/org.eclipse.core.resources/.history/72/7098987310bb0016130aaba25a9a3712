@@ -4,9 +4,13 @@ import java.util.HashSet;
 public class GameManager extends Thread{
 	
 	private static final int DELAY = 20;
+	
 	private boolean gameIsRunning = false;
+	
 	private Protagonist protagonist;
+	
 	private GamePanel gamePanel;
+	
 	private World world;
 	
 	public GameManager(GamePanel gamePanel){
@@ -29,8 +33,6 @@ public class GameManager extends Thread{
 			protagonist.checkJumpState();
 			
 			manageKeys();
-			
-			protagonist.collisionChecker();
 			
 			gamePanel.repaintGame();
 			
