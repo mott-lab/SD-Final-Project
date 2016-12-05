@@ -12,7 +12,7 @@ public class GameManager extends Thread{
 	public GameManager(GamePanel gamePanel){
 		
 		this.world = new World();
-//		this.world.initializeStage(1);
+		this.world.initializeStage(1);
 		
 		//initialize protagonist
 		this.protagonist = new Protagonist();
@@ -30,8 +30,7 @@ public class GameManager extends Thread{
 			
 			manageKeys();
 			
-//			protagonist.collisionChecker();
-			protagonist.move(KeyEvent.VK_RIGHT);
+			protagonist.collisionChecker();
 			
 			gamePanel.repaintGame();
 			

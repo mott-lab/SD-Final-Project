@@ -9,13 +9,7 @@ import javax.swing.JPanel;
 //and the playPanel throwing them informations coming from the logic
 //side of the game
 public class GamePanel extends JPanel{
-	
-	private KeyboardController keyboardController;
-	private StatsPanel statsPanel=new StatsPanel();
-	private PlayPanel playPanel=new PlayPanel();
-	@SuppressWarnings("unused")
-	private Protagonist bb8;
-
+	private static final long serialVersionUID = 1L;
 	public GamePanel(){
 		this.setRequestFocusEnabled(true);
 		this.setSize(WIDTH, HEIGHT);
@@ -44,5 +38,9 @@ public class GamePanel extends JPanel{
 		statsPanel.repaint();
 	}
 	
-	
+	private KeyboardController keyboardController;
+	private StatsPanel statsPanel=new StatsPanel();
+	private PlayPanel playPanel=new PlayPanel();
+	@SuppressWarnings("unused")
+	private Protagonist bb8;
 }

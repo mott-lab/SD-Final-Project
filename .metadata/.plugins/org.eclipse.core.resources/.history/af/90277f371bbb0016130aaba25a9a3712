@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 //the main game frame of the game 
 public class GameFrame extends JFrame {
 	
-	public static final int WIDTH=1280;
+	public static final int WIDTH=2000;
 	public static final int HEIGHT=640;
 
 	public GameFrame(GamePanel gamePanel){

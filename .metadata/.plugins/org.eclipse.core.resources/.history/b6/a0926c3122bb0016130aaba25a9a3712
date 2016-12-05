@@ -55,7 +55,40 @@ public class World {
 		
 //		this.setLayout(grid);
 	}
-
+	
+	public void initializeStage(int level){
+//		try {
+//			BACKGROUND=ImageIO.read(new File("space_background.png"));
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
+//		
+//		InputStream is = null;
+//		try {
+//			is = new FileInputStream(new File("level1.txt"));
+//		} catch (FileNotFoundException e1) {
+//			e1.printStackTrace();
+//		}
+//		BufferedReader reader=new BufferedReader(new InputStreamReader(is));
+//		String line=null;
+//		String[] tilesInLine=new String[ROWS];
+//		try {
+//			int i=0;
+//			while((line=reader.readLine())!=null){
+//				tilesInLine=line.split(" ");
+//				for(int j=0; j<COLS; j++){
+//					if(!tilesInLine[j].equalsIgnoreCase("empt")){
+//						tiledMap[i][j]=newTileInstance(tilesInLine[j],i,j);
+//					} else {
+//						tiledMap[i][j]=null;
+//					}
+//				}
+//				i++;
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+	}
 	
 	private Tile newTileInstance(String name, int i, int j) {
 		switch (name) {
