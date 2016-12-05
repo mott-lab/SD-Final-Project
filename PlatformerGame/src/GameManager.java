@@ -3,13 +3,20 @@ import java.util.HashSet;
 
 public class GameManager extends Thread{
 	
-	private static final int DELAY = 15;
+	private static final int DELAY = 20;
 	
 	private boolean gameIsRunning = false;
 	
 	private Protagonist protagonist;
 	
+	private GamePanel gamePanel;
+	
+	private World world;
+	
 	public GameManager(GamePanel gamePanel){
+		
+		this.world = new World();
+		this.world.initializeStage(1);
 		
 		//initialize protagonist
 		this.protagonist = new Protagonist();
@@ -22,7 +29,7 @@ public class GameManager extends Thread{
 	
 	public void run(){
 		while(gameIsRunning){
-			
+			//updates protagonist movement if jumping
 			protagonist.checkJumpState();
 			
 			manageKeys();
@@ -48,8 +55,16 @@ public class GameManager extends Thread{
 		}else if(currentKeys.contains(KeyEvent.VK_LEFT)){
 			//move left
 			protagonist.move(KeyEvent.VK_LEFT);
-		}else{
+		}else if(currentKeys.isEmpty() && !(protagonist.isJumping())){
 			protagonist.stop();
 		}
+		
+		if(currentKeys.contains(KeyEvent.VK_SPACE)){
+			if(!protagonist.isJumping()){
+				protagonist.jump();
+			}
+		}
 	}
+	
+	
 }
