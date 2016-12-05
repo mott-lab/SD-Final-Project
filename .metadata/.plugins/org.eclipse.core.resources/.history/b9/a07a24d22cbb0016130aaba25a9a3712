@@ -7,11 +7,11 @@ public class GameManager extends Thread{
 	private boolean gameIsRunning = false;
 	private Protagonist protagonist;
 	private GamePanel gamePanel;
-	private Tiles tiles;
+	private World world;
 	
 	public GameManager(GamePanel gamePanel){
 		
-		this.tiles = new Tiles();
+		this.world = new World();
 //		this.world.initializeStage(1);
 		
 		//initialize protagonist

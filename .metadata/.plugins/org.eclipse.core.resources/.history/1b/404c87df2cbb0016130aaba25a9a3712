@@ -209,20 +209,20 @@ public class Protagonist {
 //					int upRightCornerCol=(int)((collisionBox.getMaxX())/Tile.TILE_SIZE);
 //
 //					if(rowCurrent>=0){
-//						if(Tiles.tiles[upRow][upLeftCornerCol] instanceof Block){
+//						if(Tiles.tiledMap[upRow][upLeftCornerCol] instanceof Block){
 //							//if the upper-left corner stats intersecting a block, stop the jumping phase
 //							//and start the falling phase, setting the jump_count to 0
-//							if(Tiles.tiles[upRow][upLeftCornerCol].getCollisionBox().intersects(this.collisionBox)){
+//							if(Tiles.tiledMap[upRow][upLeftCornerCol].getCollisionBox().intersects(this.collisionBox)){
 //								jumping=false;
 //								jump_count=0;
 //								descending=true;
 //								return;
 //							}
 //						}
-//						if(Tiles.tiles[upRow][upRightCornerCol] instanceof Block){
+//						if(Tiles.tiledMap[upRow][upRightCornerCol] instanceof Block){
 //							//if the upper-right corner stats intersecting a block, stop the jumping phase
 //							//and start the falling phase, setting the jump_count to 0
-//							if(Tiles.tiles[upRow][upRightCornerCol].getCollisionBox().intersects(this.collisionBox)){
+//							if(Tiles.tiledMap[upRow][upRightCornerCol].getCollisionBox().intersects(this.collisionBox)){
 //								jumping=false;
 //								jump_count=0;
 //								descending=true;
@@ -245,9 +245,9 @@ public class Protagonist {
 //					
 //					if(tileInFrontOfFootCol<Tiles.COLS){
 //						//if the tile in front of the character contains a block..
-//						if(Tiles.tiles[tileInFrontOfFootRow][tileInFrontOfFootCol] instanceof Block){
+//						if(Tiles.tiledMap[tileInFrontOfFootRow][tileInFrontOfFootCol] instanceof Block){
 //							//..and the character's bounding box intersect the block's one
-//							if(collisionBox.intersects(Tiles.tiles[tileInFrontOfFootRow][tileInFrontOfFootCol].getCollisionBox())){
+//							if(collisionBox.intersects(Tiles.tiledMap[tileInFrontOfFootRow][tileInFrontOfFootCol].getCollisionBox())){
 //								//push the character away and re-set its position
 //								currentX-=DISPLACEMENT;
 //								collisionBox.setLocation(currentX, currentY);
@@ -255,9 +255,9 @@ public class Protagonist {
 //							}
 //						}
 //						
-//						if(Tiles.tiles[rowCurrent][colCurrent] instanceof Block){
+//						if(Tiles.tiledMap[rowCurrent][colCurrent] instanceof Block){
 //							//if the tile the character finds himself in contains a block, act like above
-//							if(collisionBox.intersects(Tiles.tiles[rowCurrent][colCurrent].getCollisionBox())){
+//							if(collisionBox.intersects(Tiles.tiledMap[rowCurrent][colCurrent].getCollisionBox())){
 //								currentX-=DISPLACEMENT;
 //								collisionBox.setLocation(currentX, currentY);
 //								colCurrent=currentX/Tile.TILE_SIZE;
@@ -275,9 +275,9 @@ public class Protagonist {
 //					
 //					if(tileInFrontOfFootCol>=0){
 //						//if the tile in front of the character contains a block..
-//						if(Tiles.tiles[tileInFrontOfFootRow][tileInFrontOfFootCol] instanceof Block){
+//						if(Tiles.tiledMap[tileInFrontOfFootRow][tileInFrontOfFootCol] instanceof Block){
 //							//..and the character's bounding box intersect the block's one
-//							if(collisionBox.intersects(Tiles.tiles[tileInFrontOfFootRow][tileInFrontOfFootCol].getCollisionBox())){
+//							if(collisionBox.intersects(Tiles.tiledMap[tileInFrontOfFootRow][tileInFrontOfFootCol].getCollisionBox())){
 //								//push the character away and re-set its position
 //								currentX+=DISPLACEMENT;
 //								collisionBox.setLocation(currentX, currentY);
@@ -285,9 +285,9 @@ public class Protagonist {
 //							}
 //						}
 //						
-//						if(Tiles.tiles[rowCurrent][colCurrent] instanceof Block){
+//						if(Tiles.tiledMap[rowCurrent][colCurrent] instanceof Block){
 //							//if the tile the character finds himself in contains a block, act like above
-//							if(collisionBox.intersects(Tiles.tiles[rowCurrent][colCurrent].getCollisionBox())){
+//							if(collisionBox.intersects(Tiles.tiledMap[rowCurrent][colCurrent].getCollisionBox())){
 //								currentX+=DISPLACEMENT;
 //								collisionBox.setLocation(currentX, currentY);
 //								colCurrent=currentX/Tile.TILE_SIZE;
@@ -300,7 +300,7 @@ public class Protagonist {
 		// Check moving first
 		if (moving) {
 			
-			if (Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
+			if (Tiles.tiledMap[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
 				moving = false;
 //				return;
 			} else {
@@ -311,17 +311,17 @@ public class Protagonist {
 		// If jumping, check for blocks above character's head
 		// If touch, start descending
 		if (ascending) {
-			if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(collisionBox)) {
+			if (Tiles.tiledMap[rowUp][colRight].getCollisionBox().intersects(collisionBox)) {
 				ascending = false;
 				descending = true;
-			} else if (Tiles.tiles[rowUp][colCurrent].getCollisionBox().intersects(collisionBox)) {
+			} else if (Tiles.tiledMap[rowUp][colCurrent].getCollisionBox().intersects(collisionBox)) {
 				ascending = false;
 				descending = true;
 			}
 		} else if (descending) {
-			if (Tiles.tiles[rowDown][colRight].getCollisionBox().intersects(collisionBox)) {
+			if (Tiles.tiledMap[rowDown][colRight].getCollisionBox().intersects(collisionBox)) {
 				descending = false;
-			} else if (Tiles.tiles[rowDown][colCurrent].getCollisionBox().intersects(collisionBox)) {
+			} else if (Tiles.tiledMap[rowDown][colCurrent].getCollisionBox().intersects(collisionBox)) {
 				descending = false;
 			}
 		} 

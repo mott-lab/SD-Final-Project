@@ -67,8 +67,8 @@ public class PlayPanel extends JPanel{
 		
 		for(int i = 0; i < Tiles.ROWS; i++){
 			for(int j = 0; j < Tiles.COLS; j++){
-				if(Tiles.tiles[i][j] != null){
-					g2.drawImage(Tiles.tiles[i][j].getImage(), j*Tile.TILE_SIZE, i*Tile.TILE_SIZE, null);
+				if(Tiles.tiledMap[i][j] != null){
+					g2.drawImage(Tiles.tiledMap[i][j].getImage(), j*Tile.TILE_SIZE, i*Tile.TILE_SIZE, null);
 				}
 			}
 		}

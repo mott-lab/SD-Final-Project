@@ -1,6 +1,4 @@
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
@@ -31,15 +29,6 @@ public abstract class Tile extends JComponent{
 	
 	public Rectangle getCollisionBox() {
 		return collisionBox;
-	}
-	
-	public void paintComponent(Graphics g){
-		
-		super.paintComponents(g);
-		
-		Graphics2D g2 = (Graphics2D) g;
-		
-		
 	}
 	
 }

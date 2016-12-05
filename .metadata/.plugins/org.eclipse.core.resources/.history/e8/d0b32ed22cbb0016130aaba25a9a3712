@@ -25,13 +25,13 @@ public class PlayPanel extends JPanel{
 	//reference to the protagonist of the game
 	private Protagonist bb8;
 	
-	private Tiles tiles;
+	private World world;
 
 	public PlayPanel(){
 		
 //		super();
 		
-		tiles = new Tiles();
+		world = new World();
 		
 		//set the size of the play panel
 		this.setSize(GameFrame.WIDTH, PLAY_PANEL_HEIGHT);
@@ -45,7 +45,7 @@ public class PlayPanel extends JPanel{
 		for(int i = 0; i < grid.getRows(); i++){
 			for(int j = 0; j < grid.getColumns(); j++){
 //				if()
-				add(tiles.getTile(i, j));
+				add(world.getTile(i, j));
 			}
 		}
 		
@@ -62,13 +62,13 @@ public class PlayPanel extends JPanel{
 		
 		Graphics2D g2=(Graphics2D)g;
 		
-		g2.drawImage(Tiles.BACKGROUND, 0, Tile.TILE_SIZE, GameFrame.WIDTH, PLAY_PANEL_HEIGHT, null);
+		g2.drawImage(World.BACKGROUND, 0, Tile.TILE_SIZE, GameFrame.WIDTH, PLAY_PANEL_HEIGHT, null);
 		
 		
-		for(int i = 0; i < Tiles.ROWS; i++){
-			for(int j = 0; j < Tiles.COLS; j++){
-				if(Tiles.tiles[i][j] != null){
-					g2.drawImage(Tiles.tiles[i][j].getImage(), j*Tile.TILE_SIZE, i*Tile.TILE_SIZE, null);
+		for(int i = 0; i < World.ROWS; i++){
+			for(int j = 0; j < World.COLS; j++){
+				if(World.tiledMap[i][j] != null){
+					g2.drawImage(World.tiledMap[i][j].getImage(), j*Tile.TILE_SIZE, i*Tile.TILE_SIZE, null);
 				}
 			}
 		}
