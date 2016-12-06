@@ -21,8 +21,8 @@ public class Protagonist {
 	private static final int DISPLACEMENT = 4;	//space covered by single step of protagonist
 	private BufferedImage currentImage;
 	
-	private int PROTAGONIST_HEIGHT = 138;
-	private int PROTAGONIST_WIDTH = 100;
+	private int PROTAGONIST_HEIGHT = 44;
+	private int PROTAGONIST_WIDTH = 32;
 
 	private int currentFrameNumber = 0;	
 	
@@ -34,7 +34,7 @@ public class Protagonist {
 	
 	private int jump_count = 0;
 	
-	private boolean moving;
+	private boolean moving = true;
 	private boolean ascending;
 	private boolean descending;
 	
@@ -178,24 +178,24 @@ public class Protagonist {
 		return ascending;
 	}
 	
-	public void checkJumpState(){
-		if(jumping){
-			if(jump_count < 15){
-				currentY -= 6;
-				collisionBox.setLocation(currentX, currentY);
-			}else{
-				currentY += 6;
-				collisionBox.setLocation(currentX, currentY);
-			}
-		}
+// 	public void checkJumpState(){
+// 		if(jumping){
+// 			if(jump_count < 15){
+// 				currentY -= 6;
+// 				collisionBox.setLocation(currentX, currentY);
+// 			}else{
+// 				currentY += 6;
+// 				collisionBox.setLocation(currentX, currentY);
+// 			}
+// 		}
 		
-		jump_count++;
+// 		jump_count++;
 		
-		if(jump_count >= 30){
-			jumping = false;
-			jump_count = 0;
-		}
-	}
+// 		if(jump_count >= 30){
+// 			jumping = false;
+// 			jump_count = 0;
+// 		}
+// 	}
 
 	public void stop(){
 		currentImage = run_R[0];
@@ -219,149 +219,56 @@ public class Protagonist {
 	
 	public void collisionChecker () {
 		
-		int footPos = (int)collisionBox.getMaxY();
+//		int footPos = (int)collisionBox.getMaxY();
 		
-		int rowCurrent = (int)(currentY/Tile.TILE_SIZE);
+		int rowCurrent = (int)((currentY+100)/Tile.TILE_SIZE);
 		int rowUp = (int)((collisionBox.getMinY()-1)/Tile.TILE_SIZE);
 		int rowDown = (int)((collisionBox.getMaxY()+1)/Tile.TILE_SIZE);
 		int colCurrent = (int)(currentX/Tile.TILE_SIZE);
-		int colRight = (int)((collisionBox.getMaxX()-1)/Tile.TILE_SIZE);
-		
-//		//position of the character's feet on the y-axis
-//				int footY=(int)(collisionBox.getMaxY());
-//				
-//				//if the character is jumping, his head must not touch a block;
-//				//if it touches a block, stop the ascending phase of the jump (start falling)
-//				if(jumping){
-//					
-//					//row position of the cell above the character's head (in the tiled map)
-//					int upRow=(int)((collisionBox.getMinY()-1)/Tile.TILE_SIZE);
-//					
-//					//tile position relative to the upper-left corner of the character's bounding box
-//					int upLeftCornerCol=(int)(collisionBox.getMinX()/Tile.TILE_SIZE);
-//					
-//					//tile position relative to the upper-right corner of the character's bounding box
-//					int upRightCornerCol=(int)((collisionBox.getMaxX())/Tile.TILE_SIZE);
-//
-//					if(rowCurrent>=0){
-//						if(Tiles.tiles[upRow][upLeftCornerCol] instanceof Block){
-//							//if the upper-left corner stats intersecting a block, stop the jumping phase
-//							//and start the falling phase, setting the jump_count to 0
-//							if(Tiles.tiles[upRow][upLeftCornerCol].getCollisionBox().intersects(this.collisionBox)){
-//								jumping=false;
-//								jump_count=0;
-//								descending=true;
-//								return;
-//							}
-//						}
-//						if(Tiles.tiles[upRow][upRightCornerCol] instanceof Block){
-//							//if the upper-right corner stats intersecting a block, stop the jumping phase
-//							//and start the falling phase, setting the jump_count to 0
-//							if(Tiles.tiles[upRow][upRightCornerCol].getCollisionBox().intersects(this.collisionBox)){
-//								jumping=false;
-//								jump_count=0;
-//								descending=true;
-//								return;
-//							}
-//						}
-//					}
-//				}
-//				
-//				//if last direction was right..
-//				if(last_direction==KeyEvent.VK_RIGHT){
-//					
-//					//get the left side of the bounding box
-//					int footX=(int)collisionBox.getMinX();
-//					
-//					//get the tile position (in the tiled map) 
-//					//relative to the tile in front of the character
-//					int tileInFrontOfFootRow=((footY-1)/Tile.TILE_SIZE);
-//					int tileInFrontOfFootCol=(footX/Tile.TILE_SIZE)+1;
-//					
-//					if(tileInFrontOfFootCol<Tiles.COLS){
-//						//if the tile in front of the character contains a block..
-//						if(Tiles.tiles[tileInFrontOfFootRow][tileInFrontOfFootCol] instanceof Block){
-//							//..and the character's bounding box intersect the block's one
-//							if(collisionBox.intersects(Tiles.tiles[tileInFrontOfFootRow][tileInFrontOfFootCol].getCollisionBox())){
-//								//push the character away and re-set its position
-//								currentX-=DISPLACEMENT;
-//								collisionBox.setLocation(currentX, currentY);
-//								colCurrent=currentX/Tile.TILE_SIZE;
-//							}
-//						}
-//						
-//						if(Tiles.tiles[rowCurrent][colCurrent] instanceof Block){
-//							//if the tile the character finds himself in contains a block, act like above
-//							if(collisionBox.intersects(Tiles.tiles[rowCurrent][colCurrent].getCollisionBox())){
-//								currentX-=DISPLACEMENT;
-//								collisionBox.setLocation(currentX, currentY);
-//								colCurrent=currentX/Tile.TILE_SIZE;
-//							}
-//						}
-//					}
-//				} else {
-//					//get the right side of the bounding box
-//					int footX=(int) collisionBox.getMaxX();
-//					
-//					//get the tile position (in the tiled map) 
-//					//relative to the tile in front of the character
-//					int tileInFrontOfFootRow=((footY-1)/Tile.TILE_SIZE);
-//					int tileInFrontOfFootCol=(footX/Tile.TILE_SIZE)-1;
-//					
-//					if(tileInFrontOfFootCol>=0){
-//						//if the tile in front of the character contains a block..
-//						if(Tiles.tiles[tileInFrontOfFootRow][tileInFrontOfFootCol] instanceof Block){
-//							//..and the character's bounding box intersect the block's one
-//							if(collisionBox.intersects(Tiles.tiles[tileInFrontOfFootRow][tileInFrontOfFootCol].getCollisionBox())){
-//								//push the character away and re-set its position
-//								currentX+=DISPLACEMENT;
-//								collisionBox.setLocation(currentX, currentY);
-//								colCurrent=currentX/Tile.TILE_SIZE;
-//							}
-//						}
-//						
-//						if(Tiles.tiles[rowCurrent][colCurrent] instanceof Block){
-//							//if the tile the character finds himself in contains a block, act like above
-//							if(collisionBox.intersects(Tiles.tiles[rowCurrent][colCurrent].getCollisionBox())){
-//								currentX+=DISPLACEMENT;
-//								collisionBox.setLocation(currentX, currentY);
-//								colCurrent=currentX/Tile.TILE_SIZE;
-//							}
-//						}
-//					}	
-//				}
-
+		int colRight = (int)((collisionBox.getMaxX()+1)/Tile.TILE_SIZE);
 		
 		// Check moving first
-		if (moving) {
-			
-			if (Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
-				moving = false;
-//				return;
-			} else {
-//				return;
+//		if (moving) {
+		moving = true;
+			if (Tiles.tiles[rowCurrent][colRight] != null) {
+				if (Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
+					moving = false;
+				} else {
+					moving = true;
+				}
 			}
-		}
+//		}
 			
 		// If jumping, check for blocks above character's head
 		// If touch, start descending
 		if (ascending) {
-			if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(collisionBox)) {
-				ascending = false;
-				descending = true;
-			} else if (Tiles.tiles[rowUp][colCurrent].getCollisionBox().intersects(collisionBox)) {
-				ascending = false;
-				descending = true;
+			if (Tiles.tiles[rowUp][colRight] != null) {
+				if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(collisionBox)) {
+					ascending = false;
+					descending = true;
+				}
 			}
-		} else if (descending) {
+			if (Tiles.tiles[rowUp][colCurrent] != null) {
+				if (Tiles.tiles[rowUp][colCurrent].getCollisionBox().intersects(collisionBox)) {
+					ascending = false;
+					descending = true;
+				}
+			}
+		} else {
+			descending = true;
+		}
+		
+		if (Tiles.tiles[rowDown][colRight] != null) {
 			if (Tiles.tiles[rowDown][colRight].getCollisionBox().intersects(collisionBox)) {
 				descending = false;
-			} else if (Tiles.tiles[rowDown][colCurrent].getCollisionBox().intersects(collisionBox)) {
+			} 
+		}
+		if (Tiles.tiles[rowDown][colCurrent] != null) {
+			if (Tiles.tiles[rowDown][colCurrent].getCollisionBox().intersects(collisionBox)) {
 				descending = false;
 			}
-		} 
+		}
 	}
-	
 	
 		
 	public void die () {
@@ -370,13 +277,17 @@ public class Protagonist {
 	
 	public void shoot() //will added for firing
 	{
-		Bullet bullet = new Bullet(currentX, currentY+50);
+		Bullet bullet = new Bullet(currentX, currentY);
 		bullets.add(bullet);
 	}
 	
 	public static ArrayList getBullets() //will added for firing
 	{
 		return bullets;
+	}
+	
+	public boolean canMove(){
+		return moving;
 	}
 
 }

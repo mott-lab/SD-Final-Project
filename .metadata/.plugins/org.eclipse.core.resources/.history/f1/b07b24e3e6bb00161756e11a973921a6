@@ -1,0 +1,25 @@
+//import java.awt.Color;
+//import java.awt.Graphics;
+//import java.awt.Graphics2D;
+//import java.awt.Rectangle;
+//
+//public class EmptyTile extends Tile {
+//
+//	public EmptyTile(int i, int j) {
+//		super(i, j);
+//		
+//	}
+//
+//public void paintComponent(Graphics g){
+//		
+//		super.paintComponents(g);
+//		
+//		Graphics2D g2 = (Graphics2D) g;
+//		
+//		Rectangle rect = new Rectangle(TILE_SIZE, TILE_SIZE);
+//		g2.setColor(Color.WHITE);
+//		g2.fill(rect);
+//		
+////		g2.drawImage(image,TILE_SIZE, TILE_SIZE, null);
+//	}
+//}

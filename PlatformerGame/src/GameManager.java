@@ -26,15 +26,13 @@ public class GameManager extends Thread{
 	public void run(){
 		while(gameIsRunning){
 			//updates protagonist movement if jumping
-//			protagonist.checkJumpState();
 			protagonist.checkAscending();
 			protagonist.checkDescending();
 			
 			manageKeys();
 			
-//			protagonist.collisionChecker();
-//			protagonist.move(KeyEvent.VK_RIGHT);
-			
+			protagonist.collisionChecker();
+			//protagonist.move(KeyEvent.VK_RIGHT);
 			gamePanel.repaintGame();
 			
 			try{
@@ -51,8 +49,10 @@ public class GameManager extends Thread{
 		
 		//manage left/right direction
 		if(currentKeys.contains(KeyEvent.VK_RIGHT)){
-			//move right
-			protagonist.move(KeyEvent.VK_RIGHT);
+			if (protagonist.canMove()) {	
+				//move right
+				protagonist.move(KeyEvent.VK_RIGHT);
+			}
 		}else if(currentKeys.contains(KeyEvent.VK_LEFT)){
 			//move left
 			protagonist.move(KeyEvent.VK_LEFT);
@@ -66,10 +66,9 @@ public class GameManager extends Thread{
 			}
 		}
 		
-		if(currentKeys.contains(KeyEvent.VK_S)){
+		if(currentKeys.contains(KeyEvent.VK_S)) //will added for firing
+		{
 			protagonist.shoot();
 		}
 	}
-	
-	
 }

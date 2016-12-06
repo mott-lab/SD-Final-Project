@@ -1,0 +1,62 @@
+
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+//blocks are all those tiles that you can walk on and collide against
+//they do not entail any kind of interaction
+public class Block extends Tile {
+	
+	private String imgName;
+	private int x;
+	private int y;
+	private Rectangle collisionBox;
+	private BufferedImage image;
+
+	public Block(String imgName,int i, int j) {
+		super(i,j);
+		this.imgName=imgName;
+//		initializeStuff();
+		loadInformations();
+		System.out.println("YOOOOO");
+		x=col*TILE_SIZE;
+		y=row*TILE_SIZE;
+		collisionBox=new Rectangle(x,y,TILE_SIZE,TILE_SIZE);
+	}
+	
+	public String getName(){
+		return "Block";
+	}
+
+	protected void initializeStuff() {
+		x=col*TILE_SIZE;
+		y=row*TILE_SIZE;
+		collisionBox=new Rectangle(x,y,TILE_SIZE,TILE_SIZE);
+	}
+	
+	protected void loadInformations() {
+		try {
+			image=ImageIO.read(new File(imgName + ".png"));
+		} catch (IOException e) {
+//			System.out.println(imgName);
+			e.printStackTrace();
+		}
+	}
+	
+	public Rectangle getCollisionBox(){
+		return collisionBox;
+	}
+	
+	public void paintComponent(Graphics g){
+		super.paintComponent(g);
+		
+		Graphics2D g2 = (Graphics2D) g;
+		
+		g2.drawImage(image, TILE_SIZE, TILE_SIZE, null);
+	}
+}

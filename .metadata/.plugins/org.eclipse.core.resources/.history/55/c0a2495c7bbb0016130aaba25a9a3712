@@ -1,0 +1,55 @@
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+
+import javax.swing.JComponent;
+
+public class Tile extends JComponent{
+	protected int row;
+	protected int col;
+//	protected BufferedImage image;
+	protected Rectangle collisionBox;
+	public static final int TILE_SIZE=64;
+	
+	public Tile(int i, int j){
+		this.row=i;
+		this.col=j;
+//		initializeStuff();
+		
+//		collisionBox = new Rectangle(TILE_SIZE, TILE_SIZE);
+	}
+
+	
+//	public BufferedImage getImage(){
+//		return image;
+//	}
+	
+	public Rectangle getCollisionBox() {
+		return collisionBox;
+	}
+	
+	public int getRow(){
+		return row;
+	}
+	
+	public int getCol(){
+		return col;
+	}
+	
+	public void paintComponent(Graphics g){
+		
+		super.paintComponents(g);
+		
+		Graphics2D g2 = (Graphics2D) g;
+		
+		Rectangle rect = new Rectangle(TILE_SIZE, TILE_SIZE);
+		g2.setColor(Color.WHITE);
+		g2.fill(rect);
+		
+//		g2.drawImage(rect,TILE_SIZE, TILE_SIZE, null);
+	}
+	
+}

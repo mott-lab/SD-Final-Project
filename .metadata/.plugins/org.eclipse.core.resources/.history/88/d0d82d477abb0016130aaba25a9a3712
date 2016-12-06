@@ -1,0 +1,46 @@
+
+import java.awt.Rectangle;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+//blocks are all those tiles that you can walk on and collide against
+//they do not entail any kind of interaction
+public class Block extends Tile {
+	
+	private String imgName;
+	private int x;
+	private int y;
+	private Rectangle collisionBox;
+
+	public Block(String imgName,int i, int j) {
+		super(i,j);
+		this.imgName=imgName;
+		initializeStuff();
+		loadInformations();
+		
+		x=col*TILE_SIZE;
+		y=row*TILE_SIZE;
+		collisionBox=new Rectangle(x,y,TILE_SIZE,TILE_SIZE);
+	}
+
+	protected void initializeStuff() {
+		x=col*TILE_SIZE;
+		y=row*TILE_SIZE;
+		collisionBox=new Rectangle(x,y,TILE_SIZE,TILE_SIZE);
+	}
+	
+	protected void loadInformations() {
+		try {
+			image=ImageIO.read(new File(imgName + ".png"));
+		} catch (IOException e) {
+			System.out.println(imgName);
+			e.printStackTrace();
+		}
+	}
+	
+	public Rectangle getCollisionBox(){
+		return collisionBox;
+	}
+}

@@ -1,0 +1,21 @@
+
+public class EmptyBlock extends Tile {
+
+	public EmptyBlock(int i, int j) {
+		super(i, j);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	protected void initializeStuff() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void loadInformations() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

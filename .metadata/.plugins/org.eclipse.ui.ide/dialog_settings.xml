@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="C:\Users\Matthew\Documents\Education\Fall &apos;16\CSCI 2300\SD-Final-Project-master (1)\SD-Final-Project-master"/>
+		<item value="C:\Users\Matthew\Documents\Education\Fall &apos;16\CSCI 2300\theBoyWithNoName-npcs\TheBoyWithNoName"/>
+	</list>
+	<section name="ExternalProjectImportWizard">
+		<item value="false" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Users\Matthew\Documents\Education\Fall &apos;16\CSCI 2300\theBoyWithNoName-master"/>
+			<item value="C:\Users\Matthew\Documents\Education\Fall &apos;16\CSCI 2300\theBoyWithNoName-npcs\TheBoyWithNoName"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value=""/>
+		</list>
+	</section>
+</section>

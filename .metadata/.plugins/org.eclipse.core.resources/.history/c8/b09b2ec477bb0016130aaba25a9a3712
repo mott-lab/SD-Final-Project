@@ -1,0 +1,20 @@
+
+public class EmptyBlock extends Tile {
+
+	public EmptyBlock(int i, int j) {
+		super(i,j);
+	}
+
+	@Override
+	protected void initializeStuff() {
+		
+
+	}
+
+	@Override
+	protected void loadInformations() {
+		
+
+	}
+
+}
