@@ -6,7 +6,6 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
-import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -77,23 +76,8 @@ public class PlayPanel extends JPanel{
 		//draw the protagonist of the game
 //		if(!bb8.getRestoring()){
 			g2.drawImage(bb8.getCurrentImage(), bb8.getCurrentX(), bb8.getCurrentY(), null);
-			g2.draw(bb8.getCollisionBox());
+//			g2.draw(bb8.getCollisionBox());
 //		}
-			
-			ArrayList bullets = bb8.getBullets(); //will added to add bullets
-			for (int i = 0; i < bullets.size(); i++)
-			{
-				Bullet bull = (Bullet) bullets.get(i);
-				if (bull.see == true){
-					bull.move();
-					g2.drawImage(bull.img, bull.x, bull.y, null);
-				}
-
-				else
-					bullets.remove(i);
-				
-			}
-			
 	}
 	
 	//function called by the GameManager to add the boy (protagonist) to the play panel at runtime

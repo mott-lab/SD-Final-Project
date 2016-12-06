@@ -38,10 +38,6 @@ public class Protagonist {
 	private boolean ascending;
 	private boolean descending;
 	
-	static ArrayList bullets;
-	
-	private static final int JUMP_DISPLACEMENT = 6;
-	
 	private BufferedImage[] run_R;
 	private BufferedImage[] run_L;
 
@@ -50,7 +46,6 @@ public class Protagonist {
 		run_L = new BufferedImage[35];
 		run_R = new BufferedImage[35];
 		
-		bullets = new ArrayList();
 		loadImages();
 		
 		currentImage = run_R[0];
@@ -132,50 +127,16 @@ public class Protagonist {
 		
 	}
 	
-	public void jump() {
-		this.jump_count = 0;
+	public void jump(){
+		this.jumping = true;
 		
-		descending = false;
-		ascending = true;
-
+		this.jump_count = 0;
 		
 		if(last_direction == KeyEvent.VK_RIGHT){
 			currentImage = run_R[currentFrameNumber];
 		}else{
 			currentImage = run_L[currentFrameNumber];
 		}
-	}
-	
-	public void checkAscending() {
-		if(ascending) {
-			if(jump_count < 15) {
-				currentY -= JUMP_DISPLACEMENT;
-				collisionBox.setLocation(currentX, currentY);
-//				jump_count++;
-			} else {
-				ascending = false;
-				descending = true;
-				jump_count = 0;
-			}
-			jump_count++;
-		}
-	}
-	
-	public void checkDescending () {
-		if (descending) {
-			if(collisionBox.getMaxY()/Tile.TILE_SIZE>=Tiles.ROWS){
-				die();
-			} else {
-				// Move character in downward direction
-				currentY += JUMP_DISPLACEMENT;
-				collisionBox.setLocation(currentX, currentY);
-			}
-		}
-	}
-	
-	//keyboard events
-	public boolean isJumping(){
-		return ascending;
 	}
 	
 	public void checkJumpState(){
@@ -196,7 +157,11 @@ public class Protagonist {
 			jump_count = 0;
 		}
 	}
-
+	
+	public boolean isJumping(){
+		return jumping;
+	}
+	
 	public void stop(){
 		currentImage = run_R[0];
 	}
@@ -362,21 +327,23 @@ public class Protagonist {
 		} 
 	}
 	
-	
+	public void checkDescending () {
+		if (!descending) {
+			if(collisionBox.getMaxY()/Tile.TILE_SIZE>=Tiles.ROWS){
+				die();
+			}
+			
+			// Move character in downward direction
+			currentY += DISPLACEMENT;
+			collisionBox.setLocation(currentX, currentY);
+			
+			// Update different motions
+			collisionChecker();
+		}
+	}
 		
 	public void die () {
 		//Re-start game? Take away life? Create new map?
-	}
-	
-	public void shoot() //will added for firing
-	{
-		Bullet bullet = new Bullet(currentX, currentY+50);
-		bullets.add(bullet);
-	}
-	
-	public static ArrayList getBullets() //will added for firing
-	{
-		return bullets;
 	}
 
 }

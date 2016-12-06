@@ -55,10 +55,6 @@ public class Tiles {
 	public Tile getTile(int row, int col){
 		return tiles[row][col];
 	}
-	
-	public void setTile(int row, int col){
-//		tiles[row][col] = newTileInstance();
-	}
 
 	
 	private Tile newTileInstance(String name, int i, int j) {

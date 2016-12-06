@@ -77,7 +77,7 @@ public class PlayPanel extends JPanel{
 		//draw the protagonist of the game
 //		if(!bb8.getRestoring()){
 			g2.drawImage(bb8.getCurrentImage(), bb8.getCurrentX(), bb8.getCurrentY(), null);
-			g2.draw(bb8.getCollisionBox());
+//			g2.draw(bb8.getCollisionBox());
 //		}
 			
 			ArrayList bullets = bb8.getBullets(); //will added to add bullets

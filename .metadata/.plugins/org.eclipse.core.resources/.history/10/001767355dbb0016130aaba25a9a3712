@@ -32,7 +32,7 @@ public class GameManager extends Thread{
 			
 			manageKeys();
 			
-//			protagonist.collisionChecker();
+			protagonist.collisionChecker();
 //			protagonist.move(KeyEvent.VK_RIGHT);
 			
 			gamePanel.repaintGame();
@@ -64,10 +64,6 @@ public class GameManager extends Thread{
 			if(!protagonist.isJumping()){
 				protagonist.jump();
 			}
-		}
-		
-		if(currentKeys.contains(KeyEvent.VK_S)){
-			protagonist.shoot();
 		}
 	}
 	

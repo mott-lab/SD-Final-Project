@@ -57,7 +57,7 @@ public class Tiles {
 	}
 	
 	public void setTile(int row, int col){
-//		tiles[row][col] = newTileInstance();
+		tiles[row][col] = newTileInstance()
 	}
 
 	

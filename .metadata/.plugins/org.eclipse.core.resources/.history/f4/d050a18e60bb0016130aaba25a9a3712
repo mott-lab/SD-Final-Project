@@ -38,7 +38,7 @@ public class Protagonist {
 	private boolean ascending;
 	private boolean descending;
 	
-	static ArrayList bullets;
+	static ArrayList<Bullet> bullets;
 	
 	private static final int JUMP_DISPLACEMENT = 6;
 	
@@ -50,7 +50,6 @@ public class Protagonist {
 		run_L = new BufferedImage[35];
 		run_R = new BufferedImage[35];
 		
-		bullets = new ArrayList();
 		loadImages();
 		
 		currentImage = run_R[0];

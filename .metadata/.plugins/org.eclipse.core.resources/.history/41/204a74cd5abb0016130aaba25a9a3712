@@ -38,8 +38,6 @@ public class Protagonist {
 	private boolean ascending;
 	private boolean descending;
 	
-	static ArrayList bullets;
-	
 	private static final int JUMP_DISPLACEMENT = 6;
 	
 	private BufferedImage[] run_R;
@@ -50,7 +48,6 @@ public class Protagonist {
 		run_L = new BufferedImage[35];
 		run_R = new BufferedImage[35];
 		
-		bullets = new ArrayList();
 		loadImages();
 		
 		currentImage = run_R[0];
@@ -135,9 +132,9 @@ public class Protagonist {
 	public void jump() {
 		this.jump_count = 0;
 		
-		descending = false;
+//		checkAscending();
+//		checkDescending();
 		ascending = true;
-
 		
 		if(last_direction == KeyEvent.VK_RIGHT){
 			currentImage = run_R[currentFrameNumber];
@@ -151,13 +148,12 @@ public class Protagonist {
 			if(jump_count < 15) {
 				currentY -= JUMP_DISPLACEMENT;
 				collisionBox.setLocation(currentX, currentY);
-//				jump_count++;
+				jump_count++;
 			} else {
 				ascending = false;
 				descending = true;
 				jump_count = 0;
 			}
-			jump_count++;
 		}
 	}
 	
@@ -175,7 +171,7 @@ public class Protagonist {
 	
 	//keyboard events
 	public boolean isJumping(){
-		return ascending;
+		return !(ascending && descending);
 	}
 	
 	public void checkJumpState(){
@@ -366,17 +362,6 @@ public class Protagonist {
 		
 	public void die () {
 		//Re-start game? Take away life? Create new map?
-	}
-	
-	public void shoot() //will added for firing
-	{
-		Bullet bullet = new Bullet(currentX, currentY+50);
-		bullets.add(bullet);
-	}
-	
-	public static ArrayList getBullets() //will added for firing
-	{
-		return bullets;
 	}
 
 }

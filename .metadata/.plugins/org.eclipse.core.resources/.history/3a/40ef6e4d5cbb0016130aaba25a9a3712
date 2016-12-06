@@ -38,8 +38,6 @@ public class Protagonist {
 	private boolean ascending;
 	private boolean descending;
 	
-	static ArrayList bullets;
-	
 	private static final int JUMP_DISPLACEMENT = 6;
 	
 	private BufferedImage[] run_R;
@@ -50,7 +48,6 @@ public class Protagonist {
 		run_L = new BufferedImage[35];
 		run_R = new BufferedImage[35];
 		
-		bullets = new ArrayList();
 		loadImages();
 		
 		currentImage = run_R[0];
@@ -135,9 +132,10 @@ public class Protagonist {
 	public void jump() {
 		this.jump_count = 0;
 		
-		descending = false;
-		ascending = true;
 
+		ascending = true;
+//		checkAscending();
+//		checkDescending();
 		
 		if(last_direction == KeyEvent.VK_RIGHT){
 			currentImage = run_R[currentFrameNumber];
@@ -366,17 +364,6 @@ public class Protagonist {
 		
 	public void die () {
 		//Re-start game? Take away life? Create new map?
-	}
-	
-	public void shoot() //will added for firing
-	{
-		Bullet bullet = new Bullet(currentX, currentY+50);
-		bullets.add(bullet);
-	}
-	
-	public static ArrayList getBullets() //will added for firing
-	{
-		return bullets;
 	}
 
 }

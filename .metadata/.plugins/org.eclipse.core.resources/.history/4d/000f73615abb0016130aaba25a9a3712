@@ -26,14 +26,12 @@ public class GameManager extends Thread{
 	public void run(){
 		while(gameIsRunning){
 			//updates protagonist movement if jumping
-//			protagonist.checkJumpState();
-			protagonist.checkAscending();
-			protagonist.checkDescending();
+			protagonist.checkJumpState();
 			
 			manageKeys();
 			
 //			protagonist.collisionChecker();
-//			protagonist.move(KeyEvent.VK_RIGHT);
+			protagonist.move(KeyEvent.VK_RIGHT);
 			
 			gamePanel.repaintGame();
 			
@@ -64,10 +62,6 @@ public class GameManager extends Thread{
 			if(!protagonist.isJumping()){
 				protagonist.jump();
 			}
-		}
-		
-		if(currentKeys.contains(KeyEvent.VK_S)){
-			protagonist.shoot();
 		}
 	}
 	
