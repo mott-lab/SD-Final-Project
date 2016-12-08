@@ -6,6 +6,7 @@ public class Bullet {
 	int x,y;
 	Image img;
 	boolean see = true;
+	private Rectangle collisionBox;
 	
 	public Bullet(int beginX, int beginY)
 	{
@@ -14,12 +15,18 @@ public class Bullet {
 		ImageIcon aBullet = new ImageIcon("laserShot.png");
 		img = aBullet.getImage();
 		see = true;
+		collisionBox = new Rectangle(beginX, beginY, 22, 12);
 	}
 	
 	public void move()
 	{
-		x = x + 13;
+		x = x + 10;
+		collisionBox.setLocation(x, y);
 		if (x > GameFrame.WIDTH)
 			see = false;
+	}
+	
+	public Rectangle getCollisionBox(){
+		return collisionBox;
 	}
 }

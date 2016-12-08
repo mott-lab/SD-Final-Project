@@ -1,13 +1,22 @@
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashSet;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class GameManager extends Thread{
 	
-	private static final int DELAY = 20;
+	private static final int DELAY = 10;
 	private boolean gameIsRunning = false;
 	private Protagonist protagonist;
 	private GamePanel gamePanel;
 	private Tiles tiles;
+	private int bulletDelay = 40;
+	private int time = 0;
+	
+	JFrame youDied = new JFrame("You died :(");
 	
 	public GameManager(GamePanel gamePanel){
 		
@@ -21,24 +30,37 @@ public class GameManager extends Thread{
 		this.gamePanel.addProtagonist(protagonist);
 		
 		this.gameIsRunning = true;
+		
 	}
 	
 	public void run(){
 		while(gameIsRunning){
+			manageKeys();
+			
 			//updates protagonist movement if jumping
+			
 			protagonist.checkAscending();
 			protagonist.checkDescending();
+			protagonist.collisionChecker();
 			
 			manageKeys();
 			
-			protagonist.collisionChecker();
-			//protagonist.move(KeyEvent.VK_RIGHT);
 			gamePanel.repaintGame();
 			
 			try{
 				Thread.sleep(DELAY);
 			}catch (InterruptedException ie){
 				ie.printStackTrace();
+			}
+			
+			if (protagonist.isDead()) {
+				gameIsRunning = false;
+				JPanel panel = new JPanel();
+				youDied.add(panel);
+				JLabel gameOver = new JLabel("You have lost the game");
+				panel.add(gameOver);
+				youDied.setSize(350, 150);
+				youDied.setVisible(true);
 			}
 		}
 	}
@@ -49,10 +71,10 @@ public class GameManager extends Thread{
 		
 		//manage left/right direction
 		if(currentKeys.contains(KeyEvent.VK_RIGHT)){
-			if (protagonist.canMove()) {	
+//			if (protagonist.canMove()) {	
 				//move right
 				protagonist.move(KeyEvent.VK_RIGHT);
-			}
+//			}
 		}else if(currentKeys.contains(KeyEvent.VK_LEFT)){
 			//move left
 			protagonist.move(KeyEvent.VK_LEFT);
@@ -68,7 +90,19 @@ public class GameManager extends Thread{
 		
 		if(currentKeys.contains(KeyEvent.VK_S)) //will added for firing
 		{
-			protagonist.shoot();
+			if (time <= 0) {
+		        protagonist.shoot();
+		        time = bulletDelay;  // Reset the timer
+		    }else{
+		    	time--;
+		    }
+			
 		}
+		
+//		if(currentKeys.contains(KeyEvent.VK_A)) //will added for firing
+//		{
+//			protagonist.genEnemy();
+//		}
+		
 	}
 }

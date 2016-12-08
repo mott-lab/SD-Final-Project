@@ -39,7 +39,16 @@ public class Block extends Tile {
 		}
 	}
 	
+	public void setTile(String name, int row, int col){
+		
+	}
+	
 	public Rectangle getCollisionBox(){
 		return collisionBox;
+	}
+	
+	public void move()
+	{
+		x = x -4;
 	}
 }

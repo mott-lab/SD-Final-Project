@@ -1,0 +1,35 @@
+import java.awt.Image;
+import java.awt.Rectangle;
+
+import javax.swing.ImageIcon;
+
+public class Platform{
+	
+	ImageIcon img;
+	public int x;
+	public int y;
+	public boolean see;
+	private Rectangle collisionBox;
+
+	public Platform() {
+		x = 1300;
+		y = (int)(Math.random()*590+150);
+		img = new ImageIcon("term.png");
+		see = true;
+		collisionBox = new Rectangle(x, y, Tile.TILE_SIZE, Tile.TILE_SIZE);
+	}
+
+
+	public void move()
+	{
+		x = x - 5;
+		collisionBox.setLocation(x, y);
+		if (x < 0)
+			see = false;
+		
+	}
+	
+	public Rectangle getCollisionBox(){
+		return collisionBox;
+	}
+}

@@ -1,0 +1,48 @@
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
+public class Enemy {
+
+	Image img;
+	public int x;
+	public int y;
+	public boolean see;
+	private Rectangle collisionBox;
+
+	
+	public Enemy()
+	{
+		x = 1300;
+		y = (int)(Math.random()*590+150); 
+		BufferedImage l;
+		try {
+			img = ImageIO.read(new File("TieFighter.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		see = true;
+		collisionBox = new Rectangle(x, y, 32, 44);
+	}
+	
+
+	
+	public void move()
+	{
+		x = x - 5;
+		collisionBox.setLocation(x, y);
+		if (x < 0)
+			see = false;
+		
+	}
+	
+	public Rectangle getCollisionBox(){
+		return collisionBox;
+	}
+}

@@ -41,7 +41,7 @@ public class GamePanel extends JPanel{
 	
 	public void repaintGame(){
 		playPanel.repaint();
-		statsPanel.repaint();
+//		statsPanel.repaint();
 	}
 	
 	

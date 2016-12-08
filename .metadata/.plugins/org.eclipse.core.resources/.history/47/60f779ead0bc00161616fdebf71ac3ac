@@ -1,0 +1,29 @@
+import java.awt.Image;
+import java.awt.Rectangle;
+
+public class Platform{
+	
+	Image img;
+	public int x;
+	public int y;
+	public boolean see;
+	private Rectangle collisionBox;
+
+	public Platform() {
+		x = 1300;
+		y = (int)(Math.random()*590+150);
+	}
+
+	@Override
+	protected void initializeStuff() {
+		
+
+	}
+
+	@Override
+	protected void loadInformations() {
+		
+
+	}
+
+}

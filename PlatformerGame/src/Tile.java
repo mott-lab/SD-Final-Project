@@ -39,7 +39,12 @@ public abstract class Tile extends JComponent{
 		
 		Graphics2D g2 = (Graphics2D) g;
 		
-		g2.drawImage(image,TILE_SIZE, TILE_SIZE, null);
+		
+	}
+	
+	public void move()
+	{
+		col = col -4;
 	}
 	
 }

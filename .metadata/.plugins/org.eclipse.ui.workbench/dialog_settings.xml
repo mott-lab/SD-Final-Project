@@ -28,6 +28,7 @@
 		<item value="false" key="WizardFileSystemResourceImportPage1.STORE_CREATE_CONTAINER_STRUCTURE_ID"/>
 		<item value="true" key="WizardFileSystemResourceImportPage1.STORE_OVERWRITE_EXISTING_RESOURCES_ID"/>
 		<list key="WizardFileSystemResourceImportPage1.STORE_SOURCE_NAMES_ID">
+			<item value="C:\Users\Matthew\Documents\Education\Fall &apos;16\CSCI 2300\SD-Final-Project-master 12.7"/>
 			<item value="C:\Users\Matthew\Documents\Education\Fall &apos;16\CSCI 2300\SD-Final-Project-master (1)\SD-Final-Project-master\PlatformerGame\src"/>
 			<item value="C:\Users\Matthew\Documents\Education\Fall &apos;16\CSCI 2300"/>
 			<item value="C:\Users\Matthew\Documents\Education\Fall &apos;16\CSCI 2300\theBoyWithNoName-npcs\TheBoyWithNoName\src\logic"/>

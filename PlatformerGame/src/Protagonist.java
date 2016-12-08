@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -18,7 +19,7 @@ public class Protagonist {
 	private static final int MOVE_COUNTER_THRESH = 6;	//max number of frames of animation
 	private int moveCounter = 0;
 	private Rectangle collisionBox;	//space occupied by protagonist
-	private static final int DISPLACEMENT = 4;	//space covered by single step of protagonist
+	private static final int DISPLACEMENT = 1;	//space covered by single step of protagonist
 	private BufferedImage currentImage;
 	
 	private int PROTAGONIST_HEIGHT = 44;
@@ -35,12 +36,20 @@ public class Protagonist {
 	private int jump_count = 0;
 	
 	private boolean moving = true;
-	private boolean ascending;
-	private boolean descending;
+	private boolean ascending = false;
+	private boolean descending = false;
+	private boolean dead = false;
 	
-	static ArrayList bullets;
+	private boolean moveRightPossible = true;
+	private boolean moveLeftPossible = true;
 	
-	private static final int JUMP_DISPLACEMENT = 6;
+	static ArrayList<Bullet> bullets;
+	boolean reloaded = false;
+	int reloadedSeconds = 0;
+	
+//	static ArrayList<Enemy> enemies;
+	
+	private static final int JUMP_DISPLACEMENT = 4;
 	
 	private BufferedImage[] run_R;
 	private BufferedImage[] run_L;
@@ -51,6 +60,7 @@ public class Protagonist {
 		run_R = new BufferedImage[35];
 		
 		bullets = new ArrayList();
+//		enemies = new ArrayList();
 		loadImages();
 		
 		currentImage = run_R[0];
@@ -72,83 +82,65 @@ public class Protagonist {
 	
 	public void move(int direction){
 		
-		moving = true;
+//		moving = true;
 //		collisionChecker();
 		
+//		if (canMove()){
 		if(direction == KeyEvent.VK_LEFT){
-			
-			//update position
-			currentX = currentX - DISPLACEMENT;
-			
-			//update bounding box position
-			collisionBox.setLocation(currentX, currentY);
-			
-			//change the current frame in animation
-			decrementFrameNumber();
-			currentImage = run_L[currentFrameNumber];
-			
-			//set last direction
-			last_direction = KeyEvent.VK_LEFT;
+			if(canMoveLeft()){
+				//update position
+				currentX = currentX - DISPLACEMENT;
+				
+				//update bounding box position
+				collisionBox.setLocation(currentX, currentY);
+				
+				//change the current frame in animation
+				decrementFrameNumber();
+				currentImage = run_L[currentFrameNumber];
+				
+				//set last direction
+				last_direction = KeyEvent.VK_LEFT;
+			}
 			
 		}else if(direction == KeyEvent.VK_RIGHT){
-			
-			//update position
-			currentX = currentX + DISPLACEMENT;
-			
-			collisionBox.setLocation(currentX, currentY);
-			
-			incrementFrameNumber();
-			currentImage = run_R[currentFrameNumber];
-			
-			//set last direction
-			last_direction = KeyEvent.VK_RIGHT;
-			
+			if(canMoveRight()){
+				//update position
+				currentX = currentX + DISPLACEMENT;
+				
+				collisionBox.setLocation(currentX, currentY);
+				
+				incrementFrameNumber();
+				currentImage = run_R[currentFrameNumber];
+				
+				//set last direction
+				last_direction = KeyEvent.VK_RIGHT;
+			}
 		}else{
 			return;
 		}
 		moveCounter++;
 	}
-	
-	
-	//set current frame when protagonist is moving. we have a total of 5 frames for 
-    //each run direction. The variable moveCounter is incremented each time the gameManager
-    //calls the move function on the Boy. So according to moveCounter we can choose the current
-    //frame. The frame changes every MOVE_COUNTER_THRESH increments of the moveCounter variable.
-    //In this case MOVE_COUNTER_THRESH is set to 5. The use of "6" instead of a variable is temporary
-    //because I still don't know how many frames will be used in the final animation
-	private void incrementFrameNumber(){
-		currentFrameNumber++;
-		currentFrameNumber %= 35;
-		
-	}
-	
-	private void decrementFrameNumber(){
-		if(currentFrameNumber == 0){
-			currentFrameNumber = 34;
-		}else{
-			currentFrameNumber--;
-			currentFrameNumber %= 35;
-		}
-		
-	}
+//	}
 	
 	public void jump() {
-		this.jump_count = 0;
 		
-		descending = false;
-		ascending = true;
-
+		if (jump_count == 0) {
 		
-		if(last_direction == KeyEvent.VK_RIGHT){
-			currentImage = run_R[currentFrameNumber];
-		}else{
-			currentImage = run_L[currentFrameNumber];
+			descending = false;
+			ascending = true;
+	
+			
+			if(last_direction == KeyEvent.VK_RIGHT){
+				currentImage = run_R[currentFrameNumber];
+			}else{
+				currentImage = run_L[currentFrameNumber];
+			}
 		}
 	}
 	
 	public void checkAscending() {
 		if(ascending) {
-			if(jump_count < 15) {
+			if(jump_count < 30) {
 				currentY -= JUMP_DISPLACEMENT;
 				collisionBox.setLocation(currentX, currentY);
 //				jump_count++;
@@ -164,13 +156,13 @@ public class Protagonist {
 	public void checkDescending () {
 		if (descending) {
 			if(collisionBox.getMaxY()/Tile.TILE_SIZE>=Tiles.ROWS){
-				die();
+				died();
 			} else {
 				// Move character in downward direction
 				currentY += JUMP_DISPLACEMENT;
 				collisionBox.setLocation(currentX, currentY);
 			}
-		}
+		} 
 	}
 	
 	//keyboard events
@@ -178,25 +170,30 @@ public class Protagonist {
 		return ascending;
 	}
 	
-// 	public void checkJumpState(){
-// 		if(jumping){
-// 			if(jump_count < 15){
-// 				currentY -= 6;
-// 				collisionBox.setLocation(currentX, currentY);
-// 			}else{
-// 				currentY += 6;
-// 				collisionBox.setLocation(currentX, currentY);
-// 			}
-// 		}
-		
-// 		jump_count++;
-		
-// 		if(jump_count >= 30){
-// 			jumping = false;
-// 			jump_count = 0;
-// 		}
-// 	}
 
+	
+	//set current frame when protagonist is moving. we have a total of 5 frames for 
+    //each run direction. The variable moveCounter is incremented each time the gameManager
+    //calls the move function on the Boy. So according to moveCounter we can choose the current
+    //frame. The frame changes every MOVE_COUNTER_THRESH increments of the moveCounter variable.
+    //In this case MOVE_COUNTER_THRESH is set to 5. The use of "6" instead of a variable is temporary
+    //because I still don't know how many frames will be used in the final animation
+	
+	private void incrementFrameNumber(){
+		currentFrameNumber++;
+		currentFrameNumber %= 35;
+		
+	}
+	
+	private void decrementFrameNumber(){
+		if(currentFrameNumber == 0){
+			currentFrameNumber = 34;
+		}else{
+			currentFrameNumber--;
+			currentFrameNumber %= 35;
+		}	
+	}
+	
 	public void stop(){
 		currentImage = run_R[0];
 	}
@@ -217,77 +214,223 @@ public class Protagonist {
 		return currentImage;
 	}
 	
+	public boolean canMove() {
+		return moving;
+	}
+	
+	public boolean canMoveRight(){
+		return moveRightPossible;
+	}
+	
+	public boolean canMoveLeft(){
+		return moveLeftPossible;
+	}
+		
 	public void collisionChecker () {
 		
-//		int footPos = (int)collisionBox.getMaxY();
+		int rowCurrent = (int)((currentY+30)/Tile.TILE_SIZE);				//center y
+		int rowUp = (int)((collisionBox.getMinY()-1)/Tile.TILE_SIZE);	//top y
+		int rowDown = (int)((collisionBox.getMaxY()+1)/Tile.TILE_SIZE);	//bottom y
+		int colCurrent = (int)(currentX/Tile.TILE_SIZE);				//center x
+		int colRight = (int)((collisionBox.getMaxX()+1)/Tile.TILE_SIZE);//right y
+		int colLeft = (int)((collisionBox.getMinX()-1)/Tile.TILE_SIZE);	//left y
 		
-		int rowCurrent = (int)((currentY+100)/Tile.TILE_SIZE);
-		int rowUp = (int)((collisionBox.getMinY()-1)/Tile.TILE_SIZE);
-		int rowDown = (int)((collisionBox.getMaxY()+1)/Tile.TILE_SIZE);
-		int colCurrent = (int)(currentX/Tile.TILE_SIZE);
-		int colRight = (int)((collisionBox.getMaxX()+1)/Tile.TILE_SIZE);
 		
-		// Check moving first
-//		if (moving) {
-		moving = true;
-			if (Tiles.tiles[rowCurrent][colRight] != null) {
-				if (Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
-					moving = false;
-				} else {
-					moving = true;
-				}
-			}
+		// Check at top right of character collision box
+		if (Tiles.tiles[rowUp][colRight] != null) {
+//			if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(this.collisionBox)) {
+				moveRightPossible = false;
+				System.out.println("Collision at top right corner");
+//				return;
+//			} else {
+//				moveRightPossible = true;
+//			}
+		}else{
+			moveRightPossible = true;
+		}
+		// Check at bottom right of character hit box
+		if (Tiles.tiles[rowCurrent][colRight] != null) {
+//			if (Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
+				moveRightPossible = false;
+				System.out.println("Collision at bottom right corner");
+				move(KeyEvent.VK_LEFT);
+//				return;
+//			} else {
+//				moveRightPossible = true;
+//			}
+		}else{
+			moveRightPossible = true;
+		}
+		
+		if (Tiles.tiles[rowUp][colLeft] != null) {
+//			if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(this.collisionBox)) {
+				moveLeftPossible = false;
+				System.out.println("Collision at top right corner");
+//				return;
+//			} else {
+//				moveRightPossible = true;
+//			}
+		}else{
+			moveLeftPossible = true;
+		}
+		// Check at bottom right of character hit box
+		if (Tiles.tiles[rowCurrent][colLeft] != null) {
+//			if (Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
+				moveLeftPossible = false;
+				System.out.println("Collision at bottom right corner");
+				move(KeyEvent.VK_RIGHT);
+//				return;
+//			} else {
+//				moveRightPossible = true;
+//			}
+		}else{
+			moveLeftPossible = true;
+		}
+		
+		//Check at middle and to right of character collision box
+//		if(Tiles.tiles[rowCurrent][colRight] != null){
+//			if(Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)){
+//				moving = false;
+//				return;
+//			}else{
+//				moving = true;
+//			}
 //		}
 			
 		// If jumping, check for blocks above character's head
 		// If touch, start descending
 		if (ascending) {
+			// Checks top right
 			if (Tiles.tiles[rowUp][colRight] != null) {
-				if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(collisionBox)) {
+//				if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(collisionBox)) {
 					ascending = false;
 					descending = true;
-				}
+					System.out.println("Collision at top right corner while ascending");
+//					return;
+//				}
 			}
-			if (Tiles.tiles[rowUp][colCurrent] != null) {
-				if (Tiles.tiles[rowUp][colCurrent].getCollisionBox().intersects(collisionBox)) {
+			// Checks top left
+			if (Tiles.tiles[rowUp][colLeft] != null) {
+//				if (Tiles.tiles[rowUp][colLeft].getCollisionBox().intersects(collisionBox)) {
 					ascending = false;
 					descending = true;
-				}
+					System.out.println("Collision at top left corner while ascending");
+//					return;
+//				}
 			}
 		} else {
+			//must be descending
 			descending = true;
 		}
 		
-		if (Tiles.tiles[rowDown][colRight] != null) {
-			if (Tiles.tiles[rowDown][colRight].getCollisionBox().intersects(collisionBox)) {
-				descending = false;
-			} 
-		}
-		if (Tiles.tiles[rowDown][colCurrent] != null) {
-			if (Tiles.tiles[rowDown][colCurrent].getCollisionBox().intersects(collisionBox)) {
-				descending = false;
+		if(descending){
+			if (Tiles.tiles[rowDown][colRight] != null) {
+//				if (Tiles.tiles[rowDown][colRight].getCollisionBox().intersects(collisionBox)) {
+					descending = false;
+					jump_count = 0;
+//					move(KeyEvent.VK_LEFT);
+					System.out.println("Collision at bottom right corner while descending");
+//					return;
+//				} 
 			}
-		}
+			if (Tiles.tiles[rowDown][colLeft] != null) {
+//				if (Tiles.tiles[rowDown][colLeft].getCollisionBox().intersects(collisionBox)) {
+					descending = false;
+					jump_count = 0;
+//					move(KeyEvent.VK_LEFT);
+					System.out.println("Collision at bottom left corner while descending");
+//					return;
+//				}
+			}
+		} 		
+		
+		
+		collisionBox.setLocation(currentX, currentY);
+		
+		// Check moving first
+//		moving = true;
+//		// Check at top right of character collision box
+//		if (Tiles.tiles[rowUp][colRight] != null) {
+//			if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(this.collisionBox)) {
+//				moving = false;
+//			} else {
+//				moving = true;
+//			}
+//		}
+//		// Check at bottom right of character hit box
+//		if (Tiles.tiles[rowDown][colRight] != null) {
+//			if (Tiles.tiles[rowDown][colRight].getCollisionBox().intersects(this.collisionBox)) {
+//				moving = false;
+//			} else {
+//				moving = true;
+//			}
+//		}
+//			
+//		// If jumping, check for blocks above character's head
+//		// If touch, start descending
+//		if (ascending) {
+//			// Checks top right
+//			if (Tiles.tiles[rowUp][colRight] != null) {
+//				if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(collisionBox)) {
+//					ascending = false;
+//					descending = true;
+//				}
+//			}
+//			// Checks top left
+//			if (Tiles.tiles[rowUp][colLeft] != null) {
+//				if (Tiles.tiles[rowUp][colLeft].getCollisionBox().intersects(collisionBox)) {
+//					ascending = false;
+//					descending = true;
+//				}
+//			}
+//		} else {
+//			descending = true;
+//		}
+//		
+//		if (Tiles.tiles[rowDown][colRight] != null) {
+//			if (Tiles.tiles[rowDown][colRight].getCollisionBox().intersects(collisionBox)) {
+//				descending = false;
+//				jump_count = 0;
+//			} 
+//		}
+//		if (Tiles.tiles[rowDown][colLeft] != null) {
+//			if (Tiles.tiles[rowDown][colLeft].getCollisionBox().intersects(collisionBox)) {
+//				descending = false;
+//				jump_count = 0;
+//			}
+//		}
+//		
+//		collisionBox.setLocation(currentX, currentY);
+	}	
+	
+	public void died() {
+		dead = true;
 	}
 	
-		
-	public void die () {
-		//Re-start game? Take away life? Create new map?
+	public boolean isDead() {
+		return dead;
 	}
 	
 	public void shoot() //will added for firing
 	{
-		Bullet bullet = new Bullet(currentX, currentY);
-		bullets.add(bullet);
+		if(bullets.size() > 5){
+			reloaded = false;
+		}else{
+			reloaded = true;
+		}
+
+		if(reloaded){
+			Bullet bullet = new Bullet(currentX, currentY+10);
+			bullets.add(bullet);
+		}
+	
 	}
 	
-	public static ArrayList getBullets() //will added for firing
+	public static ArrayList<Bullet> getBullets() //will added for firing
 	{
 		return bullets;
 	}
 	
-	public boolean canMove(){
-		return moving;
-	}
+
 
 }
