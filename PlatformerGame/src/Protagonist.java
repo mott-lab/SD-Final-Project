@@ -38,7 +38,7 @@ public class Protagonist {
 	
 	private boolean moving = true;
 	private boolean ascending = false;
-	private boolean descending = false;
+	private boolean descending = true;
 	private boolean dead = false;
 	
 	private boolean moveRightPossible = true;
@@ -174,7 +174,9 @@ public class Protagonist {
 	
 	public void checkDescending () {
 		if (descending) {
-			if(collisionBox.getMaxY()/Tile.TILE_SIZE>=Tiles.ROWS){
+			//check if lowest part of protagonist's collisionBox divided by the size of each game tile is greater than the number of rows in the panel (9)
+			//this checks if he is off screen at the bottom
+			if(collisionBox.getMaxY() / PlayPanel.TILE_SIZE >= 9){
 				died();
 			} else {
 				// Move character in downward direction
@@ -272,129 +274,129 @@ public class Protagonist {
 		return moveLeftPossible;
 	}
 		
-	public void collisionChecker () {
+//	public void collisionChecker () {
 		
-		int rowCurrent = (int)((currentY+30)/Tile.TILE_SIZE);				//center y
-		int rowUp = (int)((collisionBox.getMinY()-1)/Tile.TILE_SIZE);	//top y
-		int rowDown = (int)((collisionBox.getMaxY()+1)/Tile.TILE_SIZE);	//bottom y
-		int colCurrent = (int)(currentX/Tile.TILE_SIZE);				//center x
-		int colRight = (int)((collisionBox.getMaxX()+1)/Tile.TILE_SIZE);//right y
-		int colLeft = (int)((collisionBox.getMinX()-1)/Tile.TILE_SIZE);	//left y
+//		int rowCurrent = (int)((currentY+30)/Tile.TILE_SIZE);				//center y
+//		int rowUp = (int)((collisionBox.getMinY()-1)/Tile.TILE_SIZE);	//top y
+//		int rowDown = (int)((collisionBox.getMaxY()+1)/Tile.TILE_SIZE);	//bottom y
+//		int colCurrent = (int)(currentX/Tile.TILE_SIZE);				//center x
+//		int colRight = (int)((collisionBox.getMaxX()+1)/Tile.TILE_SIZE);//right y
+//		int colLeft = (int)((collisionBox.getMinX()-1)/Tile.TILE_SIZE);	//left y
 		
-		
-		// Check at top right of character collision box
-		if (Tiles.tiles[rowUp][colRight] != null) {
-//			if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(this.collisionBox)) {
-				moveRightPossible = false;
-//				System.out.println("Collision at top right corner");
-//				return;
-//			} else {
-//				moveRightPossible = true;
-//			}
-		}else{
-			moveRightPossible = true;
-		}
-		// Check at bottom right of character hit box
-		if (Tiles.tiles[rowCurrent][colRight] != null) {
-//			if (Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
-				moveRightPossible = false;
-//				System.out.println("Collision at bottom right corner");
-				move(KeyEvent.VK_LEFT);
-				
-//				return;
-//			} else {
-//				moveRightPossible = true;
-//			}
-		}else{
-			moveRightPossible = true;
-		}
-		
-		if (Tiles.tiles[rowUp][colLeft] != null) {
-//			if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(this.collisionBox)) {
-				moveLeftPossible = false;
-//				System.out.println("Collision at top right corner");
-//				return;
-//			} else {
-//				moveRightPossible = true;
-//			}
-		}else{
-			moveLeftPossible = true;
-		}
-		// Check at bottom right of character hit box
-		if (Tiles.tiles[rowCurrent][colLeft] != null) {
-//			if (Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
-				moveLeftPossible = false;
-//				System.out.println("Collision at bottom right corner");
-				move(KeyEvent.VK_RIGHT);
-//				return;
-//			} else {
-//				moveRightPossible = true;
-//			}
-		}else{
-			moveLeftPossible = true;
-		}
-		
-		//Check at middle and to right of character collision box
-//		if(Tiles.tiles[rowCurrent][colRight] != null){
-//			if(Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)){
-//				moving = false;
-//				return;
-//			}else{
-//				moving = true;
-//			}
+//		
+//		// Check at top right of character collision box
+//		if (Tiles.tiles[rowUp][colRight] != null) {
+////			if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(this.collisionBox)) {
+//				moveRightPossible = false;
+////				System.out.println("Collision at top right corner");
+////				return;
+////			} else {
+////				moveRightPossible = true;
+////			}
+//		}else{
+//			moveRightPossible = true;
 //		}
-			
-		// If jumping, check for blocks above character's head
-		// If touch, start descending
-		if (ascending) {
-			// Checks top right
-			if (Tiles.tiles[rowUp][colRight] != null) {
-//				if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(collisionBox)) {
-					ascending = false;
-					descending = true;
-//					System.out.println("Collision at top right corner while ascending");
-//					return;
-//				}
-			}
-			// Checks top left
-			if (Tiles.tiles[rowUp][colLeft] != null) {
-//				if (Tiles.tiles[rowUp][colLeft].getCollisionBox().intersects(collisionBox)) {
-					ascending = false;
-					descending = true;
-//					System.out.println("Collision at top left corner while ascending");
-//					return;
-//				}
-			}
-		} else {
-			//must be descending
-			descending = true;
-		}
-		
-		if(descending){
-			if (Tiles.tiles[rowDown][colRight] != null) {
-//				if (Tiles.tiles[rowDown][colRight].getCollisionBox().intersects(collisionBox)) {
-					descending = false;
-					jump_count = 0;
-//					move(KeyEvent.VK_LEFT);
-//					System.out.println("Collision at bottom right corner while descending");
-//					return;
-//				} 
-			}
-			if (Tiles.tiles[rowDown][colLeft] != null) {
-//				if (Tiles.tiles[rowDown][colLeft].getCollisionBox().intersects(collisionBox)) {
-					descending = false;
-					jump_count = 0;
-//					move(KeyEvent.VK_LEFT);
-//					System.out.println("Collision at bottom left corner while descending");
-//					return;
-//				}
-			}
-		} 		
+//		// Check at bottom right of character hit box
+//		if (Tiles.tiles[rowCurrent][colRight] != null) {
+////			if (Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
+//				moveRightPossible = false;
+////				System.out.println("Collision at bottom right corner");
+//				move(KeyEvent.VK_LEFT);
+//				
+////				return;
+////			} else {
+////				moveRightPossible = true;
+////			}
+//		}else{
+//			moveRightPossible = true;
+//		}
+//		
+//		if (Tiles.tiles[rowUp][colLeft] != null) {
+////			if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(this.collisionBox)) {
+//				moveLeftPossible = false;
+////				System.out.println("Collision at top right corner");
+////				return;
+////			} else {
+////				moveRightPossible = true;
+////			}
+//		}else{
+//			moveLeftPossible = true;
+//		}
+//		// Check at bottom right of character hit box
+//		if (Tiles.tiles[rowCurrent][colLeft] != null) {
+////			if (Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
+//				moveLeftPossible = false;
+////				System.out.println("Collision at bottom right corner");
+//				move(KeyEvent.VK_RIGHT);
+////				return;
+////			} else {
+////				moveRightPossible = true;
+////			}
+//		}else{
+//			moveLeftPossible = true;
+//		}
+//		
+//		//Check at middle and to right of character collision box
+////		if(Tiles.tiles[rowCurrent][colRight] != null){
+////			if(Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)){
+////				moving = false;
+////				return;
+////			}else{
+////				moving = true;
+////			}
+////		}
+//			
+//		// If jumping, check for blocks above character's head
+//		// If touch, start descending
+//		if (ascending) {
+//			// Checks top right
+//			if (Tiles.tiles[rowUp][colRight] != null) {
+////				if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(collisionBox)) {
+//					ascending = false;
+//					descending = true;
+////					System.out.println("Collision at top right corner while ascending");
+////					return;
+////				}
+//			}
+//			// Checks top left
+//			if (Tiles.tiles[rowUp][colLeft] != null) {
+////				if (Tiles.tiles[rowUp][colLeft].getCollisionBox().intersects(collisionBox)) {
+//					ascending = false;
+//					descending = true;
+////					System.out.println("Collision at top left corner while ascending");
+////					return;
+////				}
+//			}
+//		} else {
+//			//must be descending
+//			descending = true;
+//		}
+//		
+//		if(descending){
+//			if (Tiles.tiles[rowDown][colRight] != null) {
+////				if (Tiles.tiles[rowDown][colRight].getCollisionBox().intersects(collisionBox)) {
+//					descending = false;
+//					jump_count = 0;
+////					move(KeyEvent.VK_LEFT);
+////					System.out.println("Collision at bottom right corner while descending");
+////					return;
+////				} 
+//			}
+//			if (Tiles.tiles[rowDown][colLeft] != null) {
+////				if (Tiles.tiles[rowDown][colLeft].getCollisionBox().intersects(collisionBox)) {
+//					descending = false;
+//					jump_count = 0;
+////					move(KeyEvent.VK_LEFT);
+////					System.out.println("Collision at bottom left corner while descending");
+////					return;
+////				}
+//			}
+//		} 		
 			
 
 		
 		
-		updateLocations();
+//		updateLocations();
 //		collisionBox.setLocation(currentX, currentY);
 		
 		// Check moving first
@@ -451,7 +453,7 @@ public class Protagonist {
 //		}
 //		
 //		collisionBox.setLocation(currentX, currentY);
-	}	
+//	}	
 	
 	public void platformCollisionChecker(){
 		//check collision with moving blocks

@@ -1,8 +1,13 @@
-
-
-
 public class Main {
+	
+	private Level level;
+	public GamePanel gamePanel;
+	private GameManager gameManager;
+	private GameFrame gameFrame;
+	
 	public static void main(String[] args) {
+		boolean running = true;
+		
 		//initialize the gamePanel
 		GamePanel gamePanel=new GamePanel();
 		
@@ -11,7 +16,7 @@ public class Main {
 		gameManager.start();
 		
 		//start-up the game main frame 
-		@SuppressWarnings("unused")
 		GameFrame gameFrame=new GameFrame(gamePanel);
 	}
+	
 }

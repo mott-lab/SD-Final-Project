@@ -6,11 +6,11 @@ import javax.swing.ImageIcon;
 public class Platform{
 	
 	Image img;
-	public int x;
-	public int y;
-	public int originx;
-	public int originy;
-	public int numBlocks;
+	private int x;
+	private int y;
+	private int originx;
+	private int originy;
+	private int numBlocks;
 	public boolean see;
 	private Rectangle collisionBox;
 
@@ -37,12 +37,11 @@ public class Platform{
 		img = i.getImage();
 		see = true;
 		
-		collisionBox = new Rectangle(originx, originy, Tile.TILE_SIZE * numBlocks, Tile.TILE_SIZE);
+		collisionBox = new Rectangle(originx, originy, PlayPanel.TILE_SIZE * numBlocks, PlayPanel.TILE_SIZE);
 	}
 
+	//constructor for when wanting control of how long the platform is.  Mainly used to set the size of the first platform
 	public Platform(int newx, int newy, int numBlocks) {
-//		numBlocks = (int) (Math.random()*5 + 1);
-		
 		originx = newx;
 		originy = newy;
 		this.numBlocks = numBlocks;
@@ -52,7 +51,7 @@ public class Platform{
 		img = i.getImage();
 		see = true;
 		
-		collisionBox = new Rectangle(originx, originy, Tile.TILE_SIZE * numBlocks, Tile.TILE_SIZE);
+		collisionBox = new Rectangle(originx, originy, PlayPanel.TILE_SIZE * numBlocks, PlayPanel.TILE_SIZE);
 	}
 
 	public int getOriginx() {

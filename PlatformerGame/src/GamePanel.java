@@ -13,7 +13,7 @@ public class GamePanel extends JPanel{
 	private KeyboardController keyboardController;
 	private StatsPanel statsPanel=new StatsPanel();
 	private PlayPanel playPanel=new PlayPanel();
-	@SuppressWarnings("unused")
+	
 	private Protagonist bb8;
 	private Level level;
 
@@ -28,7 +28,6 @@ public class GamePanel extends JPanel{
 
 		this.add(playPanel);
 		playPanel.setLocation(0, StatsPanel.STATS_HEIGHT);
-		
 		
 		keyboardController=new KeyboardController();
 		this.addKeyListener(keyboardController);
@@ -51,5 +50,23 @@ public class GamePanel extends JPanel{
 //		statsPanel.repaint();
 	}
 	
-	
+	public void resetGame(){
+		
+		this.statsPanel = new StatsPanel();
+		this.playPanel = new PlayPanel();
+		
+		this.setRequestFocusEnabled(true);
+		this.setSize(WIDTH, HEIGHT);
+		this.setLayout(null);
+		this.setBackground(Color.BLACK);
+		
+		this.add(statsPanel);
+		statsPanel.setLocation(0, 0);
+
+		this.add(playPanel);
+		playPanel.setLocation(0, StatsPanel.STATS_HEIGHT);
+		
+		repaint();
+		repaintGame();
+	}
 }

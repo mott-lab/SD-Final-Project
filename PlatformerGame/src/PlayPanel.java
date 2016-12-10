@@ -6,11 +6,14 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 //PlayPanel - Is the panel where you see the actual game in motion,
@@ -24,75 +27,42 @@ public class PlayPanel extends JPanel{
 	//height of the PlayPanel 
 	public static final int PLAY_PANEL_HEIGHT=1280;
 	
+	public BufferedImage BACKGROUND;
+	
 	GridLayout grid = new GridLayout(20, 9);
+	
+	//size of each tile in a 20x9 grid
+	public static final int TILE_SIZE = 64;
+	
 	static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
 	static ArrayList<Platform> platforms = new ArrayList<Platform>();
-	
-	
 	
 	//reference to the protagonist of the game
 	private Protagonist bb8;
 	
-	private Tiles tiles;
+//	private Tiles tiles;
 
 	private Level level;
 
 	public PlayPanel(){
 		
-//		super();
-		
-		
-		
-		tiles = new Tiles();
+		super();
+
+		try{
+			BACKGROUND = ImageIO.read(new File("space_background.png"));
+		}catch (IOException e){
+			e.printStackTrace();
+		}
 		
 		
 		//set the size of the play panel
 		this.setSize(GameFrame.WIDTH, PLAY_PANEL_HEIGHT);
 		
-		//set a random background color to distinguish the play panel from the rest
+		//set a background color in case background image does not load
 		this.setBackground(Color.DARK_GRAY);
 		
 		//set layout
 		this.setLayout(grid);
-		
-//		Scanner scanner = null;
-//		
-//		try {
-//			scanner = new Scanner(new File("level1.txt"));
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		int row = 0;
-//		
-//		while(scanner.hasNextLine()){
-//			String line = scanner.nextLine();
-//			String[] words = line.split(" ");
-//			
-//			for(int col = 0; col < words.length; col++){
-//				if(!(words[col].equals("empt"))){
-//					tiles.setTile(new Block(words[col], row, col));
-//					
-//					System.out.print(words[col]);
-//				}else{
-////					tiles.setTile(new EmptyTile(row, col));
-//					System.out.print(words[col]);
-//					
-//				}
-//				
-//				add(tiles.getTile(row, col));
-////				System.out.println(" Added a tile ");
-//			}
-//			System.out.println();
-//			row++;
-//		}
-		
-//		for(int i = 0; i < grid.getRows(); i++){
-//			for(int j = 0; j < grid.getColumns(); j++){
-////				if()
-//				//add(tiles.getTile(i, j));
-//			}
-//		}
 		
 		//double buffering should improve animations
 		this.setDoubleBuffered(true);
@@ -105,25 +75,25 @@ public class PlayPanel extends JPanel{
 		super.paintComponent(g);
 		
 		Graphics2D g2=(Graphics2D)g;
-//		if (bb8.getCurrentX()-590%2400 == 0) //590 is the x position when screen vanishes
-//			bb8.nx = 0;
-//		if (bb8.getCurrentX()-1790%2400 == 0) //1790 is the x where the new screen must be drawn
-//			bb8.nx2 = 0;
-		g2.drawImage(Tiles.BACKGROUND, bb8.getCurrentX()-1880, 0, GameFrame.WIDTH, 640, null);
-		g2.drawImage(Tiles.BACKGROUND, bb8.getCurrentX()+680, 0, GameFrame.WIDTH, 640, null);
-		//if (bb8.getCurrentX() >= 590) //bb8 is at point where emptiness shows on the next screen
-		g2.drawImage(Tiles.BACKGROUND, bb8.getCurrentX()-600, 0, GameFrame.WIDTH, 640, null);
+
 		
-		for(int i = 0; i < Tiles.ROWS; i++){
-			for(int j = 0; j < Tiles.COLS; j++){
-				if(Tiles.tiles[i][j] != null){
-					g2.drawImage(Tiles.tiles[i][j].getImage(), j*Tile.TILE_SIZE, i*Tile.TILE_SIZE, null);
-				}
-			}
+		g2.drawImage(BACKGROUND, level.getBackx_one(), 0, GameFrame.WIDTH, 640, null);
+		g2.drawImage(BACKGROUND, level.getBackx_two(), 0, GameFrame.WIDTH, 640, null);
+		level.setBackx_one(level.getBackx_one()-1);
+		if (level.getBackx_one()+1250 < 0)
+		{
+			level.setBackx_one(1250);
+		}
+		level.setBackx_two(level.getBackx_two()-1);
+		if (level.getBackx_two()+1250 < 0)
+		{
+			level.setBackx_one(1250);
 		}
 		
 		//draw the protagonist of the game
 //		if(!bb8.getRestoring()){
+		
+		
 			g2.drawImage(bb8.getCurrentImage(), bb8.getCurrentX(), bb8.getCurrentY(), null);
 			g2.draw(bb8.getCollisionBox());
 			g2.drawOval((int)bb8.gettopleft().getX(), (int)bb8.gettopleft().getY(), 5, 5);
@@ -192,59 +162,8 @@ public class PlayPanel extends JPanel{
 			
 			
 			
-			int randomBlock = (int)(Math.random()*100+1);
-//				Platform firstplat = new Platform(1300, 540);
-//				platforms.add(firstplat);
-//
-//			
-//			for(int i = 0; i < 50; i++){
-//				Platform platform = (Platform) platforms.get(i);
-//				platform.move();
-//				if (i>0)
-//				{
-//					Platform oldplat = (Platform) platforms.get((i-1));
-////					platform.setX(1300+(64*oldplat.getNumBlocks())+25);
-//					int newX = 1300+(64*oldplat.getNumBlocks())+25;
-//					int newY;
-//					if (oldplat.getY()<90)
-//					{
-////						platform.setY(oldplat.getY()-60);
-//						newY = oldplat.getY() - 60;
-//					} else if (oldplat.getY()>570) {
-////						platform.setY(oldplat.getY()+60);
-//						newY = oldplat.getY()+60;
-//					} else {
-//						int diff = (int) (Math.random()*50 - 50);
-////						platform.setY(oldplat.getY()+diff);
-//						newY = oldplat.getY() + diff;
-//					}
-//					platform.setOriginx(newX);
-//					platform.setOriginy(newY);
-//					
-////					Platform newplat = new Platform(newX, newY);
-//					platforms.add(platform);
-//					
-////					if (platform.see == true) {
-////						g2.drawImage(platform.img, platform.x, platform.y, null);
-////						g2.draw(platform.getCollisionBox());
-////					}
-//					
-//				} else{
-//					Platform newplat = new Platform(1300,540);
-//					newplat.setSee(true);
-//					platforms.add(newplat);
-////					if (platform.see == true) {
-////						g2.drawImage(platform.img, platform.x, platform.y, null);
-////						g2.draw(platform.getCollisionBox());
-////					}
-//				}
-//				
-//				if (platform.see == true) {
-//					System.out.println("newplat");
-//					g2.drawImage(platform.img, platform.x, platform.y, null);
-//					g2.draw(platform.getCollisionBox());
-//				}
-//			}
+//			int randomBlock = (int)(Math.random()*100+1);
+
 			
 			
 			for (int i=0; i < level.getPlatforms().size(); i++)
@@ -252,7 +171,7 @@ public class PlayPanel extends JPanel{
 				Platform platform = (Platform) level.getPlatforms().get(i);
 				platform.move();
 				if (platform.see == true) {
-					g2.drawImage(platform.img, platform.x, platform.y, null);
+					g2.drawImage(platform.img, platform.getX(), platform.getY(), null);
 					g2.draw(platform.getCollisionBox());
 					System.out.println("Drawing platform number: " + i);
 					System.out.println("Platform x: " + platform.getX());
@@ -264,8 +183,16 @@ public class PlayPanel extends JPanel{
 			
 	}
 	
-	//function called by the GameManager to add the boy (protagonist) to the play panel at runtime
-	//the PlayPanel needs a reference to the boy since he's drawn a LOT of times 
+	public int getRows(){
+		return grid.getRows();
+	}
+	
+	public int getCols(){
+		return grid.getColumns();
+	}
+	
+	//function called by the GameManager to add the protagonist to the play panel at runtime
+	//the PlayPanel needs a reference to the protagonist because he's drawn a LOT of times 
 	public void addProtagonist(Protagonist bb8) {
 		this.bb8=bb8;
 	}

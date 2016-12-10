@@ -3,9 +3,29 @@ import java.util.ArrayList;
 public class Level {
 	public ArrayList<Platform> platforms;
 	private int level;
+	public int backx_one = 0;
+	public int backx_two = 1250;
+	
+	public int getBackx_one() {
+		return backx_one;
+	}
+
+	public void setBackx_one(int backx_one) {
+		this.backx_one = backx_one;
+	}
+
+	public int getBackx_two() {
+		return backx_two;
+	}
+
+	public void setBackx_two(int backx_two) {
+		this.backx_two = backx_two;
+	}
 	
 	public Level(int level) {
 		this.level = level;
+		backx_one = 0;
+		backx_two = 1250;
 		platforms = new ArrayList<Platform>();
 		
 		if (level == 1)
@@ -80,5 +100,4 @@ public class Level {
 	public int getLevel(){
 		return level;
 	}
-
 }

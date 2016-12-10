@@ -6,9 +6,9 @@ import javax.swing.JFrame;
 //the main game frame of the game 
 public class GameFrame extends JFrame {
 	
-	//SET SIZE OF FRAME HERE...SET SIZE OF PLAYING FIELD IN PLAYPANEL
+	//set size of whole game frame here; set size of playing field in PlayPanel
 	public static final int WIDTH=1280;
-	public static final int HEIGHT=640;
+	public static final int HEIGHT=704;
 
 	public GameFrame(GamePanel gamePanel){
 		

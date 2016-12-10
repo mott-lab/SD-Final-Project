@@ -1,32 +1,32 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class GameManager extends Thread{
 	
-	private static final int DELAY = 10;
+	private static final int DELAY = 12;	//thread delay between each repaint of game's panels
 	private boolean gameIsRunning = false;
 	private Protagonist protagonist;
 	private GamePanel gamePanel;
-	private Tiles tiles;
 	private int bulletDelay = 30;
 	private int time = 0;
-	Level level;
-	int jumpcounter = 0;
+	private Level level;
+	private int jumpcounter = 0;
 	
 	JFrame youDied = new JFrame("You died :(");
 	
 	public GameManager(GamePanel gamePanel){
 		
 		this.level = new Level(1);
-		this.tiles = new Tiles();
-//		this.world.initializeStage(1);
 		
-		//initialize protagonist
+		//initialize protagonist888////
 		this.protagonist = new Protagonist();
 		
 		this.gamePanel = gamePanel;
@@ -38,6 +38,7 @@ public class GameManager extends Thread{
 	}
 	
 	public void run(){
+		
 		while(gameIsRunning){
 			manageKeys();
 			
@@ -45,7 +46,8 @@ public class GameManager extends Thread{
 			
 			protagonist.checkAscending();
 			protagonist.checkDescending();
-			protagonist.collisionChecker();
+			
+//			protagonist.collisionChecker();
 			protagonist.platformCollisionChecker();
 			
 			manageKeys();
@@ -59,15 +61,37 @@ public class GameManager extends Thread{
 			}
 			
 			if (protagonist.isDead()) {
+				
 				gameIsRunning = false;
+				
 				JPanel panel = new JPanel();
-				youDied.add(panel);
+								
 				JLabel gameOver = new JLabel("You have lost the game");
+				JButton resetButton = new JButton("I'm addicted, let me keep playing.");
+				resetButton.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						resetGame(gamePanel);
+						youDied.setVisible(false);
+					}
+					
+				});
+				
 				panel.add(gameOver);
+				panel.add(resetButton);
+				
+				youDied.add(panel);
+				
 				youDied.setSize(350, 150);
 				youDied.setVisible(true);
 			}
 		}
+	}
+	
+	public void resetGame(GamePanel gamePanel){
+		gamePanel.resetGame();
+		gameIsRunning = true;
 	}
 	
 	public void manageKeys(){
@@ -76,10 +100,8 @@ public class GameManager extends Thread{
 		
 		//manage left/right direction
 		if(currentKeys.contains(KeyEvent.VK_RIGHT)){
-//			if (protagonist.canMove()) {	
-				//move right
-				protagonist.move(KeyEvent.VK_RIGHT);
-//			}
+			//move right
+			protagonist.move(KeyEvent.VK_RIGHT);
 		}else if(currentKeys.contains(KeyEvent.VK_LEFT)){
 			//move left
 			protagonist.move(KeyEvent.VK_LEFT);
