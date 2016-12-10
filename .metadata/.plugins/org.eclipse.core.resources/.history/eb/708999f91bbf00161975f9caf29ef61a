@@ -500,7 +500,7 @@ public class Protagonist {
 //					currentX -= 2;
 //				}
 
-			}
+			
 			
 			updateLocations();
 //		check top right

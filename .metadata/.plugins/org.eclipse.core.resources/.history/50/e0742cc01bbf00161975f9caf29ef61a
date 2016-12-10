@@ -462,6 +462,8 @@ public class Protagonist {
 			//if the collision boxes overlap, handle each type of collision
 			if(this.collisionBox.intersects(level.getPlatforms().get(i).getCollisionBox())){
 				
+				
+				
 				//get the intersecting block
 				Platform collidingPlatform = level.getPlatforms().get(i);
 //				System.out.println(i);
@@ -500,7 +502,11 @@ public class Protagonist {
 //					currentX -= 2;
 //				}
 
+			}else{
+				descending = true;
 			}
+			
+			
 			
 			updateLocations();
 //		check top right

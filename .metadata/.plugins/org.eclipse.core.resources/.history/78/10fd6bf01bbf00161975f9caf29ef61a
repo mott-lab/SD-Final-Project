@@ -500,6 +500,9 @@ public class Protagonist {
 //					currentX -= 2;
 //				}
 
+			}else{
+				descending = true;
+				System.out.println("Here");
 			}
 			
 			updateLocations();

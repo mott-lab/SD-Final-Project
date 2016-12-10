@@ -36,14 +36,13 @@ public class Level {
 			platforms.add(secondplat);
 	
 			int farX = 1300;
-			Platform oldplat = secondplat;
 			
-			for(int i = 0; i < 10; i++){
+			for(int i = 0; i < 50; i++){
 	//			Platform platform = new Platform(1300, 320);
 				if (i>1)
 				{
 					System.out.println(i);
-					oldplat = (Platform) platforms.get((i-1));
+					Platform oldplat = (Platform) platforms.get((i-1));
 	//				platform.setX(1300+(64*oldplat.getNumBlocks())+25);
 					int newX = farX + (64*oldplat.getNumBlocks());
 					int newY;
@@ -88,20 +87,6 @@ public class Level {
 			}
 			
 			//add goal platform
-			int goalY;
-			if (oldplat.getY()<90)
-			{
-				goalY = oldplat.getY() - 60;
-			} else if (oldplat.getY()>570) {
-				goalY = oldplat.getY()+60;
-			} else {
-				int diff = (int) (Math.random()*50 - 50);
-				goalY = oldplat.getY() + diff;
-			}
-			int goalX = farX + (64*oldplat.getNumBlocks());
-			
-			Platform goalPlat = new Platform(goalX, goalY);
-			platforms.add(goalPlat);
 		}
 		
 	}
