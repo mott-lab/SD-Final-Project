@@ -30,7 +30,7 @@ public class Tiles {
 		Scanner scanner = null;
 		
 		try {
-			scanner = new Scanner(new File("level1.txt"));
+			scanner = new Scanner(new File("EmptyLevel.txt"));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

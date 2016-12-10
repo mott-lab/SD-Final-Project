@@ -8,28 +8,88 @@ public class Platform{
 	Image img;
 	public int x;
 	public int y;
-	int numBlocks;
+	public int originx;
+	public int originy;
+	public int numBlocks;
 	public boolean see;
 	private Rectangle collisionBox;
 
-	public Platform() {
+//	public Platform() {
+//		numBlocks = (int) (Math.random()*5 + 1);
+//		
+//		x = 1300;
+//		y = (int)(Math.random()*590+150);
+//		ImageIcon i = new ImageIcon("term.png");
+//		img = i.getImage();
+//		see = true;
+//		
+//		collisionBox = new Rectangle(x, y, Tile.TILE_SIZE * numBlocks, Tile.TILE_SIZE);
+//	}
+	
+	public Platform(int newx, int newy) {
 		numBlocks = (int) (Math.random()*5 + 1);
 		
-		x = 1300;
-		y = (int)(Math.random()*590+150);
+		originx = newx;
+		originy = newy;
+		x = newx;
+		y = newy;
 		ImageIcon i = new ImageIcon("term.png");
 		img = i.getImage();
 		see = true;
 		
-		collisionBox = new Rectangle(x, y, Tile.TILE_SIZE * numBlocks, Tile.TILE_SIZE);
+		collisionBox = new Rectangle(originx, originy, Tile.TILE_SIZE * numBlocks, Tile.TILE_SIZE);
+	}
+
+	public Platform(int newx, int newy, int numBlocks) {
+//		numBlocks = (int) (Math.random()*5 + 1);
+		
+		originx = newx;
+		originy = newy;
+		this.numBlocks = numBlocks;
+		x = newx;
+		y = newy;
+		ImageIcon i = new ImageIcon("term.png");
+		img = i.getImage();
+		see = true;
+		
+		collisionBox = new Rectangle(originx, originy, Tile.TILE_SIZE * numBlocks, Tile.TILE_SIZE);
+	}
+
+	public int getOriginx() {
+		return originx;
+	}
+
+
+	public void setOriginx(int originx) {
+		this.originx = originx;
+	}
+
+
+	public int getOriginy() {
+		return originy;
+	}
+
+
+	public void setOriginy(int originy) {
+		this.originy = originy;
+	}
+
+
+	public boolean isSee() {
+		return see;
+	}
+
+
+	public void setSee(boolean see) {
+		this.see = see;
 	}
 
 
 	public void move()
 	{
-		x = x - 5;
+		x = x - 2;
 		collisionBox.setLocation(x, y);
-		if (x < 0)
+		if (x + (64*numBlocks) < 0)
 			see = false;
 		
 	}
@@ -37,4 +97,36 @@ public class Platform{
 	public Rectangle getCollisionBox(){
 		return collisionBox;
 	}
+
+
+	public int getX() {
+		return x;
+	}
+
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+
+	public int getY() {
+		return y;
+	}
+
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+
+	public int getNumBlocks() {
+		return numBlocks;
+	}
+
+
+	public void setNumBlocks(int numBlocks) {
+		this.numBlocks = numBlocks;
+	}
+	
+	
 }

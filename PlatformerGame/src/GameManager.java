@@ -13,13 +13,16 @@ public class GameManager extends Thread{
 	private Protagonist protagonist;
 	private GamePanel gamePanel;
 	private Tiles tiles;
-	private int bulletDelay = 40;
+	private int bulletDelay = 30;
 	private int time = 0;
+	Level level;
+	int jumpcounter = 0;
 	
 	JFrame youDied = new JFrame("You died :(");
 	
 	public GameManager(GamePanel gamePanel){
 		
+		this.level = new Level(1);
 		this.tiles = new Tiles();
 //		this.world.initializeStage(1);
 		
@@ -28,6 +31,7 @@ public class GameManager extends Thread{
 		
 		this.gamePanel = gamePanel;
 		this.gamePanel.addProtagonist(protagonist);
+		this.gamePanel.addLevel(level);
 		
 		this.gameIsRunning = true;
 		
@@ -42,6 +46,7 @@ public class GameManager extends Thread{
 			protagonist.checkAscending();
 			protagonist.checkDescending();
 			protagonist.collisionChecker();
+			protagonist.platformCollisionChecker();
 			
 			manageKeys();
 			
@@ -83,9 +88,11 @@ public class GameManager extends Thread{
 		}
 		
 		if(currentKeys.contains(KeyEvent.VK_SPACE)){
+
 			if(!protagonist.isJumping()){
 				protagonist.jump();
 			}
+
 		}
 		
 		if(currentKeys.contains(KeyEvent.VK_S)) //will added for firing

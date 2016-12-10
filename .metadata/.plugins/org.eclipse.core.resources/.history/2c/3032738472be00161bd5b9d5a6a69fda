@@ -1,0 +1,59 @@
+import java.util.ArrayList;
+
+public class Level {
+	private ArrayList<Platform> platforms;
+
+	public Level(int level) {
+		if (level == 1)
+		{
+		Platform firstplat = new Platform(1300, 540);
+		platforms.add(firstplat);
+
+		
+		for(int i = 0; i < 50; i++){
+			Platform platform = new Platform(1300, 320);
+			if (i>0)
+			{
+				Platform oldplat = (Platform) platforms.get((i-1));
+//				platform.setX(1300+(64*oldplat.getNumBlocks())+25);
+				int newX = 1300+(64*oldplat.getNumBlocks())+25;
+				int newY;
+				if (oldplat.getY()<90)
+				{
+//					platform.setY(oldplat.getY()-60);
+					newY = oldplat.getY() - 60;
+				} else if (oldplat.getY()>570) {
+//					platform.setY(oldplat.getY()+60);
+					newY = oldplat.getY()+60;
+				} else {
+					int diff = (int) (Math.random()*50 - 50);
+//					platform.setY(oldplat.getY()+diff);
+					newY = oldplat.getY() + diff;
+				}
+				platform.setOriginx(newX);
+				platform.setOriginy(newY);
+				
+//				Platform newplat = new Platform(newX, newY);
+				platforms.add(platform);
+				
+//				if (platform.see == true) {
+//					g2.drawImage(platform.img, platform.x, platform.y, null);
+//					g2.draw(platform.getCollisionBox());
+//				}
+				
+			} else{
+				Platform newplat = new Platform(1300,540);
+				newplat.setSee(true);
+				platforms.add(newplat);
+//				if (platform.see == true) {
+//					g2.drawImage(platform.img, platform.x, platform.y, null);
+//					g2.draw(platform.getCollisionBox());
+//				}
+			}
+			
+		}
+		}
+		// TODO Auto-generated constructor stub
+	}
+
+}

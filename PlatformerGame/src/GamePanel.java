@@ -15,6 +15,7 @@ public class GamePanel extends JPanel{
 	private PlayPanel playPanel=new PlayPanel();
 	@SuppressWarnings("unused")
 	private Protagonist bb8;
+	private Level level;
 
 	public GamePanel(){
 		this.setRequestFocusEnabled(true);
@@ -36,6 +37,12 @@ public class GamePanel extends JPanel{
 	public void addProtagonist(Protagonist bb8) {
 		this.bb8=bb8;
 		playPanel.addProtagonist(bb8);
+//		statsPanel.addProtagonist(bb8);
+	}
+	
+	public void addLevel(Level level) {
+		this.level=level;
+		playPanel.addLevel(level);
 //		statsPanel.addProtagonist(bb8);
 	}
 	

@@ -1,0 +1,94 @@
+import java.awt.Image;
+import java.awt.Rectangle;
+
+import javax.swing.ImageIcon;
+
+public class Platform{
+	
+	Image img;
+	public int x;
+	public int y;
+	public int numBlocks;
+	public boolean see;
+	private Rectangle collisionBox;
+
+//	public Platform() {
+//		numBlocks = (int) (Math.random()*5 + 1);
+//		
+//		x = 1300;
+//		y = (int)(Math.random()*590+150);
+//		ImageIcon i = new ImageIcon("term.png");
+//		img = i.getImage();
+//		see = true;
+//		
+//		collisionBox = new Rectangle(x, y, Tile.TILE_SIZE * numBlocks, Tile.TILE_SIZE);
+//	}
+	
+	public Platform(int newx, int newy) {
+		numBlocks = (int) (Math.random()*5 + 1);
+		
+		x = newx;
+		y = newy;
+		ImageIcon i = new ImageIcon("term.png");
+		img = i.getImage();
+		see = true;
+		
+		collisionBox = new Rectangle(x, y, Tile.TILE_SIZE * numBlocks, Tile.TILE_SIZE);
+	}
+
+
+	public boolean isSee() {
+		return see;
+	}
+
+
+	public void setSee(boolean see) {
+		this.see = see;
+	}
+
+
+	public void move()
+	{
+		x = x - 2;
+		collisionBox.setLocation(x, y);
+		if (x < 0)
+			see = false;
+		
+	}
+	
+	public Rectangle getCollisionBox(){
+		return collisionBox;
+	}
+
+
+	public int getX() {
+		return x;
+	}
+
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+
+	public int getY() {
+		return y;
+	}
+
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+
+	public int getNumBlocks() {
+		return numBlocks;
+	}
+
+
+	public void setNumBlocks(int numBlocks) {
+		this.numBlocks = numBlocks;
+	}
+	
+	
+}
