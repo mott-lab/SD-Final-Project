@@ -91,10 +91,9 @@ public class GameManager extends Thread{
 				panel.add(imageLabel, BorderLayout.CENTER);
 				panel.add(resetButton, BorderLayout.SOUTH);
 				
+				panel.setLocation(GameFrame.WIDTH / 4, GameFrame.HEIGHT / 4);
 				youDied.add(panel);
 				
-				youDied.setLocation(GameFrame.WIDTH / 2, GameFrame.HEIGHT / 2);
-		
 				youDied.setSize(600, 500);
 				youDied.setVisible(true);
 			}

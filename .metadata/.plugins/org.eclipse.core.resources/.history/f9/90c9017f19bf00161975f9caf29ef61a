@@ -20,7 +20,7 @@ public class GameFrame extends JFrame {
 		this.setSize(WIDTH,HEIGHT);
 		
 		//set the title of the frame
-		this.setTitle("Platform 51");
+		this.setTitle("Space Adventures");
 		
 		//make the frame visible
 		this.setVisible(true);

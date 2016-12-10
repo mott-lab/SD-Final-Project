@@ -109,7 +109,7 @@ public class PlayPanel extends JPanel{
 				if (bull.see == true){
 					bull.move();
 					g2.drawImage(bull.img, bull.x, bull.y, null);
-//					g2.draw(bull.getCollisionBox());
+					g2.draw(bull.getCollisionBox());
 				}
 
 				else
@@ -171,11 +171,8 @@ public class PlayPanel extends JPanel{
 				Platform platform = (Platform) level.getPlatforms().get(i);
 				platform.move();
 				if (platform.see == true) {
-//					g2.drawImage(platform.img, platform.getX(), platform.getY(), null);
-					g2.setColor(Color.GREEN);
+					g2.drawImage(platform.img, platform.getX(), platform.getY(), null);
 					g2.draw(platform.getCollisionBox());
-					g2.setColor(Color.DARK_GRAY);
-					g2.fill(platform.getCollisionBox());
 					System.out.println("Drawing platform number: " + i);
 					System.out.println("Platform x: " + platform.getX());
 					System.out.println("Platform y: " + platform.getY());

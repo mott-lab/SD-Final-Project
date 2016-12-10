@@ -93,7 +93,7 @@ public class GameManager extends Thread{
 				
 				youDied.add(panel);
 				
-				youDied.setLocation(GameFrame.WIDTH / 2, GameFrame.HEIGHT / 2);
+				youDied.setLocation(GameFrame.WIDTH / 2, GameFrame.HEIGHT / 4);
 		
 				youDied.setSize(600, 500);
 				youDied.setVisible(true);

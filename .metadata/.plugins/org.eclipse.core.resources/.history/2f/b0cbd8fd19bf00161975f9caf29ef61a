@@ -13,8 +13,10 @@ public class GameFrame extends JFrame {
 	public GameFrame(GamePanel gamePanel){
 		
 		//set frame to appear at the center of the screen
-		this.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth()-WIDTH)/2),
-				((int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()-HEIGHT)/2));		
+//		this.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth()-WIDTH)/2),
+//				((int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()-HEIGHT)/2));		
+		
+		this.setLocationRelativeTo(null);
 	
 		//set the size of the frame
 		this.setSize(WIDTH,HEIGHT);

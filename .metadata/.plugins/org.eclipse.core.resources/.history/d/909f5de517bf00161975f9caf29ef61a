@@ -48,7 +48,7 @@ public class Platform{
 		x = newx;
 		y = newy;
 //		ImageIcon i = new ImageIcon("term.png");
-//		img = i.getImage();
+		img = i.getImage();
 		see = true;
 		
 		collisionBox = new Rectangle(originx, originy, PlayPanel.TILE_SIZE * numBlocks, PlayPanel.TILE_SIZE);

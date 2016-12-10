@@ -172,7 +172,6 @@ public class PlayPanel extends JPanel{
 				platform.move();
 				if (platform.see == true) {
 //					g2.drawImage(platform.img, platform.getX(), platform.getY(), null);
-					g2.setColor(Color.GREEN);
 					g2.draw(platform.getCollisionBox());
 					g2.setColor(Color.DARK_GRAY);
 					g2.fill(platform.getCollisionBox());
