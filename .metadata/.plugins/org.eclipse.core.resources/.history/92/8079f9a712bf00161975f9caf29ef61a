@@ -47,7 +47,7 @@ public class GamePanel extends JPanel{
 	
 	public void repaintGame(){
 		playPanel.repaint();
-		statsPanel.repaint();
+//		statsPanel.repaint();
 	}
 	
 	public void resetGame(){
@@ -65,9 +65,6 @@ public class GamePanel extends JPanel{
 
 		this.add(playPanel);
 		playPanel.setLocation(0, StatsPanel.STATS_HEIGHT);
-		
-		keyboardController=new KeyboardController();
-		this.addKeyListener(keyboardController);
 		
 		repaint();
 		repaintGame();

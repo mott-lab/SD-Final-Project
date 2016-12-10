@@ -180,6 +180,7 @@ public class PlayPanel extends JPanel{
 			}
 			
 			
+			
 	}
 	
 	public int getRows(){

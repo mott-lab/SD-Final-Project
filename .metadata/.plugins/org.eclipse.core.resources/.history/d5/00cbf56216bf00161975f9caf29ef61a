@@ -49,7 +49,6 @@ public class GameManager extends Thread{
 			
 			protagonist.checkAscending();
 			protagonist.checkDescending();
-			protagonist.checkIfOffScreen();
 			
 //			protagonist.collisionChecker();
 			protagonist.platformCollisionChecker();

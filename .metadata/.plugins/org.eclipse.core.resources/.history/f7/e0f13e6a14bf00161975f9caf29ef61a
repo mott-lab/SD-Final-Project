@@ -1,11 +1,9 @@
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,7 +19,6 @@ public class GameManager extends Thread{
 	private int time = 0;
 	private Level level;
 	private int jumpcounter = 0;
-	
 	
 	JFrame youDied = new JFrame("You died :(");
 	
@@ -49,7 +46,6 @@ public class GameManager extends Thread{
 			
 			protagonist.checkAscending();
 			protagonist.checkDescending();
-			protagonist.checkIfOffScreen();
 			
 //			protagonist.collisionChecker();
 			protagonist.platformCollisionChecker();
@@ -71,29 +67,23 @@ public class GameManager extends Thread{
 				JPanel panel = new JPanel();
 								
 				JLabel gameOver = new JLabel("You have lost the game");
-				ImageIcon deathGif = new ImageIcon("death.gif");
-				JLabel imageLabel = new JLabel();
-				imageLabel.setIcon(deathGif);
-				
 				JButton resetButton = new JButton("I'm addicted, let me keep playing.");
 				resetButton.addActionListener(new ActionListener(){
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						
 						resetGame(gamePanel);
 						youDied.setVisible(false);
 					}
 					
 				});
 				
-				panel.add(gameOver, BorderLayout.NORTH);
-				panel.add(imageLabel, BorderLayout.CENTER);
-				panel.add(resetButton, BorderLayout.SOUTH);
+				panel.add(gameOver);
+				panel.add(resetButton);
 				
 				youDied.add(panel);
 				
-				youDied.setSize(600, 500);
+				youDied.setSize(350, 150);
 				youDied.setVisible(true);
 			}
 		}

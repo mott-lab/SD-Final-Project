@@ -49,7 +49,6 @@ public class GameManager extends Thread{
 			
 			protagonist.checkAscending();
 			protagonist.checkDescending();
-			protagonist.checkIfOffScreen();
 			
 //			protagonist.collisionChecker();
 			protagonist.platformCollisionChecker();
@@ -93,7 +92,7 @@ public class GameManager extends Thread{
 				
 				youDied.add(panel);
 				
-				youDied.setSize(600, 500);
+				youDied.setSize(500, 500);
 				youDied.setVisible(true);
 			}
 		}

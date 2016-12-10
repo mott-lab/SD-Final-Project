@@ -177,12 +177,14 @@ public class Protagonist {
 		if (descending) {
 			//check if lowest part of protagonist's collisionBox divided by the size of each game tile is greater than the number of rows in the panel (9)
 			//this checks if he is off screen at the bottom
-			
+			if(collisionBox.getMaxY() / PlayPanel.TILE_SIZE >= 9){
+				died();
+			} else {
 				// Move character in downward direction
 				currentY += JUMP_DISPLACEMENT;
 //				collisionBox.setLocation(currentX, currentY);
 				updateLocations();
-			
+			}
 		} 
 	}
 	
@@ -559,24 +561,6 @@ public class Protagonist {
 		this.level = level;
 	}
 	
-	public void checkIfOffScreen(){
-		//check if protagonist is out of bounds of the GameFrame
-		//if moves off to the left
-		if(collisionBox.getMaxX() <=0 ){
-			died();
-		}
-		//if moves off to the right
-		if(collisionBox.getMinX() > GameFrame.WIDTH){
-			died();
-		}
-		//if jumps too high
-		if(collisionBox.getMinY() <= 0){
-			died();
-		}
-		//if falls to bottom
-		if(collisionBox.getMaxY() > GameFrame.HEIGHT){
-			died();
-		}
-	}
+
 
 }

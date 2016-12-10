@@ -15,7 +15,7 @@ public class Bullet {
 		ImageIcon aBullet = new ImageIcon("laserShot.png");
 		img = aBullet.getImage();
 		see = true;
-		collisionBox = new Rectangle(beginX, beginY, 52, 12);
+		collisionBox = new Rectangle(beginX, beginY, 22, 12);
 	}
 	
 	public void move()

@@ -46,7 +46,7 @@ public class PlayPanel extends JPanel{
 
 	public PlayPanel(){
 		
-		super();
+//		super();
 
 		try{
 			BACKGROUND = ImageIO.read(new File("space_background.png"));
@@ -178,6 +178,7 @@ public class PlayPanel extends JPanel{
 					System.out.println("Platform y: " + platform.getY());
 				}
 			}
+			
 			
 			
 	}
