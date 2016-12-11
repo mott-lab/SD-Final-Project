@@ -21,13 +21,10 @@ public class GameManager extends Thread{
 	private int time = 0;
 	private Level level;
 	private int jumpcounter = 0;
-	
-	
-	JFrame youDied = new JFrame("You died :(");
-	
+		
 	public GameManager(GamePanel gamePanel){
 		
-		this.level = new Level(1);
+		this.level = new Level(3);
 		
 		//initialize protagonist888////
 		this.protagonist = new Protagonist();
@@ -51,7 +48,6 @@ public class GameManager extends Thread{
 			protagonist.checkDescending();
 			protagonist.checkIfOffScreen();
 			
-//			protagonist.collisionChecker();
 			protagonist.platformCollisionChecker();
 			
 			manageKeys();
@@ -65,7 +61,7 @@ public class GameManager extends Thread{
 			}
 			
 			if (protagonist.isDead()) {
-				
+				JFrame youDied = new JFrame("You died :(");
 				gameIsRunning = false;
 				
 				JPanel panel = new JPanel();
@@ -75,7 +71,7 @@ public class GameManager extends Thread{
 				JLabel imageLabel = new JLabel();
 				imageLabel.setIcon(deathGif);
 				
-				JButton resetButton = new JButton("I'm addicted, let me keep playing.");
+				JButton resetButton = new JButton("Play again.");
 				resetButton.addActionListener(new ActionListener(){
 
 					@Override
@@ -98,6 +94,41 @@ public class GameManager extends Thread{
 				youDied.setSize(600, 500);
 				youDied.setVisible(true);
 			}
+			if (protagonist.isWon()){
+				JFrame youWon = new JFrame("You won :)");
+
+				gameIsRunning = false;
+				
+				JPanel panel = new JPanel();
+								
+				JLabel gameOver = new JLabel("You have won the game");
+				ImageIcon deathGif = new ImageIcon("death.gif");
+				JLabel imageLabel = new JLabel();
+				imageLabel.setIcon(deathGif);
+				
+				JButton resetButton = new JButton("Next Level?");
+				resetButton.addActionListener(new ActionListener(){
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						resetGame(gamePanel);
+						youWon.setVisible(false);
+					}
+					
+				});
+				
+				panel.add(gameOver, BorderLayout.NORTH);
+				panel.add(imageLabel, BorderLayout.CENTER);
+				panel.add(resetButton, BorderLayout.SOUTH);
+				
+				youWon.add(panel);
+				
+				youWon.setLocation(GameFrame.WIDTH / 2, GameFrame.HEIGHT / 2);
+		
+				youWon.setSize(600, 500);
+				youWon.setVisible(true);
+			}
 		}
 	}
 	
@@ -107,7 +138,7 @@ public class GameManager extends Thread{
 	}
 	
 	public void manageKeys(){
-		//access keys being pressed
+		//access keys being pressed. Use HashSet because it is the fastest data structure for contains()
 		HashSet<Integer> currentKeys = KeyboardController.getActiveKeys();
 		
 		//manage left/right direction

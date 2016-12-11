@@ -39,24 +39,19 @@ public class Level {
 			Platform oldplat = secondplat;
 			
 			for(int i = 0; i < 10; i++){
-	//			Platform platform = new Platform(1300, 320);
 				if (i>1)
 				{
 					System.out.println(i);
 					oldplat = (Platform) platforms.get((i-1));
-	//				platform.setX(1300+(64*oldplat.getNumBlocks())+25);
 					int newX = farX + (64*oldplat.getNumBlocks());
 					int newY;
 					if (oldplat.getY()<90)
 					{
-	//					platform.setY(oldplat.getY()-60);
 						newY = oldplat.getY() - 60;
 					} else if (oldplat.getY()>570) {
-	//					platform.setY(oldplat.getY()+60);
 						newY = oldplat.getY()+60;
 					} else {
 						int diff = (int) (Math.random()*50 - 50);
-	//					platform.setY(oldplat.getY()+diff);
 						newY = oldplat.getY() + diff;
 					}
 					Platform platter = new Platform(newX, newY);
@@ -64,25 +59,11 @@ public class Level {
 					
 					farX += (64*oldplat.getNumBlocks())+25;
 					
-	//				platform.setOriginx(newX);
-	//				platform.setOriginy(newY);
-	//				
-	//				Platform newplat = new Platform(newX, newY);
-	//				platforms.add(platform);
-					
-	//				if (platform.see == true) {
-	//					g2.drawImage(platform.img, platform.x, platform.y, null);
-	//					g2.draw(platform.getCollisionBox());
-	//				}
-					
 				} else{
 					Platform newplat = new Platform(1300,540);
 					newplat.setSee(true);
 					platforms.add(newplat);
-	//				if (platform.see == true) {
-	//					g2.drawImage(platform.img, platform.x, platform.y, null);
-	//					g2.draw(platform.getCollisionBox());
-	//				}
+
 				}
 				
 			}
@@ -101,6 +82,123 @@ public class Level {
 			int goalX = farX + (64*oldplat.getNumBlocks());
 			
 			Platform goalPlat = new Platform(goalX, goalY);
+			goalPlat.setEnd(true);
+			platforms.add(goalPlat);
+		}
+		
+		if (level == 2)
+		{
+			Platform firstplat = new Platform(1, 540, 20);
+			platforms.add(firstplat);
+			Platform secondplat = new Platform(1325, 540);
+			platforms.add(secondplat);
+	
+			int farX = 1300;
+			Platform oldplat = secondplat;
+			
+			for(int i = 0; i < 75; i++){
+				if (i>1)
+				{
+					System.out.println(i);
+					oldplat = (Platform) platforms.get((i-1));
+					int newX = farX + (64*oldplat.getNumBlocks());
+					int newY;
+					if (oldplat.getY()<90)
+					{
+						newY = oldplat.getY() - 60;
+					} else if (oldplat.getY()>570) {
+						newY = oldplat.getY()+60;
+					} else {
+						int diff = (int) (Math.random()*50 - 50);
+						newY = oldplat.getY() + diff;
+					}
+					Platform platter = new Platform(newX, newY);
+					platforms.add(platter);
+					
+					farX += (64*oldplat.getNumBlocks())+25;
+					
+				} else{
+					Platform newplat = new Platform(1300,540);
+					newplat.setSee(true);
+					platforms.add(newplat);
+
+				}
+				
+			}
+			
+			//add goal platform
+			int goalY;
+			if (oldplat.getY()<90)
+			{
+				goalY = oldplat.getY() - 60;
+			} else if (oldplat.getY()>570) {
+				goalY = oldplat.getY()+60;
+			} else {
+				int diff = (int) (Math.random()*50 - 50);
+				goalY = oldplat.getY() + diff;
+			}
+			int goalX = farX + (64*oldplat.getNumBlocks());
+			
+			Platform goalPlat = new Platform(goalX, goalY);
+			goalPlat.setEnd(true);
+			platforms.add(goalPlat);
+		}
+		
+		if (level == 3)
+		{
+			Platform firstplat = new Platform(1, 540, 20);
+			platforms.add(firstplat);
+			Platform secondplat = new Platform(1325, 540);
+			platforms.add(secondplat);
+	
+			int farX = 1300;
+			Platform oldplat = secondplat;
+			
+			for(int i = 0; i < 10; i++){
+				if (i>1)
+				{
+					System.out.println(i);
+					oldplat = (Platform) platforms.get((i-1));
+					int newX = farX + (64*oldplat.getNumBlocks());
+					int newY;
+					if (oldplat.getY()<90)
+					{
+						newY = oldplat.getY() - 60;
+					} else if (oldplat.getY()>570) {
+						newY = oldplat.getY()+60;
+					} else {
+						int diff = (int) (Math.random()*50 - 50);
+						newY = oldplat.getY() + diff;
+					}
+					Platform platter = new Platform(newX, newY);
+					platforms.add(platter);
+					
+					farX += (64*oldplat.getNumBlocks())+25;
+					
+				} else{
+					Platform newplat = new Platform(1300,540);
+					newplat.setSee(true);
+					platforms.add(newplat);
+
+				}
+				
+			}
+			
+			//add goal platform
+			int goalY;
+			if (oldplat.getY()<90)
+			{
+				goalY = oldplat.getY() - 60;
+			} else if (oldplat.getY()>570) {
+				goalY = oldplat.getY()+60;
+			} else {
+				int diff = (int) (Math.random()*50 - 50);
+				goalY = oldplat.getY() + diff;
+			}
+			int goalX = farX + (64*oldplat.getNumBlocks());
+			
+			Platform goalPlat = new Platform(goalX, goalY);
+			goalPlat.setEnd(true);
 			platforms.add(goalPlat);
 		}
 		

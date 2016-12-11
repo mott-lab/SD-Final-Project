@@ -12,6 +12,7 @@ public class Platform{
 	private int originy;
 	private int numBlocks;
 	public boolean see;
+	public boolean end;
 	private Rectangle collisionBox;
 
 //	public Platform() {
@@ -37,7 +38,7 @@ public class Platform{
 //		img = i.getImage();
 		see = true;
 		
-		collisionBox = new Rectangle(originx, originy, PlayPanel.TILE_SIZE * numBlocks, PlayPanel.TILE_SIZE);
+		collisionBox = new Rectangle(x, y, PlayPanel.TILE_SIZE * numBlocks, PlayPanel.TILE_SIZE);
 	}
 
 	//constructor for when wanting control of how long the platform is.  Mainly used to set the size of the first platform
@@ -51,7 +52,7 @@ public class Platform{
 //		img = i.getImage();
 		see = true;
 		
-		collisionBox = new Rectangle(originx, originy, PlayPanel.TILE_SIZE * numBlocks, PlayPanel.TILE_SIZE);
+		collisionBox = new Rectangle(x, y, PlayPanel.TILE_SIZE * numBlocks, PlayPanel.TILE_SIZE);
 	}
 
 	public int getOriginx() {
@@ -63,6 +64,14 @@ public class Platform{
 		this.originx = originx;
 	}
 
+
+	public boolean isEnd() {
+		return end;
+	}
+
+	public void setEnd(boolean end) {
+		this.end = end;
+	}
 
 	public int getOriginy() {
 		return originy;

@@ -10,8 +10,11 @@ public class GameFrame extends JFrame {
 	public static final int WIDTH=1280;
 	public static final int HEIGHT=704;
 
-	public GameFrame(GamePanel gamePanel){
+	public GameFrame() {
 		
+		//initialize the gamePanel
+		GamePanel gamePanel=new GamePanel();
+				
 		//set frame to appear at the center of the screen
 		this.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth()-WIDTH)/2),
 				((int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()-HEIGHT)/2));		

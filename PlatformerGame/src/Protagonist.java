@@ -28,9 +28,10 @@ public class Protagonist {
 
 	private int currentFrameNumber = 0;	
 	
-	private int currentX = 100;		//current horizontal start dist
-	
-	private int currentY = GameFrame.HEIGHT - PlayPanel.TERRAIN_HEIGHT - PROTAGONIST_HEIGHT;
+	private final int INITIAL_X = 100;
+	private final int INITIAL_Y = GameFrame.HEIGHT - PlayPanel.TERRAIN_HEIGHT - PROTAGONIST_HEIGHT;
+	private int currentX = INITIAL_X;		//current horizontal start dist
+	private int currentY = INITIAL_Y;
 	
 	private boolean jumping;
 	
@@ -38,8 +39,9 @@ public class Protagonist {
 	
 	private boolean moving = true;
 	private boolean ascending = false;
-	private boolean descending = false;
+	private boolean descending = true;
 	private boolean dead = false;
+	private boolean won = false;
 	
 	private boolean moveRightPossible = true;
 	private boolean moveLeftPossible = true;
@@ -52,6 +54,8 @@ public class Protagonist {
 	private Point bottomRight;
 	private Point topLeft;
 	private Point bottomLeft;
+	private Point middleRight;
+	private Point middleLeft;
 //	static ArrayList<Enemy> enemies;
 	
 	private static final int JUMP_DISPLACEMENT = 4;
@@ -82,6 +86,8 @@ public class Protagonist {
 		bottomRight = new Point( currentX + PROTAGONIST_WIDTH, currentY + PROTAGONIST_HEIGHT);
 		topLeft = new Point(currentX, currentY);
 		bottomLeft = new Point(currentX, currentY + PROTAGONIST_HEIGHT);
+		middleRight = new Point(currentX + PROTAGONIST_WIDTH, ( (currentY + PROTAGONIST_HEIGHT) + currentY) / 2 );
+		middleLeft = new Point(currentX, ( (currentY + PROTAGONIST_HEIGHT) + currentY) / 2 );
 	}
 
 	private void loadImages(){
@@ -93,6 +99,12 @@ public class Protagonist {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+
+	public void reset() {
+		currentX = INITIAL_X;
+		currentY = INITIAL_Y;
 	}
 	
 	public void move(int direction){
@@ -223,6 +235,8 @@ public class Protagonist {
 		bottomRight.setLocation(currentX + PROTAGONIST_WIDTH, currentY + PROTAGONIST_HEIGHT);
 		topLeft.setLocation(currentX, currentY);
 		bottomLeft.setLocation(currentX, currentY + PROTAGONIST_HEIGHT);
+		middleRight.setLocation(currentX + PROTAGONIST_WIDTH, ( (currentY + PROTAGONIST_HEIGHT) + currentY) / 2 );
+		middleLeft.setLocation(currentX, ( (currentY + PROTAGONIST_HEIGHT) + currentY) / 2 );
 	}
 	
 	public Point gettopright(){
@@ -455,51 +469,73 @@ public class Protagonist {
 //	}	
 	
 	public void platformCollisionChecker(){
+		
+		int noCollide = 0;
+		
 		//check collision with moving blocks
 		for(int i = 0; i < level.getPlatforms().size(); i++){
 			
 			
-			//if the collision boxes overlap, handle each type of collision
-			if(this.collisionBox.intersects(level.getPlatforms().get(i).getCollisionBox())){
-				
-				//get the intersecting block
-				Platform collidingPlatform = level.getPlatforms().get(i);
-//				System.out.println(i);
-				//check if collides from side
-				if(collidingPlatform.getCollisionBox().contains(topRight) || collidingPlatform.getCollisionBox().contains(new Point ((int)bottomRight.getX(), ((int)(bottomRight.getY() + topRight.getY()) / 2 ) ))){
-					currentX -= 1;
-					moveRightPossible = false;
+			
+//			if(level.getPlatforms().get(i).getX() < 1380 ){
+				//if the collision boxes overlap, handle each type of collision
+				if(this.collisionBox.intersects(level.getPlatforms().get(i).getCollisionBox())){
 					
-				}
-				
-				if(ascending){
-					//check if hit head
-					if(collidingPlatform.getCollisionBox().contains(topLeft) || collidingPlatform.getCollisionBox().contains(topRight) ){
-						System.out.println("Collision with platform type 1");
+					//get the intersecting block
+					Platform collidingPlatform = level.getPlatforms().get(i);
+	//				System.out.println(i);
+					//check if collides from side
+					if(collidingPlatform.getCollisionBox().contains(topRight) || collidingPlatform.getCollisionBox().contains(middleRight) ){
+						currentX -= 1;
 						moveRightPossible = false;
-						ascending = false;
-						descending = true;
 						
+					}else{
+//						descending = true;
+						moveRightPossible = true;
 					}
+					
+					if(ascending){
+						//check if hit head
+						if(collidingPlatform.getCollisionBox().contains(topLeft) || collidingPlatform.getCollisionBox().contains(topRight) ){
+//							System.out.println("Collision with platform type 1");
+							moveRightPossible = false;
+							ascending = false;
+							descending = true;
+							jump_count = 0;
+						}
+					}else{
+						descending = true;
+					}
+						
+					if(descending){
+						
+						//check if lands on a platform
+						if(collidingPlatform.getCollisionBox().contains(bottomLeft) || collidingPlatform.getCollisionBox().contains(bottomRight)){
+//							System.out.println("Collision with platform type 2");
+							if (collidingPlatform.isEnd()==true){
+								won = true;
+							} else {
+								currentX -= 1;		//move with platform
+								descending = false;
+								jump_count = 0;
+							}
+						}else{
+							descending = true;
+						}
+					}
+	//				else{
+	//					moveRightPossible = false;
+	//					currentX -= 2;
+//					}
+	
 				}else{
-					descending = true;
+					noCollide++;
+					System.out.println(noCollide);
 				}
-					
-				if(descending){
-					
-					//check if lands on 
-					if(collidingPlatform.getCollisionBox().contains(bottomLeft) || collidingPlatform.getCollisionBox().contains(bottomRight)){
-						System.out.println("Collision with platform type 2");
-						currentX -= 1;		//move with platform
-						descending = false;
-						jump_count = 0;
-					}
-				}
-//				else{
-//					moveRightPossible = false;
-//					currentX -= 2;
-//				}
-
+//			}
+			
+			if(noCollide == level.getPlatforms().size() && (ascending == false)){
+				descending = true;
 			}
 			
 			updateLocations();
@@ -572,5 +608,18 @@ public class Protagonist {
 			died();
 		}
 	}
+
+	public boolean isWon() {
+		return won;
+	}
+
+	public void setWon(boolean won) {
+		this.won = won;
+	}
+
+	public Level getLevel() {
+		return level;
+	}
+	
 
 }

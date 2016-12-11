@@ -11,18 +11,21 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel{
 	
 	private KeyboardController keyboardController;
-	private StatsPanel statsPanel=new StatsPanel();
-	private PlayPanel playPanel=new PlayPanel();
+	private StatsPanel statsPanel;
+	private PlayPanel playPanel;
 	
 	private Protagonist bb8;
 	private Level level;
-
+	
 	public GamePanel(){
 		this.setRequestFocusEnabled(true);
 		this.setSize(WIDTH, HEIGHT);
 		this.setLayout(null);
 		this.setBackground(Color.BLACK);
 
+		statsPanel = new StatsPanel();
+		playPanel = new PlayPanel();
+		
 		this.add(statsPanel);
 		statsPanel.setLocation(0, 0);
 
@@ -31,6 +34,10 @@ public class GamePanel extends JPanel{
 		
 		keyboardController=new KeyboardController();
 		this.addKeyListener(keyboardController);
+		
+		//initialize and start the main thread of the game
+		GameManager gameManager=new GameManager(this);
+		gameManager.start();
 	}
 	
 	public void addProtagonist(Protagonist bb8) {
@@ -52,13 +59,16 @@ public class GamePanel extends JPanel{
 	
 	public void resetGame(){
 		
-		this.statsPanel = new StatsPanel();
-		this.playPanel = new PlayPanel();
+		this.remove(statsPanel);
+		this.remove(playPanel);
 		
 		this.setRequestFocusEnabled(true);
 		this.setSize(WIDTH, HEIGHT);
 		this.setLayout(null);
 		this.setBackground(Color.BLACK);
+
+		statsPanel = new StatsPanel();
+		playPanel = new PlayPanel();
 		
 		this.add(statsPanel);
 		statsPanel.setLocation(0, 0);
@@ -67,8 +77,7 @@ public class GamePanel extends JPanel{
 		playPanel.setLocation(0, StatsPanel.STATS_HEIGHT);
 		
 		keyboardController=new KeyboardController();
-		this.addKeyListener(keyboardController);
-		
+		this.addKeyListener(keyboardController);		
 		repaint();
 		repaintGame();
 	}

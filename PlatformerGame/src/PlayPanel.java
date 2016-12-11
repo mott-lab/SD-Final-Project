@@ -119,7 +119,7 @@ public class PlayPanel extends JPanel{
 			//Generates enemies randomly
 			int random = (int)(Math.random()*50+1);
 			if (random%50 == 0)	{
-				Enemy enemy = new Enemy();
+				Enemy enemy = new Enemy(bb8);
 				enemies.add(enemy);
 			}
 			
@@ -175,10 +175,15 @@ public class PlayPanel extends JPanel{
 					g2.setColor(Color.GREEN);
 					g2.draw(platform.getCollisionBox());
 					g2.setColor(Color.DARK_GRAY);
+					if(platform.isEnd()){
+						g2.setColor(Color.YELLOW);
+					}
 					g2.fill(platform.getCollisionBox());
-					System.out.println("Drawing platform number: " + i);
-					System.out.println("Platform x: " + platform.getX());
-					System.out.println("Platform y: " + platform.getY());
+//					System.out.println("Drawing platform number: " + i);
+//					System.out.println("Platform x: " + platform.getX());
+//					System.out.println("Platform y: " + platform.getY());
+					
+				
 				}
 			}
 			
