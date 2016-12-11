@@ -65,9 +65,6 @@ public class Protagonist {
 	
 	private Level level;
 
-	public static int MAX_LIVES = 3;
-	private int currentLives = 3;
-	
 	public Protagonist(){
 		//images for movement
 		run_L = new BufferedImage[35];
@@ -623,15 +620,6 @@ public class Protagonist {
 	public Level getLevel() {
 		return level;
 	}
-
-	public int getCurrentLives() {
-		return currentLives;
-	}
-
-	public void setCurrentLives(int currentLives) {
-		this.currentLives = currentLives;
-	}
-	
 	
 
 }

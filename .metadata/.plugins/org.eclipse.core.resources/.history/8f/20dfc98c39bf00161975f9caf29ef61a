@@ -24,11 +24,6 @@ import javax.swing.JPanel;
 
 public class StatsPanel extends JPanel{
 
-	private BufferedImage livingHeart;
-	private BufferedImage statsPanel;
-	public static final int STATS_HEIGHT=50;
-	private Protagonist bb8;
-	
 	public StatsPanel(){
 		this.setSize(GameFrame.WIDTH, STATS_HEIGHT);
 		this.setBackground(Color.BLACK);
@@ -67,5 +62,8 @@ public class StatsPanel extends JPanel{
 		this.bb8=bb8;
 	}
 	
-	
+	private BufferedImage livingHeart;
+	private BufferedImage statsPanel;
+	public static final int STATS_HEIGHT=50;
+	private Protagonist bb8;
 }

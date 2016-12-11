@@ -67,7 +67,6 @@ public class PlayPanel extends JPanel{
 		//double buffering should improve animations
 		this.setDoubleBuffered(true);
 		
-		System.out.println("Fuck 5.");
 		
 	}
 	

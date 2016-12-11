@@ -43,13 +43,13 @@ public class GamePanel extends JPanel{
 	public void addProtagonist(Protagonist bb8) {
 		this.bb8=bb8;
 		playPanel.addProtagonist(bb8);
-		statsPanel.addProtagonist(bb8);
+//		statsPanel.addProtagonist(bb8);
 	}
 	
 	public void addLevel(Level level) {
 		this.level=level;
 		playPanel.addLevel(level);
-		statsPanel.addProtagonist(bb8);
+//		statsPanel.addProtagonist(bb8);
 	}
 	
 	public void repaintGame(){
@@ -62,8 +62,6 @@ public class GamePanel extends JPanel{
 		this.remove(statsPanel);
 		this.remove(playPanel);
 		
-		System.out.println("Fuck 1");
-		
 		this.setRequestFocusEnabled(true);
 		this.setSize(WIDTH, HEIGHT);
 		this.setLayout(null);
@@ -72,8 +70,6 @@ public class GamePanel extends JPanel{
 		statsPanel = new StatsPanel();
 		playPanel = new PlayPanel();
 		
-		System.out.println("Fuck 2");
-		
 		this.add(statsPanel);
 		statsPanel.setLocation(0, 0);
 
@@ -81,13 +77,8 @@ public class GamePanel extends JPanel{
 		playPanel.setLocation(0, StatsPanel.STATS_HEIGHT);
 		
 		keyboardController=new KeyboardController();
-		this.addKeyListener(keyboardController);	
-		
-		System.out.println("Fuck 3");
-		
+		this.addKeyListener(keyboardController);		
 		repaint();
 		repaintGame();
-		
-		System.out.println("Fuck 4.");
 	}
 }

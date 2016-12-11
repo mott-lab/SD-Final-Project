@@ -24,11 +24,6 @@ import javax.swing.JPanel;
 
 public class StatsPanel extends JPanel{
 
-	private BufferedImage livingHeart;
-	private BufferedImage statsPanel;
-	public static final int STATS_HEIGHT=50;
-	private Protagonist bb8;
-	
 	public StatsPanel(){
 		this.setSize(GameFrame.WIDTH, STATS_HEIGHT);
 		this.setBackground(Color.BLACK);
@@ -53,7 +48,7 @@ public class StatsPanel extends JPanel{
 		g2.drawImage(statsPanel,0,0,GameFrame.WIDTH-5,STATS_HEIGHT,null);
 		
 		for(int i=0; i<bb8.MAX_LIVES; i++){
-			if(bb8.getCurrentLives()>i){
+			if(bb8.getCurrentLife()>i){
 				g2.drawImage(livingHeart,144 + 60*i,4 , 32, 42,null);
 			}
 		}
@@ -67,5 +62,8 @@ public class StatsPanel extends JPanel{
 		this.bb8=bb8;
 	}
 	
-	
+	private BufferedImage livingHeart;
+	private BufferedImage statsPanel;
+	public static final int STATS_HEIGHT=50;
+	private Protagonist bb8;
 }
