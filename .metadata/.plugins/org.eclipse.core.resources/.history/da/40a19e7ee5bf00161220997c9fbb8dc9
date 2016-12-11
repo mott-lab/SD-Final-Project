@@ -87,7 +87,6 @@ public class GameManager extends Thread{
 				btnPanel.add(exitButton, BorderLayout.WEST);
 				
 				if(!gamePanel.gameOver()) {
-					youDied.setSize(600, 360);
 			
 					deathGif = new ImageIcon("lifeloss.gif");
 					imageLabel = new JLabel();
@@ -107,8 +106,6 @@ public class GameManager extends Thread{
 					});
 					
 				} else {
-					youDied.setSize(600, 460);
-					
 					deathGif = new ImageIcon("death.gif");
 					imageLabel = new JLabel();
 					imageLabel.setIcon(deathGif);
@@ -125,7 +122,6 @@ public class GameManager extends Thread{
 						
 					});
 				}
-				
 				resetButton.setPreferredSize(new Dimension(150, 30));
 				btnPanel.add(resetButton, BorderLayout.EAST);
 				btnPanel.setPreferredSize(new Dimension (400, 40));
@@ -138,6 +134,7 @@ public class GameManager extends Thread{
 				
 				youDied.setLocation(GameFrame.WIDTH / 2, GameFrame.HEIGHT / 2);
 		
+				youDied.setSize(600, 360);
 				youDied.setVisible(true);
 			}
 			

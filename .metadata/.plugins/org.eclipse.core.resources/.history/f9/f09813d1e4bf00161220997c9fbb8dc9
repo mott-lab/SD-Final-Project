@@ -50,7 +50,13 @@ public class Level {
 	
 	private int getNewX(Platform oldplat, int farX) {
 		int newX;
+				
+//		newX = farX + (64*(oldplat.getNumBlocks() + 1));
 		newX = farX + (int) ( oldplat.getCollisionBox().getMaxX() );
+//		System.out.println("farX is " + farX);
+//		System.out.println(64*oldplat.getNumBlocks());
+//		System.out.println("Calculated x is " + newX);
+		
 		return newX;
 	}
 	
@@ -85,6 +91,8 @@ public class Level {
 					platforms.add(platter);
 					
 					farX = newX + 50;
+					System.out.println("numBlocks is " + oldplat.getNumBlocks());
+					System.out.println("X is " + newX);
 				} 
 			}
 			

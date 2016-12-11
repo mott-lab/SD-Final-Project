@@ -139,6 +139,7 @@ public class PlayPanel extends JPanel{
 			if (enemy.see == true){
 				enemy.move();
 				g2.drawImage(enemy.img, enemy.x, enemy.y, null);
+				g2.draw(enemy.getCollisionBox());
 			}
 			else
 			{

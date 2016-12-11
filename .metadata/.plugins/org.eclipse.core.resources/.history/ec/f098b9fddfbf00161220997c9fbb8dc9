@@ -267,9 +267,11 @@ public class Protagonist {
 	}
 	
 	public void stop(){
+		System.out.println("Stop");
 		//when the protagonist is stopped, it is still moving slightly faster than the block it is on.
 		//so, incremement the protagonist's animation frame half as fast as when it moves.
 		if(protagonistRepaintCounter == 0){
+			System.out.println("Should increment frame");
 			incrementFrameNumber();
 			protagonistRepaintCounter = 15;
 		}else{

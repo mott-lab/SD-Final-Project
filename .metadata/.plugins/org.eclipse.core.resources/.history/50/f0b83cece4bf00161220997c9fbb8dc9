@@ -96,9 +96,14 @@ public class GamePanel extends JPanel{
 	
 	public void resetGame(){
 		
+//		this.remove(statsPanel);
 		this.remove(playPanel);
 				
+//		statsPanel = new StatsPanel();
 		playPanel = new PlayPanel(levelCount);
+				
+//		this.add(statsPanel);
+//		statsPanel.setLocation(0, 0);
 
 		this.add(playPanel);
 		playPanel.setLocation(0, StatsPanel.STATS_HEIGHT);
