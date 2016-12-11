@@ -88,7 +88,7 @@ public class PlayPanel extends JPanel{
 		level.setBackx_two(level.getBackx_two()-1);
 		if (level.getBackx_two()+1250 < 0)
 		{
-			level.setBackx_two(1250);
+			level.setBackx_one(1250);
 		}
 		
 		//draw the protagonist of the game		
