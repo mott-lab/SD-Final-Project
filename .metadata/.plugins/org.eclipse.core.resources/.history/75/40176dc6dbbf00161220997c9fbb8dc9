@@ -27,8 +27,6 @@ public class Protagonist {
 	private int PROTAGONIST_WIDTH = 32;
 
 	private int currentFrameNumber = 0;	
-	private int moveCount = 5;
-	private int protagonistRepaintCounter = 15  ;	//used when protagonist is stopped
 	
 	private final int INITIAL_X = 100;
 	private final int INITIAL_Y = GameFrame.HEIGHT - PlayPanel.TERRAIN_HEIGHT - PROTAGONIST_HEIGHT;
@@ -114,6 +112,10 @@ public class Protagonist {
 	
 	public void move(int direction){
 		
+//		moving = true;
+//		collisionChecker();
+		
+//		if (canMove()){
 		if(direction == KeyEvent.VK_LEFT){
 			if(canMoveLeft()){
 				//update position
@@ -123,13 +125,8 @@ public class Protagonist {
 				updateLocations();
 //				collisionBox.setLocation(currentX, currentY);
 				
-				//change the current frame in animation every 3 repaints (necessary when repainting so quickly to smooth the animation
-				if(moveCount == 0){
-					decrementFrameNumber();
-					moveCount = 5;
-				}else{
-					moveCount --;
-				}
+				//change the current frame in animation
+				decrementFrameNumber();
 				currentImage = run_L[currentFrameNumber];
 				
 				//set last direction
@@ -144,13 +141,7 @@ public class Protagonist {
 				updateLocations();
 //				collisionBox.setLocation(currentX, currentY);
 				
-				//change the current frame in animation every 3 repaints (necessary when repainting so quickly to smooth the animation
-				if(moveCount == 0){
-					incrementFrameNumber();
-					moveCount = 5;
-				}else{
-					moveCount --;
-				}
+				incrementFrameNumber();
 				currentImage = run_R[currentFrameNumber];
 				
 				//set last direction
@@ -224,9 +215,10 @@ public class Protagonist {
     //In this case MOVE_COUNTER_THRESH is set to 5. The use of "6" instead of a variable is temporary
     //because I still don't know how many frames will be used in the final animation
 	
-	public void incrementFrameNumber(){
+	private void incrementFrameNumber(){
 		currentFrameNumber++;
 		currentFrameNumber %= 35;
+		
 	}
 	
 	private void decrementFrameNumber(){
@@ -246,8 +238,8 @@ public class Protagonist {
 		bottomRight.setLocation(currentX + PROTAGONIST_WIDTH, currentY + PROTAGONIST_HEIGHT);
 		topLeft.setLocation(currentX, currentY);
 		bottomLeft.setLocation(currentX, currentY + PROTAGONIST_HEIGHT);
-		middleRight.setLocation(currentX + PROTAGONIST_WIDTH, ( (currentY + PROTAGONIST_HEIGHT) + currentY) / 2 + 10);	//use 10 as offset to better handle collisions from side
-		middleLeft.setLocation(currentX, ( (currentY + PROTAGONIST_HEIGHT) + currentY) / 2 + 10);
+		middleRight.setLocation(currentX + PROTAGONIST_WIDTH, ( (currentY + PROTAGONIST_HEIGHT) + currentY) / 2 );
+		middleLeft.setLocation(currentX, ( (currentY + PROTAGONIST_HEIGHT) + currentY) / 2 );
 	}
 	
 	public Point gettopright(){
@@ -267,18 +259,7 @@ public class Protagonist {
 	}
 	
 	public void stop(){
-		System.out.println("Stop");
-		//when the protagonist is stopped, it is still moving slightly faster than the block it is on.
-		//so, incremement the protagonist's animation frame half as fast as when it moves.
-		if(protagonistRepaintCounter == 0){
-			System.out.println("Should increment frame");
-			incrementFrameNumber();
-			protagonistRepaintCounter = 15;
-		}else{
-			protagonistRepaintCounter--;
-		}
-		
-		currentImage = run_R[currentFrameNumber];
+		currentImage = run_R[0];
 	}
 	
 	public int getCurrentX(){
@@ -321,26 +302,14 @@ public class Protagonist {
 				
 				//get the intersecting block
 				Platform collidingPlatform = level.getPlatforms().get(i);
-				//check if collides from right
+				//check if collides from side
 				if(collidingPlatform.getCollisionBox().contains(topRight) || collidingPlatform.getCollisionBox().contains(middleRight) ){
 					currentX -= 1;
 					moveRightPossible = false;
-					descending = true;	//descends so that he does not cling to edge of platform
-					jump_count = 30;	//also do not let him jump when caught at edge
 					
 				}else{
 //						descending = true;
 					moveRightPossible = true;
-				}
-				
-				if(collidingPlatform.getCollisionBox().contains(topLeft) || collidingPlatform.getCollisionBox().contains(middleLeft) ){
-					moveLeftPossible = false;
-					descending = true;	//descends so that he does not cling to edge of platform
-					jump_count = 30;	//also do not let him jump when caught at edge
-					
-				}else{
-//						descending = true;
-					moveLeftPossible = true;
 				}
 				
 				if(ascending) {
@@ -372,12 +341,11 @@ public class Protagonist {
 					}
 				}
 	
-			//else, he does not collide with the platform
 			} else {
 				noCollide++;
 			}
 
-			//if protagonist does not collide with any platforms and is not jumping, should descend.  (gravity)
+			
 			if(noCollide == level.getPlatforms().size() && (ascending == false)){
 				descending = true;
 			}

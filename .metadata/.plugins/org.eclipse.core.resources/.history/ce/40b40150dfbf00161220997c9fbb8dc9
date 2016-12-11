@@ -28,7 +28,7 @@ public class Protagonist {
 
 	private int currentFrameNumber = 0;	
 	private int moveCount = 5;
-	private int protagonistRepaintCounter = 15  ;	//used when protagonist is stopped
+	private int protagonistRepaintCounter = 10;	//used when protagonist is stopped
 	
 	private final int INITIAL_X = 100;
 	private final int INITIAL_Y = GameFrame.HEIGHT - PlayPanel.TERRAIN_HEIGHT - PROTAGONIST_HEIGHT;
@@ -271,14 +271,11 @@ public class Protagonist {
 		//when the protagonist is stopped, it is still moving slightly faster than the block it is on.
 		//so, incremement the protagonist's animation frame half as fast as when it moves.
 		if(protagonistRepaintCounter == 0){
-			System.out.println("Should increment frame");
 			incrementFrameNumber();
-			protagonistRepaintCounter = 15;
+			protagonistRepaintCounter = 100;
 		}else{
 			protagonistRepaintCounter--;
 		}
-		
-		currentImage = run_R[currentFrameNumber];
 	}
 	
 	public int getCurrentX(){

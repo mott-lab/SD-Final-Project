@@ -28,7 +28,7 @@ public class Protagonist {
 
 	private int currentFrameNumber = 0;	
 	private int moveCount = 5;
-	private int protagonistRepaintCounter = 15  ;	//used when protagonist is stopped
+	private int protagonistRepaintCounter = 15;	//used when protagonist is stopped
 	
 	private final int INITIAL_X = 100;
 	private final int INITIAL_Y = GameFrame.HEIGHT - PlayPanel.TERRAIN_HEIGHT - PROTAGONIST_HEIGHT;

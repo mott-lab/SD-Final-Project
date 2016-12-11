@@ -74,7 +74,7 @@ public class GameManager extends Thread{
 				JPanel btnPanel = new JPanel(new BorderLayout());
 				JButton resetButton;
 								
-				JButton exitButton = new JButton("Give Up");
+				JButton exitButton = new JButton("Quit Game");
 				exitButton.addActionListener(new ActionListener(){
 					@Override
 					public void actionPerformed(ActionEvent e){
@@ -111,7 +111,7 @@ public class GameManager extends Thread{
 					imageLabel.setIcon(deathGif);
 					gameOver = new JLabel("You have lost the game. The Rebellion has failed, and the Empire now rules the galaxy.");
 					gameOver2 = new JLabel("Good thing it is a long, long, time ago and far, far, away.");
-					resetButton = new JButton("Try again");
+					resetButton = new JButton("Try again?");
 					resetButton.addActionListener(new ActionListener(){
 						@Override
 						public void actionPerformed(ActionEvent e) {
