@@ -2,6 +2,8 @@
 
 import java.awt.Toolkit;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 //the main game frame of the game 
 public class GameFrame extends JFrame {
@@ -15,10 +17,6 @@ public class GameFrame extends JFrame {
 		//initialize the gamePanel
 		GamePanel gamePanel=new GamePanel();
 				
-		//set frame to appear at the center of the screen
-		this.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth()-WIDTH)/2),
-				((int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()-HEIGHT)/2));		
-	
 		//set the size of the frame
 		this.setSize(WIDTH,HEIGHT);
 		
@@ -38,6 +36,11 @@ public class GameFrame extends JFrame {
 		
 		gamePanel.grabFocus();
 		gamePanel.requestFocusInWindow();
+	}
+	
+	public void exitGame(){
+		this.setVisible(false);
+		this.dispose();
 	}
 	
 	

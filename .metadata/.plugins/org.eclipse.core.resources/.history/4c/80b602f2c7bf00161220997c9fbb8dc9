@@ -1,0 +1,71 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import sun.audio.*;
+
+public class Main {
+	
+	private Level level;
+	public GamePanel gamePanel;
+	private GameManager gameManager;
+	private GameFrame gameFrame;
+	
+	public static void main(String[] args) {
+		
+		JFrame instructionFrame = new JFrame("Instructions");
+		
+		JPanel instructionPanel = new JPanel();
+		JLabel inst1 = new JLabel("Instructions:");
+		JLabel inst2 = new JLabel("You are BB-8 in the lower left-hand side of the screen.");
+		JLabel inst3 = new JLabel("Your mission is to defeat the Empire and its ruthless Tie Fighter pilots.");
+		JLabel inst4 = new JLabel("You must reach the golden platform at the end of each level to advance to the next.");
+		JLabel inst5 = new JLabel("Use the LEFT and RIGHT arrow keys to move left and right.");
+		JLabel inst6 = new JLabel("Press SPACE to jump.");
+		JLabel inst7 = new JLabel("Press S to shoot.");
+		
+		ImageIcon introGif = new ImageIcon("bb8_intro.gif");
+		JLabel imageLabel = new JLabel();
+		imageLabel.setIcon(introGif);
+		
+		instructionPanel.add(inst1);
+		instructionPanel.add(inst2);
+		instructionPanel.add(inst3);
+		instructionPanel.add(inst4);
+		instructionPanel.add(inst5);
+		instructionPanel.add(inst6);
+		instructionPanel.add(inst7);
+		instructionPanel.add(imageLabel);
+		
+		JPanel btnPanel = new JPanel(new FlowLayout());
+		JButton startButton = new JButton("Start Mission!");
+		
+		startButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				instructionFrame.setVisible(false);
+				//start-up the game main frame 
+				GameFrame gameFrame = new GameFrame();
+			}
+		});
+		
+		startButton.setPreferredSize(new Dimension(200, 50));
+		btnPanel.add(startButton);
+		
+		instructionFrame.add(instructionPanel, BorderLayout.CENTER);
+		instructionFrame.add(btnPanel, BorderLayout.SOUTH);
+		instructionFrame.setVisible(true);
+		instructionFrame.setSize(500, 700);
+		
+		
+		
+	}
+	
+}

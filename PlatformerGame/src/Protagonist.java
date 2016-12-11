@@ -65,8 +65,8 @@ public class Protagonist {
 	
 	private Level level;
 
-	public static int MAX_LIVES = 3;
-	private int currentLives = 3;
+//	public static int MAX_LIVES = 3;
+//	private int currentLives = 3;
 	
 	public Protagonist(){
 		//images for movement
@@ -289,187 +289,6 @@ public class Protagonist {
 	public boolean canMoveLeft(){
 		return moveLeftPossible;
 	}
-		
-//	public void collisionChecker () {
-		
-//		int rowCurrent = (int)((currentY+30)/Tile.TILE_SIZE);				//center y
-//		int rowUp = (int)((collisionBox.getMinY()-1)/Tile.TILE_SIZE);	//top y
-//		int rowDown = (int)((collisionBox.getMaxY()+1)/Tile.TILE_SIZE);	//bottom y
-//		int colCurrent = (int)(currentX/Tile.TILE_SIZE);				//center x
-//		int colRight = (int)((collisionBox.getMaxX()+1)/Tile.TILE_SIZE);//right y
-//		int colLeft = (int)((collisionBox.getMinX()-1)/Tile.TILE_SIZE);	//left y
-		
-//		
-//		// Check at top right of character collision box
-//		if (Tiles.tiles[rowUp][colRight] != null) {
-////			if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(this.collisionBox)) {
-//				moveRightPossible = false;
-////				System.out.println("Collision at top right corner");
-////				return;
-////			} else {
-////				moveRightPossible = true;
-////			}
-//		}else{
-//			moveRightPossible = true;
-//		}
-//		// Check at bottom right of character hit box
-//		if (Tiles.tiles[rowCurrent][colRight] != null) {
-////			if (Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
-//				moveRightPossible = false;
-////				System.out.println("Collision at bottom right corner");
-//				move(KeyEvent.VK_LEFT);
-//				
-////				return;
-////			} else {
-////				moveRightPossible = true;
-////			}
-//		}else{
-//			moveRightPossible = true;
-//		}
-//		
-//		if (Tiles.tiles[rowUp][colLeft] != null) {
-////			if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(this.collisionBox)) {
-//				moveLeftPossible = false;
-////				System.out.println("Collision at top right corner");
-////				return;
-////			} else {
-////				moveRightPossible = true;
-////			}
-//		}else{
-//			moveLeftPossible = true;
-//		}
-//		// Check at bottom right of character hit box
-//		if (Tiles.tiles[rowCurrent][colLeft] != null) {
-////			if (Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)) {
-//				moveLeftPossible = false;
-////				System.out.println("Collision at bottom right corner");
-//				move(KeyEvent.VK_RIGHT);
-////				return;
-////			} else {
-////				moveRightPossible = true;
-////			}
-//		}else{
-//			moveLeftPossible = true;
-//		}
-//		
-//		//Check at middle and to right of character collision box
-////		if(Tiles.tiles[rowCurrent][colRight] != null){
-////			if(Tiles.tiles[rowCurrent][colRight].getCollisionBox().intersects(this.collisionBox)){
-////				moving = false;
-////				return;
-////			}else{
-////				moving = true;
-////			}
-////		}
-//			
-//		// If jumping, check for blocks above character's head
-//		// If touch, start descending
-//		if (ascending) {
-//			// Checks top right
-//			if (Tiles.tiles[rowUp][colRight] != null) {
-////				if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(collisionBox)) {
-//					ascending = false;
-//					descending = true;
-////					System.out.println("Collision at top right corner while ascending");
-////					return;
-////				}
-//			}
-//			// Checks top left
-//			if (Tiles.tiles[rowUp][colLeft] != null) {
-////				if (Tiles.tiles[rowUp][colLeft].getCollisionBox().intersects(collisionBox)) {
-//					ascending = false;
-//					descending = true;
-////					System.out.println("Collision at top left corner while ascending");
-////					return;
-////				}
-//			}
-//		} else {
-//			//must be descending
-//			descending = true;
-//		}
-//		
-//		if(descending){
-//			if (Tiles.tiles[rowDown][colRight] != null) {
-////				if (Tiles.tiles[rowDown][colRight].getCollisionBox().intersects(collisionBox)) {
-//					descending = false;
-//					jump_count = 0;
-////					move(KeyEvent.VK_LEFT);
-////					System.out.println("Collision at bottom right corner while descending");
-////					return;
-////				} 
-//			}
-//			if (Tiles.tiles[rowDown][colLeft] != null) {
-////				if (Tiles.tiles[rowDown][colLeft].getCollisionBox().intersects(collisionBox)) {
-//					descending = false;
-//					jump_count = 0;
-////					move(KeyEvent.VK_LEFT);
-////					System.out.println("Collision at bottom left corner while descending");
-////					return;
-////				}
-//			}
-//		} 		
-			
-
-		
-		
-//		updateLocations();
-//		collisionBox.setLocation(currentX, currentY);
-		
-		// Check moving first
-//		moving = true;
-//		// Check at top right of character collision box
-//		if (Tiles.tiles[rowUp][colRight] != null) {
-//			if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(this.collisionBox)) {
-//				moving = false;
-//			} else {
-//				moving = true;
-//			}
-//		}
-//		// Check at bottom right of character hit box
-//		if (Tiles.tiles[rowDown][colRight] != null) {
-//			if (Tiles.tiles[rowDown][colRight].getCollisionBox().intersects(this.collisionBox)) {
-//				moving = false;
-//			} else {
-//				moving = true;
-//			}
-//		}
-//			
-//		// If jumping, check for blocks above character's head
-//		// If touch, start descending
-//		if (ascending) {
-//			// Checks top right
-//			if (Tiles.tiles[rowUp][colRight] != null) {
-//				if (Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(collisionBox)) {
-//					ascending = false;
-//					descending = true;
-//				}
-//			}
-//			// Checks top left
-//			if (Tiles.tiles[rowUp][colLeft] != null) {
-//				if (Tiles.tiles[rowUp][colLeft].getCollisionBox().intersects(collisionBox)) {
-//					ascending = false;
-//					descending = true;
-//				}
-//			}
-//		} else {
-//			descending = true;
-//		}
-//		
-//		if (Tiles.tiles[rowDown][colRight] != null) {
-//			if (Tiles.tiles[rowDown][colRight].getCollisionBox().intersects(collisionBox)) {
-//				descending = false;
-//				jump_count = 0;
-//			} 
-//		}
-//		if (Tiles.tiles[rowDown][colLeft] != null) {
-//			if (Tiles.tiles[rowDown][colLeft].getCollisionBox().intersects(collisionBox)) {
-//				descending = false;
-//				jump_count = 0;
-//			}
-//		}
-//		
-//		collisionBox.setLocation(currentX, currentY);
-//	}	
 	
 	public void platformCollisionChecker(){
 		
@@ -478,86 +297,70 @@ public class Protagonist {
 		//check collision with moving blocks
 		for(int i = 0; i < level.getPlatforms().size(); i++){
 			
-			
-			
-//			if(level.getPlatforms().get(i).getX() < 1380 ){
-				//if the collision boxes overlap, handle each type of collision
-				if(this.collisionBox.intersects(level.getPlatforms().get(i).getCollisionBox())){
+			//if the collision boxes overlap, handle each type of collision
+			if(this.collisionBox.intersects(level.getPlatforms().get(i).getCollisionBox())){
+				
+				//get the intersecting block
+				Platform collidingPlatform = level.getPlatforms().get(i);
+				//check if collides from side
+				if(collidingPlatform.getCollisionBox().contains(topRight) || collidingPlatform.getCollisionBox().contains(middleRight) ){
+					currentX -= 1;
+					moveRightPossible = false;
 					
-					//get the intersecting block
-					Platform collidingPlatform = level.getPlatforms().get(i);
-	//				System.out.println(i);
-					//check if collides from side
-					if(collidingPlatform.getCollisionBox().contains(topRight) || collidingPlatform.getCollisionBox().contains(middleRight) ){
-						currentX -= 1;
-						moveRightPossible = false;
-						
-					}else{
+				}else{
 //						descending = true;
-						moveRightPossible = true;
+					moveRightPossible = true;
+				}
+				
+				if(ascending) {
+					//check if hit head
+					if(collidingPlatform.getCollisionBox().contains(topLeft) || collidingPlatform.getCollisionBox().contains(topRight) ){
+	//					System.out.println("Collision with platform type 1");
+						moveRightPossible = false;
+						ascending = false;
+						descending = true;
+						jump_count = 0;
 					}
+				} else {
+					descending = true;
+				}
+							
+				if(descending){
 					
-					if(ascending){
-						//check if hit head
-						if(collidingPlatform.getCollisionBox().contains(topLeft) || collidingPlatform.getCollisionBox().contains(topRight) ){
-//							System.out.println("Collision with platform type 1");
-							moveRightPossible = false;
-							ascending = false;
-							descending = true;
+					//check if lands on a platform
+					if(collidingPlatform.getCollisionBox().contains(bottomLeft) || collidingPlatform.getCollisionBox().contains(bottomRight)){
+						if (collidingPlatform.isEnd()==true){
+							won = true;
+						} else {
+							currentX -= 1;		//move with platform
+							descending = false;
 							jump_count = 0;
 						}
-					}else{
+					} else {
 						descending = true;
 					}
-						
-					if(descending){
-						
-						//check if lands on a platform
-						if(collidingPlatform.getCollisionBox().contains(bottomLeft) || collidingPlatform.getCollisionBox().contains(bottomRight)){
-//							System.out.println("Collision with platform type 2");
-							if (collidingPlatform.isEnd()==true){
-								won = true;
-							} else {
-								currentX -= 1;		//move with platform
-								descending = false;
-								jump_count = 0;
-							}
-						}else{
-							descending = true;
-						}
-					}
-	//				else{
-	//					moveRightPossible = false;
-	//					currentX -= 2;
-//					}
-	
-				}else{
-					noCollide++;
-					System.out.println(noCollide);
 				}
-//			}
+	
+			} else {
+				noCollide++;
+			}
+
 			
 			if(noCollide == level.getPlatforms().size() && (ascending == false)){
 				descending = true;
 			}
 			
 			updateLocations();
-//		check top right
-//			if(Tiles.tiles[rowUp][colRight].getCollisionBox().intersects(PlayPanel.platforms.get(i).getCollisionBox())){
-//				currentX -= 4;
-//				moveRightPossible = false;
-//			}
-//			
-//			//check bottom left
-//			if(Tiles.tiles[rowCurrent][colLeft].getCollisionBox().intersects(PlayPanel.platforms.get(i).getCollisionBox())){
-//				moveLeftPossible = false;
-//			}
-//			
-//			if(Tiles.tiles[rowUp][colLeft].getCollisionBox().intersects(PlayPanel.platforms.get(i).getCollisionBox())){
-//				moveLeftPossible = false;
-//			}
 		}
 		
+	}
+	
+	public void enemyCollisionChecker() {
+		for (int i = 0; i < level.getEnemies().size(); i++) {
+			if(this.collisionBox.intersects(level.getEnemies().get(i).getCollisionBox())) {
+				this.died();
+			}
+		}
 	}
 	
 	public void died() {
@@ -623,15 +426,5 @@ public class Protagonist {
 	public Level getLevel() {
 		return level;
 	}
-
-	public int getCurrentLives() {
-		return currentLives;
-	}
-
-	public void setCurrentLives(int currentLives) {
-		this.currentLives = currentLives;
-	}
-	
-	
 
 }

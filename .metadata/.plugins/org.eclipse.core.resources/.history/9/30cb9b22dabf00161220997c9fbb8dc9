@@ -1,0 +1,271 @@
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.HashSet;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class GameManager extends Thread{
+	
+	private static final int DELAY = 12;	//thread delay between each repaint of game's panels
+	private boolean gameIsRunning = false;
+	private Protagonist protagonist;
+	private GamePanel gamePanel;
+	private int bulletDelay = 30;
+	private int time = 0;
+	private Level level;
+	private int jumpcounter = 0;
+		
+	public GameManager(GamePanel gamePanel){
+		
+		this.level = new Level(gamePanel.getLevelCount());
+		
+		//initialize protagonist888////
+		this.protagonist = new Protagonist();
+		
+		this.gamePanel = gamePanel;
+		this.gamePanel.addProtagonist(protagonist);
+		this.gamePanel.addLevel(level);
+		
+		this.gameIsRunning = true;
+		
+	}
+	
+	public void run(){
+		
+		while(gameIsRunning){
+			manageKeys();
+			
+			//updates protagonist movement if jumping
+			
+			protagonist.checkAscending();
+			protagonist.checkDescending();
+			protagonist.checkIfOffScreen();
+			
+			protagonist.platformCollisionChecker();
+			protagonist.enemyCollisionChecker();
+			
+			manageKeys();
+			
+			gamePanel.repaintGame();
+			
+			try{
+				Thread.sleep(DELAY);
+			}catch (InterruptedException ie){
+				ie.printStackTrace();
+			}
+			
+			if (protagonist.isDead()) {
+				JFrame youDied = new JFrame("You died :(");
+				gameIsRunning = false;
+				JPanel panel = new JPanel();
+				JLabel gameOver;
+				JLabel gameOver2;
+				ImageIcon deathGif;
+				JLabel imageLabel;
+				JPanel btnPanel = new JPanel(new BorderLayout());
+				JButton resetButton;
+								
+				JButton exitButton = new JButton("Quit Game");
+				exitButton.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e){
+						gamePanel.exitGame();
+						youDied.setVisible(false);
+					}
+				});
+				
+				exitButton.setPreferredSize(new Dimension(150, 30));
+				btnPanel.add(exitButton, BorderLayout.WEST);
+				
+				if(!gamePanel.gameOver()) {
+			
+					deathGif = new ImageIcon("lifeloss.gif");
+					imageLabel = new JLabel();
+					imageLabel.setIcon(deathGif);
+					gameOver = new JLabel("You have lost a life.");
+					gameOver2 = new JLabel("You have " + gamePanel.getLifeCount() + " lives left.");
+					resetButton = new JButton("Continue");
+					resetButton.addActionListener(new ActionListener(){
+	
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							gamePanel.decreaseLives();
+							resetGame(gamePanel);
+							youDied.setVisible(false);
+						}
+						
+					});
+					
+				} else {
+					deathGif = new ImageIcon("death.gif");
+					imageLabel = new JLabel();
+					imageLabel.setIcon(deathGif);
+					gameOver = new JLabel("You have lost the game. The Rebellion has failed, and the Empire now rules the galaxy.");
+					gameOver2 = new JLabel("Good thing it is a long, long, time ago and far, far, away.");
+					resetButton = new JButton("Try again?");
+					resetButton.addActionListener(new ActionListener(){
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							gamePanel.restartGame();
+							resetGame(gamePanel);
+							youDied.setVisible(false);
+						}
+						
+					});
+				}
+				resetButton.setPreferredSize(new Dimension(150, 30));
+				btnPanel.add(resetButton, BorderLayout.EAST);
+				btnPanel.setPreferredSize(new Dimension (400, 40));
+				panel.add(gameOver, BorderLayout.NORTH);
+				panel.add(gameOver2);
+				panel.add(imageLabel, BorderLayout.CENTER);
+				panel.add(btnPanel, BorderLayout.SOUTH);
+				
+				youDied.add(panel);
+				
+				youDied.setLocationRelativeTo(null);
+		
+				youDied.setSize(600, 360);
+				youDied.setVisible(true);
+			}
+			
+			
+			if (protagonist.isWon()){
+				JFrame youWon = new JFrame("You won :)");
+				
+				gameIsRunning = false;
+				JPanel panel = new JPanel();
+				JLabel gameOver;
+				JLabel gameOver2;
+				ImageIcon victoryGif;
+				JLabel imageLabel;
+				JPanel btnPanel = new JPanel(new BorderLayout());
+				JButton resetButton;
+				
+				JButton exitButton = new JButton("Quit Game");
+				exitButton.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e){
+						gamePanel.exitGame();
+						youWon.setVisible(false);
+					}
+				});
+				
+				exitButton.setPreferredSize(new Dimension(150, 30));				
+				btnPanel.add(exitButton, BorderLayout.WEST);
+
+				
+				if(gamePanel.gameWon()){
+					youWon.setSize(800, 600);
+					
+					gameOver = new JLabel("You have won the game.");
+					gameOver2 = new JLabel("The Resistance stands a chance.");
+					victoryGif = new ImageIcon("victory.gif");
+					imageLabel = new JLabel();
+					imageLabel.setIcon(victoryGif);
+					
+					resetButton = new JButton("Play Again");
+
+					resetButton.addActionListener(new ActionListener(){
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							gamePanel.restartGame();
+							resetGame(gamePanel);
+							youWon.setVisible(false);
+						}
+						
+					});
+					
+				}
+					
+				else{
+					youWon.setSize(900, 600);
+					
+					gameOver = new JLabel("You have won the level.");
+					gameOver2 = new JLabel("However, you have not completed your mission.");
+					victoryGif = new ImageIcon("levelclear.gif");
+					imageLabel = new JLabel();
+					imageLabel.setIcon(victoryGif);
+					
+					resetButton = new JButton("Next Level");
+					
+					resetButton.addActionListener(new ActionListener(){
+	
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							gamePanel.increaseLevel();
+							resetGame(gamePanel);
+							youWon.setVisible(false);
+						}
+						
+					});
+				}
+				resetButton.setPreferredSize(new Dimension(150, 30));
+				btnPanel.add(resetButton, BorderLayout.EAST);
+				btnPanel.setPreferredSize(new Dimension(400, 40));
+				
+				panel.add(gameOver, BorderLayout.NORTH);
+				panel.add(gameOver2);
+				panel.add(imageLabel, BorderLayout.CENTER);
+				panel.add(btnPanel, BorderLayout.SOUTH);
+				
+				youWon.add(panel);
+				
+				youWon.setLocationRelativeTo(null);
+		
+				youWon.setVisible(true);
+			}
+		}
+	}
+	
+	public void resetGame(GamePanel gamePanel){
+		gamePanel.resetGame();
+		gameIsRunning = true;
+	}
+	
+	public void manageKeys(){
+		//access keys being pressed. Use HashSet because it is the fastest data structure for contains()
+		HashSet<Integer> currentKeys = KeyboardController.getActiveKeys();
+		
+		//manage left/right direction
+		if(currentKeys.contains(KeyEvent.VK_RIGHT)){
+			//move right
+			protagonist.move(KeyEvent.VK_RIGHT);
+		}else if(currentKeys.contains(KeyEvent.VK_LEFT)){
+			//move left
+			protagonist.move(KeyEvent.VK_LEFT);
+		}else if(currentKeys.isEmpty() && !(protagonist.isJumping())){
+			protagonist.stop();
+		}
+		
+		if(currentKeys.contains(KeyEvent.VK_SPACE)){
+
+			if(!protagonist.isJumping()){
+				protagonist.jump();
+			}
+
+		}
+		
+		if(currentKeys.contains(KeyEvent.VK_S)) //will added for firing
+		{
+			if (time <= 0) {
+		        protagonist.shoot();
+		        time = bulletDelay;  // Reset the timer
+		    }else{
+		    	time--;
+		    }
+			
+		}
+
+		
+	}
+}

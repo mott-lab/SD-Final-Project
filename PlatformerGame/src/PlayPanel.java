@@ -34,8 +34,8 @@ public class PlayPanel extends JPanel{
 	//size of each tile in a 20x9 grid
 	public static final int TILE_SIZE = 64;
 	
-	static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	static ArrayList<Platform> platforms = new ArrayList<Platform>();
+	ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+//	static ArrayList<Platform> platforms = new ArrayList<Platform>();
 	
 	//reference to the protagonist of the game
 	private Protagonist bb8;
@@ -44,16 +44,17 @@ public class PlayPanel extends JPanel{
 
 	private Level level;
 
-	public PlayPanel(){
+	public PlayPanel(int levelCount){
 		
 		super();
 
+		level = new Level(levelCount);
+		
 		try{
 			BACKGROUND = ImageIO.read(new File("space_background.png"));
 		}catch (IOException e){
 			e.printStackTrace();
 		}
-		
 		
 		//set the size of the play panel
 		this.setSize(GameFrame.WIDTH, PLAY_PANEL_HEIGHT);
@@ -66,9 +67,7 @@ public class PlayPanel extends JPanel{
 		
 		//double buffering should improve animations
 		this.setDoubleBuffered(true);
-		
-		System.out.println("Fuck 5.");
-		
+				
 	}
 	
 	@Override
@@ -81,6 +80,7 @@ public class PlayPanel extends JPanel{
 		g2.drawImage(BACKGROUND, level.getBackx_one(), 0, GameFrame.WIDTH, 640, null);
 		g2.drawImage(BACKGROUND, level.getBackx_two(), 0, GameFrame.WIDTH, 640, null);
 		level.setBackx_one(level.getBackx_one()-1);
+		
 		if (level.getBackx_one()+1250 < 0)
 		{
 			level.setBackx_one(1250);
@@ -91,105 +91,64 @@ public class PlayPanel extends JPanel{
 			level.setBackx_one(1250);
 		}
 		
-		//draw the protagonist of the game
-//		if(!bb8.getRestoring()){
+		//draw the protagonist of the game		
 		
+		g2.drawImage(bb8.getCurrentImage(), bb8.getCurrentX(), bb8.getCurrentY(), null);
+//		g2.draw(bb8.getCollisionBox());
+//		g2.drawOval((int)bb8.gettopleft().getX(), (int)bb8.gettopleft().getY(), 5, 5);
+//		g2.drawOval((int)bb8.getbottomleft().getX(), (int)bb8.getbottomleft().getY(), 5, 5);
+//		g2.drawOval((int)bb8.gettopright().getX(), (int)bb8.gettopright().getY(), 5, 5);
+//		g2.drawOval((int)bb8.getbottomright().getX(), (int)bb8.getbottomright().getY(), 5, 5);
+//		g2.setColor(Color.RED);
+
+		for (int i=0; i < level.getPlatforms().size(); i++)
+		{
+			Platform platform = (Platform) level.getPlatforms().get(i);
+			platform.move();
+			if (platform.see == true) {
+				g2.setColor(Color.GREEN);
+				g2.draw(platform.getCollisionBox());
+				g2.setColor(Color.DARK_GRAY);
+				if(platform.isEnd()){
+					g2.setColor(Color.YELLOW);
+				}
+				g2.fill(platform.getCollisionBox());					
+			
+			}
+		}
 		
-			g2.drawImage(bb8.getCurrentImage(), bb8.getCurrentX(), bb8.getCurrentY(), null);
-			g2.draw(bb8.getCollisionBox());
-			g2.drawOval((int)bb8.gettopleft().getX(), (int)bb8.gettopleft().getY(), 5, 5);
-			g2.drawOval((int)bb8.getbottomleft().getX(), (int)bb8.getbottomleft().getY(), 5, 5);
-			g2.drawOval((int)bb8.gettopright().getX(), (int)bb8.gettopright().getY(), 5, 5);
-			g2.drawOval((int)bb8.getbottomright().getX(), (int)bb8.getbottomright().getY(), 5, 5);
-			g2.setColor(Color.RED);
-//		}
-			ArrayList<Bullet> bullets = bb8.getBullets(); //will added to add bullets
-			for (int i = 0; i < bullets.size(); i++)
-			{
-				Bullet bull = (Bullet) bullets.get(i);
-				if (bull.see == true){
-					bull.move();
-					g2.drawImage(bull.img, bull.x, bull.y, null);
-//					g2.draw(bull.getCollisionBox());
-				}
+		ArrayList<Bullet> bullets = bb8.getBullets(); //will added to add bullets
+		for (int i = 0; i < bullets.size(); i++)
+		{
+			Bullet bull = (Bullet) bullets.get(i);
+			if (bull.see == true){
+				bull.move();
+				g2.drawImage(bull.img, bull.x, bull.y, null);
+			}
 
-				else
-					bullets.remove(i);	
+			else
+				bullets.remove(i);	
+		}
+		
+		level.addEnemy();
+		
+		for (int j = 0; j < level.getEnemies().size(); j++)
+		{
+			Enemy enemy = (Enemy) level.getEnemies().get(j);
+			enemy.bulletCollisionChecker();
+			if (enemy.see == true){
+				enemy.move();
+				g2.drawImage(enemy.img, enemy.x, enemy.y, null);
+				g2.draw(enemy.getCollisionBox());
 			}
-			
-			//Generates enemies randomly
-			int random = (int)(Math.random()*50+1);
-			if (random%50 == 0)	{
-				Enemy enemy = new Enemy(bb8);
-				enemies.add(enemy);
-			}
-			
-			if (enemies.size() != 0)
-			{	
-				for (int j = 0; j < enemies.size(); j++)
-				{
-					boolean removal = false;
-					Enemy enemy = (Enemy) enemies.get(j);
-					if (enemy.see == true){
-						enemy.move();
-						g2.drawImage(enemy.img, enemy.x, enemy.y, null);
-						g2.draw(enemy.getCollisionBox());
-						if (enemies.get(j).getCollisionBox().intersects(bb8.getCollisionBox()))
-						{
-							bb8.died();
-							return;
-						}
-						for(int r = 0; r < bullets.size(); r++)
-						{
-							if (!bb8.isDead()) 
-							{
-								if (enemies.get(j).getCollisionBox().intersects(bullets.get(r).getCollisionBox()))
-								{
-//									enemies.remove(j);
-									removal = true;
-									bullets.remove(r);
-								}
-							}
-						}
-						if (removal)
-						{
-							enemies.remove(j);
-						}
-					}
-					else
-						enemies.remove(j);	
-				}
-			}
-			
-			
-			
-//			int randomBlock = (int)(Math.random()*100+1);
-
-			
-			
-			for (int i=0; i < level.getPlatforms().size(); i++)
+			else
 			{
-				Platform platform = (Platform) level.getPlatforms().get(i);
-				platform.move();
-				if (platform.see == true) {
-//					g2.drawImage(platform.img, platform.getX(), platform.getY(), null);
-					g2.setColor(Color.GREEN);
-					g2.draw(platform.getCollisionBox());
-					g2.setColor(Color.DARK_GRAY);
-					if(platform.isEnd()){
-						g2.setColor(Color.YELLOW);
-					}
-					g2.fill(platform.getCollisionBox());
-//					System.out.println("Drawing platform number: " + i);
-//					System.out.println("Platform x: " + platform.getX());
-//					System.out.println("Platform y: " + platform.getY());
-					
-				
-				}
+				level.getEnemies().remove(j);			
 			}
-			
-			
+		}
+		
 	}
+	
 	
 	public int getRows(){
 		return grid.getRows();
@@ -210,7 +169,12 @@ public class PlayPanel extends JPanel{
 		bb8.setLevel(level);
 	}
 	
-	public int getLevel(){
+	public int getLevelNum(){
 		return level.getLevel();
 	}
+	
+//	public Level getLevel() {
+//		return level;
+//	}
+	
 }

@@ -8,25 +8,13 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-//public class StatsPanel extends JPanel{
-//	
-//	private static final long serialVersionUID = 1L;
-//	private int LevelNumber = 0;
-//
-//	public StatsPanel(){
-//		this.setSize(GameFrame.WIDTH, STATS_HEIGHT);
-//		this.setBackground(Color.WHITE);
-//		this.setLayout(null);
-//	}
-//	
-//	public static final int STATS_HEIGHT=40;
-//}
 
 public class StatsPanel extends JPanel{
 
-	private BufferedImage livingHeart;
+	private BufferedImage life;
 	private BufferedImage statsPanel;
 	public static final int STATS_HEIGHT=50;
+	private int lifeCount = 3;
 	private Protagonist bb8;
 	
 	public StatsPanel(){
@@ -36,10 +24,26 @@ public class StatsPanel extends JPanel{
 		loadInformations();
 	}
 	
+	public void decreaseLifeCount() {
+		lifeCount--;
+	}
+	
+	public void resetLives() {
+		lifeCount = 3;
+	}
+	
+	public int getLifeCount() {
+		return lifeCount;
+	}
+	
+	public boolean gameOver() {
+		return (lifeCount == 0);
+	}
+	
 	private void loadInformations() {
 		try {
 //			statsPanel=ImageIO.read(getClass().getResource("statsBar.png"));
-			livingHeart=ImageIO.read(new File("bb8_0.png"));
+			life=ImageIO.read(new File("bb8_0.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -52,10 +56,8 @@ public class StatsPanel extends JPanel{
 		
 		g2.drawImage(statsPanel,0,0,GameFrame.WIDTH-5,STATS_HEIGHT,null);
 		
-		for(int i=0; i<bb8.MAX_LIVES; i++){
-			if(bb8.getCurrentLives()>i){
-				g2.drawImage(livingHeart,144 + 60*i,4 , 32, 42,null);
-			}
+		for(int i=0; i<lifeCount; i++) {
+			g2.drawImage(life,144 + 60*i,4 , 32, 42,null);
 		}
 		
 		g.setColor(Color.WHITE);

@@ -11,13 +11,14 @@ public class Enemy {
 	public boolean see;
 	private Rectangle collisionBox;
 	private Protagonist bb8;
+	private int diffY = 0;		//used in controlling how fast the enemies attack the target
 
 	
 	public Enemy(Protagonist target)
 	{
 		bb8 = target;
 		x = 1300;
-		y = (int)(Math.random()*590+150); 
+		y = (int)(Math.random()*500+150); 
 		ImageIcon l = new ImageIcon("TieFighter.png");
 		img = l.getImage();
 		see = true;
@@ -31,24 +32,14 @@ public class Enemy {
 		x = x - 3;
 		if (x-bb8.getCurrentX() < 500)
 		{
-			if (bb8.getLevel().getLevel() > 1)
+			
+			if (bb8.getCurrentY()>y)
 			{
-				if (bb8.getCurrentY()>y)
-				{
-					y = y + 1;
-				} else {
-					y = y - 1;
-				}
+				y = y + diffY;
+			} else {
+				y = y - diffY;
 			}
-			if (bb8.getLevel().getLevel() > 2)
-			{
-				if (bb8.getCurrentY()>y)
-				{
-					y = y + 2;
-				} else {
-					y = y - 2;
-				}
-			}
+			
 		}
 		collisionBox.setLocation(x, y);
 		if (x < 0)
@@ -56,7 +47,26 @@ public class Enemy {
 		
 	}
 	
+	public void bulletCollisionChecker() {
+		for (int i = 0; i < bb8.getBullets().size(); i++) {
+			if(this.collisionBox.intersects(bb8.getBullets().get(i).getCollisionBox())) {
+				this.see = false;
+				bb8.getBullets().remove(i);
+			}
+		}
+	}
+	
 	public Rectangle getCollisionBox(){
 		return collisionBox;
 	}
+
+	public int getDiffY() {
+		return diffY;
+	}
+
+	public void setDiffY(int diffY) {
+		this.diffY = diffY;
+	}
+	
+	
 }

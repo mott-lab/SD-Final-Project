@@ -25,3 +25,12 @@
 2016-12-10 12:28:10,590 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 2016-12-10 12:28:14,897 [Thread-7] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
 
+2016-12-10 23:25:02,447 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2016-12-10 23:25:06,711 [Thread-7] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
+2016-12-11 10:15:17,024 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2016-12-11 10:15:20,652 [Thread-9] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+
+2016-12-11 10:58:37,497 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2016-12-11 10:58:44,428 [Thread-8] ERROR org.eclipse.jgit.util.FS - which: git: unknown command
+

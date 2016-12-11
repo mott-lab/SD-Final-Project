@@ -1,0 +1,55 @@
+
+
+import java.awt.Toolkit;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+//the main game frame of the game 
+public class GameFrame extends JFrame {
+	
+	//set size of whole game frame here; set size of playing field in PlayPanel
+	public static final int WIDTH=1280;
+	public static final int HEIGHT=704;
+
+	public GameFrame() {
+		
+		JPanel instructionPanel = new JPanel();
+		JLabel inst1 = new JLabel("Instructions:");
+		JLabel inst2 = new JLabel("You are BB-8 in the lower left-hand side of the screen.");
+		JLabel inst3 = new JLabel("Your mission is to defeat the Empire and its ruthless Tie Fighter pilots.");
+		JLabel inst4 = new JLabel("You must reach the golden platform at the end of each level to advance to the next.");
+		JLabel inst5 = new JLabel("Use the LEFT and RIGHT arrow keys to move left and right.");
+		JLabel inst6 = new JLabel("Press SPACE to jump.");
+		JLabel inst2 = new JLabel(".");
+		
+		//initialize the gamePanel
+		GamePanel gamePanel=new GamePanel();
+				
+		//set frame to appear at the center of the screen
+		this.setLocation((int)((Toolkit.getDefaultToolkit().getScreenSize().getWidth()-WIDTH)/2),
+				((int)(Toolkit.getDefaultToolkit().getScreenSize().getHeight()-HEIGHT)/2));		
+	
+		//set the size of the frame
+		this.setSize(WIDTH,HEIGHT);
+		
+		//set the title of the frame
+		this.setTitle("Platform 51");
+		
+		//make the frame visible
+		this.setVisible(true);
+		
+		//set the operation that will happen when closing the frame
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		//make the frame impossible to resize 
+		this.setResizable(false);
+		
+		this.add(gamePanel);
+		
+		gamePanel.grabFocus();
+		gamePanel.requestFocusInWindow();
+	}
+	
+	
+}

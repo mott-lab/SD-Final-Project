@@ -1,12 +1,13 @@
 What we need to do:
-	- add instructions at beginning of game. (in main?)
-	- make a goal to level
+	- add instructions panel at beginning of game. (in main?)
 	- add another level (with different algorithm for creating platforms)
+	- different gifs
+	- fix blocks so that you have to use jumping abilities (make y difference more extreme)
+	- JPanel saying you've won the game when you have beaten level three
 
 
 What we should do:
-	- make a functional statsPanel (lives?)
-
+	
 
 What would be cool:
 	- ability to choose between different characters

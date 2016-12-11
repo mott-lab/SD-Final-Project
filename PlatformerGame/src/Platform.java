@@ -15,17 +15,7 @@ public class Platform{
 	public boolean end;
 	private Rectangle collisionBox;
 
-//	public Platform() {
-//		numBlocks = (int) (Math.random()*5 + 1);
-//		
-//		x = 1300;
-//		y = (int)(Math.random()*590+150);
-//		ImageIcon i = new ImageIcon("term.png");
-//		img = i.getImage();
-//		see = true;
-//		
-//		collisionBox = new Rectangle(x, y, Tile.TILE_SIZE * numBlocks, Tile.TILE_SIZE);
-//	}
+
 	
 	public Platform(int newx, int newy) {
 		numBlocks = (int) (Math.random()*5 + 1);
@@ -34,8 +24,6 @@ public class Platform{
 		originy = newy;
 		x = newx;
 		y = newy;
-//		ImageIcon i = new ImageIcon("term.png");
-//		img = i.getImage();
 		see = true;
 		
 		collisionBox = new Rectangle(x, y, PlayPanel.TILE_SIZE * numBlocks, PlayPanel.TILE_SIZE);
@@ -48,8 +36,6 @@ public class Platform{
 		this.numBlocks = numBlocks;
 		x = newx;
 		y = newy;
-//		ImageIcon i = new ImageIcon("term.png");
-//		img = i.getImage();
 		see = true;
 		
 		collisionBox = new Rectangle(x, y, PlayPanel.TILE_SIZE * numBlocks, PlayPanel.TILE_SIZE);

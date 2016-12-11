@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -24,7 +25,7 @@ public class GameManager extends Thread{
 		
 	public GameManager(GamePanel gamePanel){
 		
-		this.level = new Level(3);
+		this.level = new Level(gamePanel.getLevelCount());
 		
 		//initialize protagonist888////
 		this.protagonist = new Protagonist();
@@ -49,6 +50,7 @@ public class GameManager extends Thread{
 			protagonist.checkIfOffScreen();
 			
 			protagonist.platformCollisionChecker();
+			protagonist.enemyCollisionChecker();
 			
 			manageKeys();
 			
@@ -63,70 +65,165 @@ public class GameManager extends Thread{
 			if (protagonist.isDead()) {
 				JFrame youDied = new JFrame("You died :(");
 				gameIsRunning = false;
-				
 				JPanel panel = new JPanel();
+				JLabel gameOver;
+				JLabel gameOver2;
+				ImageIcon deathGif;
+				JLabel imageLabel;
+				JPanel btnPanel = new JPanel(new BorderLayout());
+				JButton resetButton;
 								
-				JLabel gameOver = new JLabel("You have lost the game");
-				ImageIcon deathGif = new ImageIcon("death.gif");
-				JLabel imageLabel = new JLabel();
-				imageLabel.setIcon(deathGif);
-				
-				JButton resetButton = new JButton("Play again.");
-				resetButton.addActionListener(new ActionListener(){
-
+				JButton exitButton = new JButton("Quit Game");
+				exitButton.addActionListener(new ActionListener(){
 					@Override
-					public void actionPerformed(ActionEvent e) {
-						
-						resetGame(gamePanel);
-						youDied.setVisible(false);
+					public void actionPerformed(ActionEvent e){
+						//kill program
+						System.exit(0);
 					}
-					
 				});
 				
+				exitButton.setPreferredSize(new Dimension(150, 30));
+				btnPanel.add(exitButton, BorderLayout.WEST);
+				
+				if(!gamePanel.gameOver()) {
+			
+					deathGif = new ImageIcon("lifeloss.gif");
+					imageLabel = new JLabel();
+					imageLabel.setIcon(deathGif);
+					gameOver = new JLabel("You have lost a life.");
+					gameOver2 = new JLabel("You have " + gamePanel.getLifeCount() + " lives left.");
+					resetButton = new JButton("Continue");
+					resetButton.addActionListener(new ActionListener(){
+	
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							gamePanel.decreaseLives();
+							resetGame(gamePanel);
+							youDied.setVisible(false);
+						}
+						
+					});
+					
+				} else {
+					deathGif = new ImageIcon("death.gif");
+					imageLabel = new JLabel();
+					imageLabel.setIcon(deathGif);
+					gameOver = new JLabel("You have lost the game. The Rebellion has failed, and the Empire now rules the galaxy.");
+					gameOver2 = new JLabel("Good thing it is a long, long, time ago and far, far, away.");
+					resetButton = new JButton("Try again?");
+					resetButton.addActionListener(new ActionListener(){
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							gamePanel.restartGame();
+							resetGame(gamePanel);
+							youDied.setVisible(false);
+						}
+						
+					});
+				}
+				resetButton.setPreferredSize(new Dimension(150, 30));
+				btnPanel.add(resetButton, BorderLayout.EAST);
+				btnPanel.setPreferredSize(new Dimension (400, 40));
 				panel.add(gameOver, BorderLayout.NORTH);
+				panel.add(gameOver2);
 				panel.add(imageLabel, BorderLayout.CENTER);
-				panel.add(resetButton, BorderLayout.SOUTH);
+				panel.add(btnPanel, BorderLayout.SOUTH);
 				
 				youDied.add(panel);
 				
 				youDied.setLocation(GameFrame.WIDTH / 2, GameFrame.HEIGHT / 2);
 		
-				youDied.setSize(600, 500);
+				youDied.setSize(600, 360);
 				youDied.setVisible(true);
 			}
+			
+			
 			if (protagonist.isWon()){
 				JFrame youWon = new JFrame("You won :)");
-
+				
 				gameIsRunning = false;
-				
 				JPanel panel = new JPanel();
-								
-				JLabel gameOver = new JLabel("You have won the game");
-				ImageIcon deathGif = new ImageIcon("death.gif");
-				JLabel imageLabel = new JLabel();
-				imageLabel.setIcon(deathGif);
+				JLabel gameOver;
+				JLabel gameOver2;
+				ImageIcon victoryGif;
+				JLabel imageLabel;
+				JPanel btnPanel = new JPanel(new BorderLayout());
+				JButton resetButton;
 				
-				JButton resetButton = new JButton("Next Level?");
-				resetButton.addActionListener(new ActionListener(){
-
+				JButton exitButton = new JButton("Quit Game");
+				exitButton.addActionListener(new ActionListener(){
 					@Override
-					public void actionPerformed(ActionEvent e) {
-						
-						resetGame(gamePanel);
-						youWon.setVisible(false);
+					public void actionPerformed(ActionEvent e){
+						//kill program
+						System.exit(1);
 					}
-					
 				});
 				
+				exitButton.setPreferredSize(new Dimension(150, 30));				
+				btnPanel.add(exitButton, BorderLayout.WEST);
+
+				
+				if(gamePanel.gameWon()){
+					youWon.setSize(1050, 650);
+					youWon.setLocation(GameFrame.WIDTH / 4, GameFrame.HEIGHT / 4);
+					
+					gameOver = new JLabel("You have won the game.");
+					gameOver2 = new JLabel("The Resistance stands a chance.");
+					victoryGif = new ImageIcon("victory.gif");
+					imageLabel = new JLabel();
+					imageLabel.setIcon(victoryGif);
+					
+					resetButton = new JButton("Play Again");
+
+					resetButton.addActionListener(new ActionListener(){
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							gamePanel.restartGame();
+							resetGame(gamePanel);
+							youWon.setVisible(false);
+						}
+						
+					});
+					
+				}
+					
+				else{
+					youWon.setSize(600, 550);
+					youWon.setLocation(GameFrame.WIDTH / 2, GameFrame.HEIGHT / 2);
+					
+					gameOver = new JLabel("You have won the level.");
+					gameOver2 = new JLabel("However, you have not completed your mission.");
+					victoryGif = new ImageIcon("levelclear.gif");
+					imageLabel = new JLabel();
+					imageLabel.setIcon(victoryGif);
+					
+					resetButton = new JButton("Next Level");
+					
+					resetButton.addActionListener(new ActionListener(){
+	
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							gamePanel.increaseLevel();
+							resetGame(gamePanel);
+							youWon.setVisible(false);
+						}
+						
+					});
+				}
+				resetButton.setPreferredSize(new Dimension(150, 30));
+				btnPanel.add(resetButton, BorderLayout.EAST);
+				btnPanel.setPreferredSize(new Dimension(400, 40));
+				
 				panel.add(gameOver, BorderLayout.NORTH);
+				panel.add(gameOver2);
 				panel.add(imageLabel, BorderLayout.CENTER);
-				panel.add(resetButton, BorderLayout.SOUTH);
+				panel.add(btnPanel, BorderLayout.SOUTH);
 				
 				youWon.add(panel);
 				
-				youWon.setLocation(GameFrame.WIDTH / 2, GameFrame.HEIGHT / 2);
+				
 		
-				youWon.setSize(600, 500);
 				youWon.setVisible(true);
 			}
 		}
@@ -170,11 +267,7 @@ public class GameManager extends Thread{
 		    }
 			
 		}
-		
-//		if(currentKeys.contains(KeyEvent.VK_A)) //will added for firing
-//		{
-//			protagonist.genEnemy();
-//		}
+
 		
 	}
 }
