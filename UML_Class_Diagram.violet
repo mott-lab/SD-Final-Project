@@ -1330,30 +1330,5 @@ KeyListener</string>
    <object idref="ClassNode3"/>
    <object idref="ClassNode22"/>
   </void>
-  <void property="minBounds">
-   <object class="java.awt.geom.Rectangle2D$Double" id="Rectangle2D$Double0">
-    <void class="java.awt.geom.Rectangle2D$Double" method="getField">
-     <string>y</string>
-     <void method="set">
-      <object idref="Rectangle2D$Double0"/>
-      <double>-5.0</double>
-     </void>
-    </void>
-    <void class="java.awt.geom.Rectangle2D$Double" method="getField">
-     <string>width</string>
-     <void method="set">
-      <object idref="Rectangle2D$Double0"/>
-      <double>2332.0381643532337</double>
-     </void>
-    </void>
-    <void class="java.awt.geom.Rectangle2D$Double" method="getField">
-     <string>height</string>
-     <void method="set">
-      <object idref="Rectangle2D$Double0"/>
-      <double>1136.370849898476</double>
-     </void>
-    </void>
-   </object>
-  </void>
  </object>
 </java>
