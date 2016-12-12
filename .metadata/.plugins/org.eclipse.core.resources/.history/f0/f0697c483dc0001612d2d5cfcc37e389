@@ -17,6 +17,7 @@ public class Protagonist {
 	//instance variables
 	private int last_direction = KeyEvent.VK_RIGHT;
 	
+	private static final int MOVE_COUNTER_THRESH = 6;	//max number of frames of animation
 	private int moveCounter = 0;
 	private Rectangle collisionBox;	//space occupied by protagonist
 	private static final int DISPLACEMENT = 1;	//space covered by single step of protagonist

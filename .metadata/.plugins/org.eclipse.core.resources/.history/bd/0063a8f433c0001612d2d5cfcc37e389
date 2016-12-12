@@ -38,5 +38,10 @@ public class GameFrame extends JFrame {
 		gamePanel.requestFocusInWindow();
 	}
 	
+	public void exitGame(){
+		this.setVisible(false);
+		this.dispose();
+	}
+	
 	
 }
