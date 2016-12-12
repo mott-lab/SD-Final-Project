@@ -19,7 +19,9 @@ public class Platform{
 	
 	public Platform(int newx, int newy) {
 		numBlocks = (int) (Math.random()*5 + 1);
-
+		
+		originx = newx;
+		originy = newy;
 		x = newx;
 		y = newy;
 		see = true;
@@ -29,6 +31,8 @@ public class Platform{
 
 	//constructor for when wanting control of how long the platform is.  Mainly used to set the size of the first platform
 	public Platform(int newx, int newy, int numBlocks) {
+		originx = newx;
+		originy = newy;
 		this.numBlocks = numBlocks;
 		x = newx;
 		y = newy;
@@ -36,6 +40,8 @@ public class Platform{
 		
 		collisionBox = new Rectangle(x, y, PlayPanel.TILE_SIZE * numBlocks, PlayPanel.TILE_SIZE);
 	}
+
+
 
 
 	public boolean isEnd() {

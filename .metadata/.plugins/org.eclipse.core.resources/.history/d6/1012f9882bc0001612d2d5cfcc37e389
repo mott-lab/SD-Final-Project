@@ -35,6 +35,8 @@ public class Protagonist {
 	private int currentX = INITIAL_X;		//current horizontal start dist
 	private int currentY = INITIAL_Y;
 	
+	private boolean jumping;
+	
 	private int jump_count = 0;
 	
 	private boolean moving = true;

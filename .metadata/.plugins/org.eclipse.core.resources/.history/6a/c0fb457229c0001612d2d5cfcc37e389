@@ -197,7 +197,7 @@ public class GameManager extends Thread{
 					youWon.setLocation(GameFrame.WIDTH / 2, GameFrame.HEIGHT / 2);
 					
 					gameOver = new JLabel("You have won the level.");
-					gameOver2 = new JLabel("However, you have not yet completed your mission.");
+					gameOver2 = new JLabel("However, you have not completed your mission.");
 					victoryGif = new ImageIcon("levelclear.gif");
 					imageLabel = new JLabel();
 					imageLabel.setIcon(victoryGif);

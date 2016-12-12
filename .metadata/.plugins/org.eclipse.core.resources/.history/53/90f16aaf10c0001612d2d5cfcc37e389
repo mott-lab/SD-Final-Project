@@ -94,10 +94,6 @@ public class GamePanel extends JPanel{
 		this.setVisible(false);
 	}
 	
-	public Protagonist getProtagonist(){
-		return bb8;
-	}
-	
 	public void resetGame(){
 		
 		this.remove(playPanel);

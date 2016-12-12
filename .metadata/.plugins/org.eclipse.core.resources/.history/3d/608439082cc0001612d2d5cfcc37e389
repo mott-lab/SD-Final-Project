@@ -42,6 +42,7 @@ public class StatsPanel extends JPanel{
 	
 	private void loadInformations() {
 		try {
+//			statsPanel=ImageIO.read(getClass().getResource("statsBar.png"));
 			life=ImageIO.read(new File("bb8_0.png"));
 		} catch (IOException e) {
 			e.printStackTrace();

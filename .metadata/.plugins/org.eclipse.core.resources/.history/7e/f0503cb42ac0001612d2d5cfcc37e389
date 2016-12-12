@@ -76,8 +76,7 @@ public class PlayPanel extends JPanel{
 		
 		Graphics2D g2=(Graphics2D)g;
 
-		//draw the background image, and make it scroll.
-		//when one background image goes off screen, have another one waiting at its end.
+		
 		g2.drawImage(BACKGROUND, level.getBackx_one(), 0, GameFrame.WIDTH, 640, null);
 		g2.drawImage(BACKGROUND, level.getBackx_two(), 0, GameFrame.WIDTH, 640, null);
 		level.setBackx_one(level.getBackx_one()-1);
@@ -108,6 +107,7 @@ public class PlayPanel extends JPanel{
 					g2.setColor(Color.YELLOW);
 				}
 				g2.fill(platform.getCollisionBox());					
+			
 			}
 		}
 		
@@ -140,6 +140,15 @@ public class PlayPanel extends JPanel{
 			}
 		}
 		
+	}
+	
+	
+	public int getRows(){
+		return grid.getRows();
+	}
+	
+	public int getCols(){
+		return grid.getColumns();
 	}
 	
 	//function called by the GameManager to add the protagonist to the play panel at runtime

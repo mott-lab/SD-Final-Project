@@ -25,6 +25,8 @@ public class GamePanel extends JPanel{
 		this.setSize(WIDTH, HEIGHT);
 		this.setLayout(null);
 		this.setBackground(Color.BLACK);
+		
+		bb8 = new Protagonist();
 
 		statsPanel = new StatsPanel();
 		playPanel = new PlayPanel(levelCount);
